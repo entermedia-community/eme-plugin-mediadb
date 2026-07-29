@@ -1,0 +1,24 @@
+#ifnull($currentchannel)
+  #set($dataid = $context.getRequestParameter("dataid"))
+  #set( $currentchannel = $mediaarchive.query("channel").exact("searchtype", "entitytutorial").exact("dataid", $dataid).exact("user", $user).sort("dateDown").searchOne() )
+#end
+
+{
+  "response": {
+    "status": "ok",
+    "userid": "$user.id"
+  }
+  #ifnotnull($currentchannel),
+  "channel": {
+      "id": #jesc($currentchannel.id),
+      "channeltype": #jesc($currentchannel.get("channeltype")),
+      "chatapplicationid": #jesc($currentchannel.get("chatapplicationid")),
+      "name": #jesc($currentchannel.get("name")),
+      "dataid": #jesc($currentchannel.get("dataid")),
+      "searchtype": #jesc($currentchannel.get("searchtype")),
+      "user": #jesc($currentchannel.get("user")),
+      "refreshdate": #jesc($currentchannel.get("refreshdate")),
+      "date": #jesc($currentchannel.get("date"))
+    }
+  #end 
+}
