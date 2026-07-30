@@ -51,4 +51,6 @@
     <user />
   </permission>
 
+  <path-action name="Admin.allowCorsHeaders" alltypes="true" />
+
 </page>
