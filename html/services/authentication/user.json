@@ -1,14 +1,22 @@
 {
+	#ifnotnull($user)
 	"response": {
 		"status": "ok",
 		"userid": "$user.id"
 	},
-	"user": {
-		"id": "$user.id",
-		"firstname": "$user.firstname",
-		"lastname": "$user.lastname",
-		"screenname": "$user.screenname",
-		"assetportrait": "$siteroot$mediaarchive.asLinkToPreview('$user.assetportrait', 'image200x200')",
-		"email": "$user.email"
+	"user": { 
+		"id" : "$user.id",
+		"firstname": "$!user.firstName",
+		"lastname" : "$!user.lastName",
+		"email" : "$!user.email",
+		"screenname" : "$!user.getScreenName()"
 	}
+	#end
+
+	#ifnull($user)
+	"response": {
+		"status": "error",
+		"userid": null
+	}
+	#end
 }

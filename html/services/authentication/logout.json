@@ -1,6 +1,5 @@
 {
-	"response": 
-	{ 
-		"status":"logout"
+	"response": {
+		"status": "logout"
 	}
 }
