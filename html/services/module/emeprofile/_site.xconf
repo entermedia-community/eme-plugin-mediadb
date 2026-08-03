@@ -2,6 +2,6 @@
 
 <page>
   <property name="module">emeprofile</property>
-  <property name="fallbackprop">/mediadb/services/module/default</property>
+  <property name="fallbackprop">/mediadb/services/module/emeprofile</property>
   <property name="searchtype">emeprofile</property>
 </page>

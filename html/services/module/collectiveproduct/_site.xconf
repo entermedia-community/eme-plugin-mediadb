@@ -2,6 +2,6 @@
 
 <page>
   <property name="module">collectiveproduct</property>
-  <property name="fallbackprop">/mediadb/services/module/default</property>
+  <property name="fallbackprop">/mediadb/services/module/collectiveproduct</property>
   <property name="searchtype">collectiveproduct</property>
 </page>

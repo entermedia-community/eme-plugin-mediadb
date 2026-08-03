@@ -2,6 +2,6 @@
 
 <page>
   <property name="module">bankaccount</property>
-  <property name="fallbackprop">/mediadb/services/module/default</property>
+  <property name="fallbackprop">/mediadb/services/module/bankaccount</property>
   <property name="searchtype">bankaccount</property>
 </page>
