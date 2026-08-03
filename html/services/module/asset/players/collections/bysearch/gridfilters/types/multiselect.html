@@ -78,7 +78,7 @@ $lsearcher.addShowOnly($context, $query)
 		
 	<select id="${valueid}.value" 
 		multiple name="$!detailprefix${valueid}.values" 
-		class="select2 form-control select2-container--bootstrap4 #if($detail.isRequired() && !$multiedit) required #end" 
+		class="select2 form-control #if($detail.isRequired() && !$multiedit) required #end" 
 		listid="$listid" 
 		data-listid="$listid" 
 		data-placeholder=" "
