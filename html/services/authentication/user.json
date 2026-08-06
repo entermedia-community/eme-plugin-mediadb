@@ -10,6 +10,10 @@
 		"lastname" : "$!user.lastName",
 		"email" : "$!user.email",
 		"screenname" : "$!user.getScreenName()"
+		#set($assetportrait = "$!siteroot$mediaarchive.asLinkToPreview($userprofile.assetportrait, 'image200x200')")
+		#ifnotnull($assetportrait),
+		"assetportrait" : "$assetportrait"
+		#end
 	}
 	#end
 
