@@ -33,7 +33,8 @@
       "channel": #jesc($answer.get("channel")),
       "questionid": #jesc($answer.get("entityquestion")),
       "confidence": #jesc($answer.get("answerconfidence")),
-      "selectedoption": #jesc($answer.get("selectedoption"))
+      "selectedoption": #jesc($answer.get("selectedoption")),
+      "iscorrect": #jesc($answer.get("iscorrect"))
     }
   #end
   ]
