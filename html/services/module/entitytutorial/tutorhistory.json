@@ -20,7 +20,7 @@
       "message": #jesc($message.get("message")),
       "replytoid": #jesc($message.get("replytoid")),
       "user": #jesc($message.get("user")),
-      "agentcontextvalues": #jesc($message.get("agentcontextvalues")),
+      "agentcontextvalues": #jesc($message.get("agentcontextvalues"))
     }
   #end
 #end
