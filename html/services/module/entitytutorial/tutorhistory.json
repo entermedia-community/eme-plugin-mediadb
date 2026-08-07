@@ -19,7 +19,8 @@
       "messageid": #jesc($message.get("id")),
       "message": #jesc($message.get("message")),
       "replytoid": #jesc($message.get("replytoid")),
-      "user": #jesc($message.get("user"))
+      "user": #jesc($message.get("user")),
+      "agentcontextvalues": #jesc($message.get("agentcontextvalues")),
     }
   #end
 #end
