@@ -1,6 +1,6 @@
 #set($channelid = $context.getRequestParameter("channel"))
-#set( $messages = $mediaarchive.query("chatterbox").exact("channel", $channelid).orgroup("user", "${user.getId()},agent").sort("dateDown").search() )
-#set( $answers = $mediaarchive.query("tutoranswer").exact("channel", $channelid).exact("user", "$user.getId()").sort("dateDown").search() )
+#set( $messages = $mediaarchive.query("chatterbox").exact("channel", $channelid).orgroup("user", "${user.getId()},agent").sort("dateUp").search() )
+#set( $answers = $mediaarchive.query("tutoranswer").exact("channel", $channelid).exact("user", "$user.getId()").sort("dateUp").search() )
 {
   "response": {
     "status": "ok",
