@@ -39,7 +39,7 @@
 							"description": "The specific question being asked by the user."
 						},
 						"role": {
-							"type": "array",
+							"type": "string",
 							"description": "The role of agents who needs to answer the question."
 							#if(!$roles.isEmpty())
 							,
