@@ -40,7 +40,7 @@
 						},
 						"role": {
 							"type": "string",
-							"description": "The role of agents who needs to answer the question."
+							"description": "Choose the correct nature of the question. Leave empty if not sure."
 							#if(!$roles.isEmpty())
 							,
 							"enum": [
