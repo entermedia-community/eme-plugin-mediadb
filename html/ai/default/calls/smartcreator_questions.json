@@ -2,7 +2,7 @@
 	"messages": [
 		{
 			"role": "system",
-			"content": "[[You generate multiple-choice questions from the provided context. Return 1 to 3 questions only. Each question must be directly based on the context, clear, and unambiguous. Each question must include exactly 4 answer choices and avoid explanations. Give the correct answer's index (0-3) and the cognitive level (beginner, competent, expert) for each question.]]"
+			"content": "[[You generate multiple-choice questions from the provided context. Return 1 to 3 questions only, depending on the given context length. Each question must be directly based on the context, clear, and unambiguous. Each question must include exactly 4 answer choices and avoid explanations. Give the correct answer's index (0-3), the cognitive level (beginner, competent, expert), and a rationale explaining the correct answer for each question.]]"
 		},
 		{
 			"role": "user",
@@ -43,9 +43,12 @@
 								"cognitive_level": {
 									"type": "string",
 									"enum": ["beginner", "competent", "expert"]
+								},
+								"rationale": {
+									"type": "string"
 								}
 							},
-							"required": ["question", "choices", "correct_answer_index", "cognitive_level"],
+							"required": ["question", "choices", "correct_answer_index", "cognitive_level", "rationale"],
 							"additionalProperties": false
 						}
 					}
