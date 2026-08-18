@@ -26,6 +26,9 @@
 		#ifnotnull($assetportrait),
 		"assetportrait" : "$assetportrait"
 		#end
+		#ifnotnull($userprofile.dataconsent),
+		"dataconsent" : "$userprofile.dataconsent"
+		#end
 	}
 	#end
 }

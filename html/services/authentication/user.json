@@ -16,6 +16,9 @@
 		#ifnotnull($assetportrait),
 		"assetportrait" : "$assetportrait"
 		#end
+		#ifnotnull($userprofile.dataconsent),
+		"dataconsent" : "$userprofile.dataconsent"
+		#end
 	},
 	"servers": [
 		#foreach($emeserver in $emeservers)
