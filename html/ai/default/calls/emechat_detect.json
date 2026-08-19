@@ -61,7 +61,7 @@
 		{
 			"type": "function",
 			"function": {
-				"name": "emechat_responder.task_create",
+				"name": "emechat_goal_manager.goal_create",
 				"description": "Use this tool when the user is requesting the creation of a goal or adding a task to an existing goal.",
 				"parameters": {
 					"type": "object",
