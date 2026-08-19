@@ -11,6 +11,7 @@
 [[2. general_chat: Use this tool for general conversations that do not fit into specific categories.]]
 [[3. search_parse: Use this tool when the user is trying to search for images, documents or specific content.]]
 [[4. image_creation: Use this tool when the user is requesting the creation of an image.]]
+[[5. task_create: Use this tool when the user is requesting the creation of a goal or adding a task to an existing goal.]]
 
 
 [[Based on the user's input, choose the most appropriate tool and provide the necessary parameters as specified in the tools list.]]")
@@ -53,7 +54,38 @@
 							
 						}
 					},
-					"required": ["question"]
+					"required": ["question", "role"]
+				}
+			}
+		},
+		{
+			"type": "function",
+			"function": {
+				"name": "emechat_responder.task_create",
+				"description": "Use this tool when the user is requesting the creation of a goal or adding a task to an existing goal.",
+				"parameters": {
+					"type": "object",
+					"properties": {
+						"task": {
+							"type": "string",
+							"description": "The specific task being asked by the user."
+						},
+						"role": {
+							"type": "string",
+							"description": "Choose the correct nature of the task. Leave empty if not sure."
+							#if(!$roles.isEmpty())
+							,
+							"enum": [
+								#foreach($role in $roles)
+									"#text($role)"
+									#if($foreach.hasNext),#end
+								#end
+							]
+							#end
+							
+						}
+					},
+					"required": ["task", "role"]
 				}
 			}
 		},
