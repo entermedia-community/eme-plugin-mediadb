@@ -38,9 +38,23 @@
 						"question": {
 							"type": "string",
 							"description": "The specific question being asked by the user."
+						},
+						"role": {
+							"type": "string",
+							"description": "Choose the correct nature of the question. Leave empty if not sure."
+							#if(!$roles.isEmpty())
+							,
+							"enum": [
+								#foreach($role in $roles)
+									"#text($role)"
+									#if($foreach.hasNext),#end
+								#end
+							]
+							#end
+							
 						}
 					},
-					"required": ["question"]
+					"required": ["question", "role"]
 				}
 			}
 		},
