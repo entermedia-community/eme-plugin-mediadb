@@ -2,7 +2,7 @@
 	"messages": [
 		{
 			"role": "system",
-			"content": "[[You generate multiple-choice questions from the provided context. Return 1 to 3 questions only, depending on the given context length. Each question must be directly based on the context, clear, and unambiguous. Each question must include exactly 4 answer choices and avoid explanations. Give the correct answer's index (0-3), the cognitive level (beginner, competent, expert), and a rationale explaining the correct answer for each question. Avoid prefixing the question with \"According to the text\", \"Based on the text\", or similar phrases. Do not include any questions that are not directly answerable from the context.]"
+			"content": "[[You generate multiple-choice questions from the provided context. Return 1 to 3 questions only, depending on the given context length. Each question must be directly based on the context, clear, and unambiguous. Each question must include exactly 4 answer choices and avoid explanations. Give the correct answer's index (0-3), the cognitive level (beginner, competent, expert), and a rationale explaining the correct answer for each question. Avoid prefixing the question with \"According to the text\", \"Based on the text\", or similar phrases. Do not include any questions that are not directly answerable from the context.]]"
 		},
 		{
 			"role": "user",
