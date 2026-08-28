@@ -22,7 +22,7 @@
         "expertprogress": $progress.expertprogress
       },
       "answersforgotten": 0,
-      "lastreviewed": 0
+      "lastreviewed": #jesc($tutorial.entity_date)
     }
     #end
   ]
