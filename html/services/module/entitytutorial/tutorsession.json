@@ -12,7 +12,6 @@
   "channel": {
       "id": #jesc($currentchannel.id),
       "channeltype": #jesc($currentchannel.get("channeltype")),
-      "chatapplicationid": #jesc($currentchannel.get("chatapplicationid")),
       "name": #jesc($currentchannel.get("name")),
       "dataid": #jesc($currentchannel.get("dataid")),
       "searchtype": #jesc($currentchannel.get("searchtype")),

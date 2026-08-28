@@ -14,7 +14,6 @@
     #if($count > 1),#end
     {
       "channel": #jesc($message.get("channel")),
-      "chatapplicationid": #jesc($message.get("chatapplicationid")),
       "date": #jesc($message.get("date")),
       "messageid": #jesc($message.get("id")),
       "message": #jesc($message.get("message")),
