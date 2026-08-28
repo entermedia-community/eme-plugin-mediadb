@@ -3,11 +3,15 @@
             "status": "ok",
             "userid": "$user.id"
       },
+      "absolutetotal":"$absolutetotal",
+      "absolutecompleted":"$absolutecompleted",
       "topics": [
             #foreach($d in $data)
                   #if($foreach.count > 1),#end
                   #set($topic = $d.get("topic"))
                   #set($progress = $d.get("progress"))
+                  #set($totalsections = $d.get("totalsections"))
+                  #set($completedsections = $d.get("completedsections"))
                   #set($tutorials = $d.get("tutorials"))
                   {
                         "id": #jesc($topic.id),
@@ -16,6 +20,8 @@
                         "tutorials": $tutorials,
                         "completed": 0,
                         "description": #jesc($topic.longcaption),
+                        "totalsections": $totalsections,
+                        "completedsections": $completedsections,
                         "progress": {
                               "beginnerprogress":  $progress.beginnerprogress,
                               "competentprogress": $progress.competentprogress,

@@ -7,11 +7,15 @@
     #foreach($d in $data)
     #set($tutorial = $d.get("tutorial"))
     #set($progress = $d.get("progress"))
+    #set($totalsections = $d.get("totalsections"))
+    #set($completedsections = $d.get("completedsections"))
     #if($foreach.count > 1),#end
     {
       "id": #jesc($tutorial.id),
       "entitytopicid": #jesc($tutorial.entitytopic),
       "title": "#text($tutorial)",
+      "totalsections": $totalsections,
+      "completedsections": $completedsections,
       "progress": {
         "beginnerprogress":  $progress.beginnerprogress,
         "competentprogress": $progress.competentprogress,
