@@ -5,6 +5,6 @@
 	<property name="module">tutordailychallenge</property>
 	<property name="channeltype">agenttutorchat</property>
 
-	<path-action name="TopicModule.loadDailyChallenges" />
+	<path-action name="TopicModule.loadDailyChallenge" />
 
 </page>
