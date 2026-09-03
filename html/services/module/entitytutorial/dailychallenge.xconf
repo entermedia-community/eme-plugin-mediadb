@@ -1,0 +1,10 @@
+<page>
+
+	<generator name="velocityGenerator" mimetypes="text/json"/>
+
+	<property name="module">tutordailychallenge</property>
+	<property name="channeltype">agenttutorchat</property>
+
+	<path-action name="TopicModule.loadDailyChallenges" />
+
+</page>
