@@ -1,0 +1,4 @@
+<page>
+	<generator name="velocityGenerator" mimetypes="text/json"/>
+	<path-action name="TopicModule.resetTutorial" />
+</page>

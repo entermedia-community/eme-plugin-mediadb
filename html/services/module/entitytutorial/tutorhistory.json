@@ -52,6 +52,7 @@
       "date": #jesc($message.get("date")),
       "messageid": #jesc($message.get("id")),
       "message": #jesc($message.get("message")),
+      "messagetype": #jesc($message.get("messagetype")),
       "replytoid": #jesc($message.get("replytoid")),
       "user": #jesc($message.get("user")),
       "agentcontextvalues": #jesc($message.get("agentcontextvalues"))
