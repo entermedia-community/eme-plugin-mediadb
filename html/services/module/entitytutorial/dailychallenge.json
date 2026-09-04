@@ -3,6 +3,11 @@
     "status": "ok",
     "userid": "$user.id"
   },
+  "dailychallenge": {
+    "id": #jesc($dailychallenge.id), 
+    "challengedate": #jesc($dailychallenge.get("challengedate")),
+    "sectionid": #jesc($dailychallenge.get("sectionid"))
+  },
   "channelhistory": [
     #foreach($channel in $channelhistory)
       #if($foreach.count > 1),#end
