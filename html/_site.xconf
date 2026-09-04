@@ -30,7 +30,7 @@
   <path-action name="MediaArchiveModule.loadApplicationId" />
   <path-action name="MediaArchiveModule.loadComponentHome" />
 
-  <property name="catalogid">catalog</property>
+  <property name="catalogid">site/catalog</property>
   <path-action name="Admin.loadPermissions"/>
   <path-action name="Admin.allowViewing" />
   <path-action name="MediaArchiveModule.loadApplicationId" />
