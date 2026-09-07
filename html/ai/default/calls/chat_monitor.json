@@ -101,7 +101,7 @@
 		{
 			"type": "function",
 			"function": {
-				"name": "creation_image_parse",
+				"name": "image_creation.image_creation",
 				"description": "Use this tool when the user is requesting the creation of an image",
 				"parameters": {
 					"type": "object",
