@@ -22,7 +22,7 @@
 		{
 			"type": "function",
 			"function": {
-				"name": "auto_detect_showresponse",
+				"name": "showfriendlyresponse",
 				"description": "Use this tool for general conversations that do not fit into specific categories.",
 				"parameters": {
 					"type": "object",
@@ -92,7 +92,7 @@
 							]
 							#end
 							
-						}
+						agentjobcreator}
 					},
 					"required": ["task", "role"]
 				}
@@ -122,7 +122,7 @@
 		{
 			"type": "function",
 			"function": {
-				"name": "chatcreateagentgoal",
+				"name": "agentorchestrator.agentJobCreator",
 				"description": "Use this tool for general conversations that do not fit into specific categories.",
 				"parameters": {
 					"type": "object",
