@@ -1,0 +1,72 @@
+{
+	"model": "${model}",
+	"messages": [
+		{
+			"role": "system",
+			"content": #jesc("[[You are an Agent Job Creator.]]
+
+[[Given the agent catalog and a goal, create the ordered steps required to complete the goal. Map each input to either a literal value or an output from an earlier step.]]
+
+[[Return a JSON object with a single agent_steps array. Each step must have an id, a details string, and an inputs array. Each input id must be declared by that agent. Set value for a known literal and copyfrom to null. Set copyfrom to an earlier step output id and value to null when chaining steps.]]
+
+{
+	"possible_steps": [
+  #foreach($step in $possible_steps)
+    #if($foreach.count>1),#end
+    {
+    "id": "$step.id",
+    "description": "$step.description",
+    "inputs": $step.inputs,
+    "outputs": $step.outputs
+    }
+  #end
+  
+  ]
+}
+")
+		},
+		{
+			"role": "user",
+			"content": #jesc("[[I want to pull content from http://cnn.com and save it to a file named /tmp/output.txt]]")
+		}
+	],
+	"response_format": {
+		"type": "json_schema",
+		"json_schema": {
+			"name": "agent_steps",
+			"strict": true,
+			"schema": {
+				"type": "object",
+				"properties": {
+					"agent_steps": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"id": { "type": "string" },
+								"details": { "type": "string" },
+								"inputs": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"id": { "type": "string" },
+											"value": { "type": ["string", "null"] },
+											"copyfrom": { "type": ["string", "null"] }
+										},
+										"required": ["id", "value", "copyfrom"],
+										"additionalProperties": false
+									}
+								}
+							},
+							"required": ["id", "details", "inputs"],
+							"additionalProperties": false
+						}
+					}
+				},
+				"required": ["agent_steps"],
+				"additionalProperties": false
+			}
+		}
+	}
+}

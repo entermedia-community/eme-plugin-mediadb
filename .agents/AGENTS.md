@@ -17,6 +17,13 @@ AI provider config lives as data under `html/ai`.
 - `html/services/wadl.xml` / `wadl.xconf` WADL description of the REST API surface
 - `html/ai/<provider>/` Per-provider AI integration config: `default`, `openai`, `gemini`, `ollama`,
   `llama`, `llamavision`, `http`, `mcp` — prompts/calls/system messages per provider
+- `html/ai/<provider>/calls/*.json` One Velocity-templated LLM request body per function. The
+  `.json` extension is mapped to `velocityGenerator` in `html/ai/_site.xconf`, so these are real
+  Velocity templates, not static JSON — rendered against the `AgentContext`
+  (`BaseLlmConnection.loadInputFromTemplate` in `plugins/finder`) and the *output* is then parsed as
+  JSON. See "Editing Rules" below for the `#jesc` quoting rule before touching one of these, and the
+  `create-java-ai-skill` skill (`.agents/skills/create-java-ai-skill/SKILL.md`, repo root) for the
+  full pattern
 - `html/mcp.old/` Legacy MCP (Model Context Protocol) client/server files — not the current
   integration path, avoid extending unless explicitly asked to
 - `html/docs/` API documentation viewer pages
@@ -41,6 +48,14 @@ AI provider config lives as data under `html/ai`.
 - Keep the response shape documented: add/update a matching entry in
   `plugins/catalog/html/data/lists/endpoint/*.xml` with a `samplerequest`.
 - `html/mcp.old` is legacy — new MCP-style work should go through `html/ai/mcp` instead.
+- In `html/ai/<provider>/calls/*.json`: wrap every message `"content"` value in `#jesc(...)`
+  (defined in `plugins/system/html/display/velocitymacros.vm`) — never hand-quote it. `#jesc(...)`'s
+  argument is parsed by Velocity as a double-quoted string literal, so it may contain **zero**
+  literal `"` characters (confirmed against the real engine: even a backslash-escaped `\"` fails to
+  parse) — use single quotes for any inline JSON-shaped example text instead. Never hand-type a
+  large reference blob (e.g. the full `aiskill` catalog) directly into one of these files; put it on
+  the `AgentContext` as a variable and reference it as `$var` inside the `#jesc(...)` block instead
+  — see the `create-java-ai-skill` skill for the full rule and a worked example.
 
 ### Validation Checklist
 
