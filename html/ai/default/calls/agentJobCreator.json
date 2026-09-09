@@ -27,7 +27,7 @@
 		},
 		{
 			"role": "user",
-			"content": #jesc("[[I want to pull content from http://cnn.com and save it to a file named /tmp/output.txt]]")
+			"content": #jesc($query)
 		}
 	],
 	"response_format": {
