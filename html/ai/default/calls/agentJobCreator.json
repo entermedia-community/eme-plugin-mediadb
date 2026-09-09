@@ -17,11 +17,9 @@
     | $step.id | $!step.description  | $!step.inputs | $!step.outputs |
     #end
     </available_steps>")
-    },
-		{
-			"role": "user",
-			"content": #jesc($query)
-		}
+    }
+    ,
+		$pages.include("./commons/messagehistory.json", $context) 
 	],
   "response_format": {
     "type": "json_schema",
@@ -31,6 +29,11 @@
       "schema": {
         "type": "object",
         "properties": {
+					"userapproved": {
+						"type": "boolean",
+						"description": "Whether or not the user has approved the proposed steps."
+					}
+          ,
           "agent_steps": {
             "type": "array",
             "description": "An ordered sequence of agent execution steps required to complete the task.",
