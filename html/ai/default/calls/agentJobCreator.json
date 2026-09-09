@@ -14,7 +14,7 @@
     ## Available Skills and Functions
     | Skill Id | Description | Inputs | Outputs | 
     #foreach($step in $possible_steps)
-    | $step.id | $!step.description  |  |  |
+    | $step.id | $!step.description  | $!step.inputs | $!step.outputs |
     #end
     </available_steps>")
     },
