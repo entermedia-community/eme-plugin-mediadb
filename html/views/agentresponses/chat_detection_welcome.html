@@ -6,11 +6,9 @@
 				<h5 class="mb-1">
 					[[Welcome to the AI Agent!]]
 				</h5>
-				<messageplain>[[Welcome to the AI Agent!]]</messageplain>
 				<p>
 					[[I can help you with any query related to]] <strong>#text($entity)</strong>.
 				</p>
-				<messageplain>[[I can help you with any query related to]] #text($entity).</messageplain>
 				#set($description = $entity.get("longcaption"))
 				#ifnull($description)
 					#set($description = $entity.get("collectivedescription"))
@@ -20,7 +18,6 @@
 						<span class="trim-text" data-max="300">$description</span>
 						<button class="see-more-btn see-more" data-seemore="(...[[see more]])" data-seeless="(...[[see less]])"></button>
 					</p>
-					<messageplain>$description</messageplain>
 				#end
 			</div>
 			#set($assetid = $entity.get("primarymedia"))
@@ -36,7 +33,6 @@
 		<div class="d-flex">
 			<div class="d-flex flex-column me-2 flex-grow-1">
 				<p>[[Here are some things I can help you with]]:</p>
-				<messageplain>[[Here are some things I can help you with]]:</messageplain>
 				#set($scenarios = $mediaarchive.query("automationscenario").exact("enabled","true").exact("chatenabled","true").sort("ordering").cachedSearch())
 				<ul>
 					#foreach( $scenario in $scenarios )
@@ -49,14 +45,12 @@
 								data-functionname="${scenario.id}_welcome"
 								data-oemaxlevel="1">
 								<span>#text( $scenario )</span>
-								<messageplain>#text( $scenario )</messageplain>
 							</a>
 						</li>
 					#end
 				</ul>
 				#ifnull($scenarios)
 					<p>[[I can help you create tutorials, answer your questions, generate images, and more.]]</p>
-					<messageplain>[[I can help you create tutorials, answer your questions, generate images, and more.]]</messageplain>
 				#end
 			</div>
 			<div class="d-flex flex-column flex-grow-1">
@@ -78,6 +72,5 @@
 	#end
 	#ifnull($entity)
 		<h5 class="mt-0 mb-2">[[What would you like to search for?]]</h5>
-		<messageplain>[[What would you like to search for?]]</messageplain>
 	#end
 </div>
