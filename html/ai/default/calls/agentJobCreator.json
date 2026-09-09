@@ -7,66 +7,72 @@
 
 [[Given the agent catalog and a goal, create the ordered steps required to complete the goal. Map each input to either a literal value or an output from an earlier step.]]
 
-[[Return a JSON object with a single agent_steps array. Each step must have an id, a details string, and an inputs array. Each input id must be declared by that agent. Set value for a known literal and copyfrom to null. Set copyfrom to an earlier step output id and value to null when chaining steps.]]
-
-{
-	"possible_steps": [
-  #foreach($step in $possible_steps)
-    #if($foreach.count>1),#end
-    {
-    "id": "$step.id",
-    "description": "$step.description",
-    "inputs": $step.inputs,
-    "outputs": $step.outputs
-    }
-  #end
-  
-  ]
-}
+[[Return a JSON object with a single agent_steps array. Each step must have an Skill Id, a details string, and an parameter array. Each input id must be declared by that agent.]]
 ")
 		},
+    {"role": "user", "content": #jesc("<available_steps> $possible_steps.size()
+    ## Available Skills and Functions
+    | Skill Id | Description | Inputs | Outputs | 
+    #foreach($step in $possible_steps)
+    | $step.id | $!step.description  |  |  |
+    #end
+    </available_steps>")
+    },
 		{
 			"role": "user",
 			"content": #jesc($query)
 		}
 	],
-	"response_format": {
-		"type": "json_schema",
-		"json_schema": {
-			"name": "agent_steps",
-			"strict": true,
-			"schema": {
-				"type": "object",
-				"properties": {
-					"agent_steps": {
-						"type": "array",
-						"items": {
-							"type": "object",
-							"properties": {
-								"id": { "type": "string" },
-								"details": { "type": "string" },
-								"inputs": {
-									"type": "array",
-									"items": {
-										"type": "object",
-										"properties": {
-											"id": { "type": "string" },
-											"value": { "type": ["string", "null"] },
-											"copyfrom": { "type": ["string", "null"] }
-										},
-										"required": ["id", "value", "copyfrom"],
-										"additionalProperties": false
-									}
-								}
-							},
-							"required": ["id", "details", "inputs"],
-							"additionalProperties": false
-						}
-					}
-				},
-				"required": ["agent_steps"],
-				"additionalProperties": false
-			}
-		}
-	}
+  "response_format": {
+    "type": "json_schema",
+    "json_schema": {
+      "name": "agent_steps",
+      "strict": true,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "agent_steps": {
+            "type": "array",
+            "description": "An ordered sequence of agent execution steps required to complete the task.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "skill_id": { 
+                  "type": "string", 
+                  "description": "The exact unique identifier of the target skill to execute (e.g., 'skill_send_email', 'skill_sql_query')." 
+                },
+                "details": { 
+                  "type": "string", 
+                  "description": "Clear step-by-step reasoning or summary explaining why this skill is being invoked and what outcome is expected." 
+                },
+                "parameters": {
+                  "type": "array",
+                  "description": "The parameter bindings required by this skill.",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "input_id": { 
+                        "type": "string", 
+                        "description": "The input parameter variable name expected by the skill." 
+                      },
+                      "value": { 
+                        "type": ["string", "null"], 
+                        "description": "A literal value to assign to this input, or null." 
+                      }
+                    },
+                    "required": ["input_id", "value"],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": ["skill_id", "details", "parameters"],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": ["agent_steps"],
+        "additionalProperties": false
+      }
+    }
+  }
 }
