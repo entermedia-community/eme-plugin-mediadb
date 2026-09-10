@@ -26,11 +26,21 @@
   "response_format": {
     "type": "json_schema",
     "json_schema": {
-      "name": "agent_steps",
+      "name": "job_creator_response",
       "strict": true,
       "schema": {
         "type": "object",
         "properties": {
+          "job_name": {
+						"type": "string",
+						"description": "A short name of the job being created. This should be concise and technical."
+					}
+          ,
+          "job_requested": {
+						"type": "string",
+						"description": "A detailed description of the job request, outlining the specific requirements and context for the job. Use Markdown formatting to enhance clarity and readability."
+					}
+          ,
 					"userapproved": {
 						"type": "boolean",
 						"description": "Whether or not the user has approved the proposed steps."
@@ -48,7 +58,7 @@
                 },
                 "details": { 
                   "type": "string", 
-                  "description": "Clear step-by-step reasoning or summary explaining why this skill is being invoked and what outcome is expected." 
+                  "description": "Clear step-by-step reasoning or summary explaining why this skill is being invoked and what outcome is expected. Include a summary of what parameters will be passed to the skill and how they relate to the overall goal." 
                 },
                 "parameters": {
                   "type": "array",
@@ -80,7 +90,7 @@
             }
           }
         },
-        "required": ["agent_steps"],
+        "required": ["job_name", "job_requested", "userapproved", "agent_steps"],
         "additionalProperties": false
       }
     }

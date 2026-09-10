@@ -1,19 +1,31 @@
-<messageplain>[[Job Plan]]:</messageplain>
-<p class="m-0">[[Job Plan]]:</p>
+<messageplain>#text($agentjob)</messageplain>
 
+#if( $agentjob.status == "new")
+  <h3>[[Requested]] - #text($agentjob)</h3>
+#elseif( $agentjob.status == "complete")
+  <h3>[[Completed]]</h3>
+#else
+  <p>
+    [[Job Status]]: #text( $mediaarchive.getCachedData("jobstatus", $agentjob.status) )
+  </p>
+#end
 
-Job Status: $agentjob.status
+<p><b>[[Goal:]]</b></p> 
+  
+$!{markdown.render($agentjob.markdowncontent)}
 
+#if( !$userapproved)
+<p><b>[[Approach:]]</b></p> 
 <ol>
   #foreach($agentjobstep in $proposedsteps)
     <li>
-      ${agentjobstep.markdowncontent} 
-      <pre class="code-block">${agentjobstep.parameters}</pre> 
-      #if($agentjobstep.defaultoutput)
-      <pre class="code-block">${agentjobstep.defaultoutput}</pre>
-      #end
+      <p>${markdown.render($agentjobstep.markdowncontent)}</p> 
     </li>
   #end
 </ol>
+<p class="m-0">[[Tell me if you want]] #if($changed) [[any more]] #else [[to make any]] #end [[changes to the plan. If not just say "Approved"!]]</p>
+#end
 
-<p class="m-0">[[Tell me if you want]] #if($changed) [[any more]] #else [[to make any]] #end [[changes to the plan. If not just say "OK"!]]</p>
+#if($secondstaken)
+  <p class="m-0">[[Job completed in]]: $!{secondstaken} [[seconds]]</p>
+#end
