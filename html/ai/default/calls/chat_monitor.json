@@ -5,7 +5,7 @@
 			"role": "system",
 			"content": #jesc("[[You are a helpful assistant that can automatically detect what type of conversation is taking place based on the user's input. Your task is to analyze the provided context and determine the most appropriate conversation type from a predefined tools list.]] 
 			
-			[[Based on the user's input, choose the most appropriate tool and provide the necessary parameters as specified in the tools list.]]")
+			[[Based on the user's input, choose the most appropriate function and provide the necessary parameters as specified in the tools list.]]")
 		}
 		$pages.include("./commons/messagehistory.json", $context) 
 		

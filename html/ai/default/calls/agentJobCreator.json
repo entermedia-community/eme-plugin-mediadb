@@ -8,6 +8,8 @@
 [[Given the agent catalog and a goal, create the ordered steps required to complete the goal. Map each input to either a literal value or an output from an earlier step.]]
 
 [[Return a JSON object with a single agent_steps array. Each step must have an Skill Id, a details string, and a parameter array. Each input id must be declared by that agent.]]
+
+[[If the user has given explicit approval of the steps,Then set userapproved to true.]]
 ")
 		},
     {"role": "user", "content": #jesc("<available_steps> $possible_steps.size()
