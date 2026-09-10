@@ -3,7 +3,11 @@
 <ol>
   #foreach($agentjobstep in $proposedsteps)
     <li>
-      ${agentjobstep.markdowncontent}  ${agentjobstep.parameters}  ${agentjobstep.defaultoutput}
+      ${agentjobstep.markdowncontent} 
+      <pre class="code-block">${agentjobstep.parameters}</pre> 
+      #if($agentjobstep.defaultoutput)
+      <pre class="code-block">${agentjobstep.defaultoutput}</pre>
+      #end
     </li>
   #end
 </ol>

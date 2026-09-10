@@ -7,11 +7,8 @@
 			
 			[[Based on the user's input, choose the most appropriate tool and provide the necessary parameters as specified in the tools list.]]")
 		}
-		#if($channelchathistory.size() <= 1)
-		, 
-		#else 
 		$pages.include("./commons/messagehistory.json", $context) 
-		#end
+		
 	],
 	"tools": [
 		{
@@ -30,7 +27,7 @@
 					"required": ["friendly_response"]
 				}
 			}
-		},
+		}, 
 		{
 			"type": "function",
 			"function": {
@@ -97,6 +94,27 @@
 			}
 		},
 		#end
+		{
+			"type": "function",
+			"function": {
+				"name": "chat_imagecreator.create_image",
+				"description": "Use this tool when the user is requesting the creation of an image",
+				"parameters": {
+					"type": "object",
+					"properties": {
+						"image_name": {
+							"type": "string",
+							"description": "The name or description of the image to be created."
+						},
+						"prompt": {
+							"type": "string",
+							"description": "Prompt for the image creation. Use the exact user prompt, don't add any additional instructions about image size, format, etc"
+						}
+					},
+					"required": ["image_name", "prompt"]
+				}
+			}
+		},
 		{
 			"type": "function",
 			"function": {
