@@ -15,13 +15,13 @@
 			"type": "function",
 			"function": {
 				"name": "showfriendlyresponse",
-				"description": "Use this tool for general conversations that do not fit into specific categories.",
+				"description": "Use this tool only for making small talk. The weather, greetings and saying goodbye are examples of small talk. If the user is asking a question or requesting a task, do not use this tool.",
 				"parameters": {
 					"type": "object",
 					"properties": {
 						"friendly_response": {
 							"type": "string",
-							"description": "A friendly response to keep the conversation going and asking user to be more specific."
+							"description": "General pleasantries, do not ask any questions or request any tasks. Keep it short and friendly."
 						}
 					},
 					"required": ["friendly_response"]
