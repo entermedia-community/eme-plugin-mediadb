@@ -9,6 +9,7 @@
 				<p>
 					[[I can help you with any query related to]] <strong>#text($entity)</strong>.
 				</p>
+				<messageplain>[[Welcome to the AI Agent!]] [[I can help you with any query related to]] #text($entity).</messageplain>
 				#set($description = $entity.get("longcaption"))
 				#ifnull($description)
 					#set($description = $entity.get("collectivedescription"))
