@@ -4,6 +4,10 @@
   <h3>[[Requested]] - #text($agentjob)</h3>
 #elseif( $agentjob.status == "complete")
   <h3>[[Completed]]</h3>
+
+$!{markdown.render($agentjob.lastresponse)}
+
+
 #else
   <p>
     [[Job Status]]: #text( $mediaarchive.getCachedData("jobstatus", $agentjob.status) )
