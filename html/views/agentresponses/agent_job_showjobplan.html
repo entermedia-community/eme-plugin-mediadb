@@ -5,8 +5,7 @@
 #elseif( $agentjob.status == "complete")
   <h3>[[Completed]]</h3>
 
-$!{markdown.render($agentjob.lastresponse)}
-
+$!{markdown.render($agentjob.summaryLog())}
 
 #else
   <p>
@@ -14,9 +13,10 @@ $!{markdown.render($agentjob.lastresponse)}
   </p>
 #end
 
+#if( $agentjob.status != "complete")
 <p><b>[[Goal:]]</b></p> 
-  
 $!{markdown.render($agentjob.markdowncontent)}
+#end
 
 #if( !$userapproved)
 <p><b>[[Approach:]]</b></p> 
