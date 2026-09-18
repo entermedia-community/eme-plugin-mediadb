@@ -5,10 +5,7 @@
   <property name="module">asset</property>
   <property name="searchtype">asset</property>
   <property name="fallbackprop">/mediadb/services/module/asset</property>
-  <permission name="download">
-    <userprofile name="download" value="true"/>
-  </permission>
-  <permission name="editasset">
+    <permission name="editasset">
     <or>
       <group id="administrators"/>
       <userprofile name="metadatageneral" value="true"/>
