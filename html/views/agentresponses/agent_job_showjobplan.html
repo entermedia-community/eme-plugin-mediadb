@@ -7,6 +7,14 @@
 
 $!{markdown.render($agentjob.summaryLog())}
 
+<ol>cd ..
+#foreach($agentjobstep in $agentjob.getSteps())
+  <li>
+    <p>${markdown.render($agentjobstep.markdowncontent)}</p> 
+  </li>
+#end
+</ol>
+
 #else
   <p>
     [[Job Status]]: #text( $mediaarchive.getCachedData("jobstatus", $agentjob.status) )
@@ -14,9 +22,47 @@ $!{markdown.render($agentjob.summaryLog())}
 #end
 
 #if( $agentjob.status != "complete")
-<p><b>[[Goal:]]</b></p> 
 $!{markdown.render($agentjob.markdowncontent)}
 #end
+
+#foreach($agentjobstep in $agentjob.getSteps())
+  #if( $agentjobstep.status == "securityprompt" )
+    <div class="agentjob-prompt">
+      <p><b>[[Security approval requested]]:</b></p>
+      ${markdown.render($agentjobstep.markdowncontent)}
+      #foreach( $decision in ["once","always","reject"] )
+        <a class="ajax btn btn-sm btn-outline-primary"
+          href="$applink/views/modules/${agentcontext.entitymoduleid}/editors/entitychat/chatterbox/changescenario.html"
+          data-targetdiv="chatterbox"
+          data-channel="$!{channel.getId()}"
+          data-currentscenario="agentorchestrator"
+          data-functionname="openCodeApprove"
+          data-context_agentjobstepid="$agentjobstep.id"
+          data-context_decision="$decision"
+          data-oemaxlevel="1">
+          <span>#if($decision == "once")[[Approve once]]#elseif($decision == "always")[[Always approve]]#else[[Reject]]#end</span>
+        </a>
+      #end
+    </div>
+  #elseif( $agentjobstep.status == "question" )
+    <div class="agentjob-prompt">
+      <p><b>[[Question]]:</b></p>
+      ${markdown.render($agentjobstep.markdowncontent)}
+      <a class="ajax btn btn-sm btn-outline-primary"
+        href="$applink/views/modules/${agentcontext.entitymoduleid}/editors/entitychat/chatterbox/changescenario.html"
+        data-targetdiv="chatterbox"
+        data-channel="$!{channel.getId()}"
+        data-currentscenario="agentorchestrator"
+        data-functionname="openCodeAnswer"
+        data-context_agentjobstepid="$agentjobstep.id"
+        data-context_answer="yes"
+        data-oemaxlevel="1">
+        <span>[[Confirm]]</span>
+      </a>
+    </div>
+  #end
+#end
+
 
 #if( !$userapproved)
 <p><b>[[Approach:]]</b></p> 
