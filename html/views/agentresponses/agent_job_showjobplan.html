@@ -7,14 +7,6 @@
 
 $!{markdown.render($agentjob.summaryLog())}
 
-<ol>cd ..
-#foreach($agentjobstep in $agentjob.getSteps())
-  <li>
-    <p>${markdown.render($agentjobstep.markdowncontent)}</p> 
-  </li>
-#end
-</ol>
-
 #else
   <p>
     [[Job Status]]: #text( $mediaarchive.getCachedData("jobstatus", $agentjob.status) )
@@ -45,20 +37,103 @@ $!{markdown.render($agentjob.markdowncontent)}
       #end
     </div>
   #elseif( $agentjobstep.status == "question" )
+    #set( $pendingform = $agentjob.getPendingForm($agentjobstep) )
     <div class="agentjob-prompt">
-      <p><b>[[Question]]:</b></p>
+      
       ${markdown.render($agentjobstep.markdowncontent)}
-      <a class="ajax btn btn-sm btn-outline-primary"
-        href="$applink/views/modules/${agentcontext.entitymoduleid}/editors/entitychat/chatterbox/changescenario.html"
+      #if( $pendingform )
+      ## Field names are context_{formid}_{key}; OpenCodeAnswerSkill converts them back to typed values
+      #set( $formid = $pendingform.id )
+      <form class="ajaxform"
+        action="$applink/views/modules/${agentcontext.entitymoduleid}/editors/entitychat/chatterbox/changescenario.html"
+        method="post"
         data-targetdiv="chatterbox"
-        data-channel="$!{channel.getId()}"
-        data-currentscenario="agentorchestrator"
-        data-functionname="openCodeAnswer"
-        data-context_agentjobstepid="$agentjobstep.id"
-        data-context_answer="yes"
         data-oemaxlevel="1">
-        <span>[[Confirm]]</span>
-      </a>
+        <input type="hidden" name="channel" value="$!{channel.getId()}" />
+        <input type="hidden" name="currentscenario" value="agentorchestrator" />
+        <input type="hidden" name="functionname" value="openCodeAnswer" />
+        <input type="hidden" name="context_agentjobstepid" value="$agentjobstep.id" />
+        <input type="hidden" name="oemaxlevel" value="1" />
+        #foreach( $field in $pendingform.fields )
+          #if( !$field.hidden )
+          #set( $fieldname = "context_${formid}_${field.key}" )
+          #set( $fieldlabel = $field.title )
+          #if( !$fieldlabel ) #set( $fieldlabel = $field.key ) #end
+           #if( $field.description )<div class="form-text">#esc($field.description)</div>#end
+
+          <div class="mb-2">
+            #if( $field.type == "external" )
+              <a href="#esc($field.url)" target="_blank" rel="noopener">#if($field.title)#esc($field.title)#else#esc($field.url)#end</a>
+            #elseif( $field.type == "boolean" )
+              <label class="form-label" for="$fieldname">#esc($fieldlabel)</label>
+              <select class="form-select form-select-sm" id="$fieldname" name="$fieldname">
+                <option value="">[[Default]]</option>
+                <option value="true" #if($field.default == true)selected#end>[[Yes]]</option>
+                <option value="false" #if($field.default == false)selected#end>[[No]]</option>
+              </select>
+            #elseif( $field.type == "multiselect" )
+              <div class="form-label">#esc($fieldlabel)</div>
+              #foreach( $option in $field.options )
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="${fieldname}__$foreach.count" name="${fieldname}__$option.value" value="true"
+                    #if($field.default && $field.default.contains($option.value))checked#end />
+                  <label class="form-check-label" for="${fieldname}__$foreach.count">#esc($option.label)</label>
+                </div>
+              #end
+            #elseif( $field.type == "string" && $field.options && !$field.custom )
+              <label class="form-label" for="$fieldname">#esc($fieldlabel)</label>
+              <select class="form-select form-select-sm" id="$fieldname" name="$fieldname" #if($field.required)required#end>
+                <option value=""></option>
+                #foreach( $option in $field.options )
+                  <option value="#esc($option.value)" #if("$!field.default" == $option.value)selected#end>#esc($option.label)</option>
+                #end
+              </select>
+            #elseif( $field.type == "string" && $field.options && $field.custom )
+              ## Suggested choices with per-option descriptions, but still a free-text field (custom==true)
+              <label class="form-label" for="$fieldname">#esc($fieldlabel)</label>
+              <input class="form-control form-control-sm mb-1" type="text" id="$fieldname" name="$fieldname"
+                value="#esc("$!field.default")"
+                placeholder="#if($field.placeholder)#esc($field.placeholder)#else[[Choose a suggestion below or type your own]]#end"
+                #if($field.pattern)pattern="#esc($field.pattern)"#end
+                #if($field.required)required#end />
+              <div class="d-flex flex-column gap-1">
+                #foreach( $option in $field.options )
+                  <button type="button" class="btn btn-sm btn-outline-secondary text-start" data-value="#esc($option.value)"
+                    onclick="document.getElementById('$fieldname').value=this.getAttribute('data-value')">
+                    #esc($option.label)#if($option.description)<div class="form-text mb-0">#esc($option.description)</div>#end
+                  </button>
+                #end
+              </div>
+            #else
+              #set( $inputtype = "text" )
+              #if( $field.type == "number" || $field.type == "integer" ) #set( $inputtype = "number" )
+              #elseif( $field.format == "email" ) #set( $inputtype = "email" )
+              #elseif( $field.format == "uri" ) #set( $inputtype = "url" )
+              #elseif( $field.format == "date" ) #set( $inputtype = "date" )
+              #elseif( $field.format == "date-time" ) #set( $inputtype = "datetime-local" )
+              #end
+              <label class="form-label" for="$fieldname">#esc($fieldlabel)</label>
+              <input class="form-control form-control-sm" type="$inputtype" id="$fieldname" name="$fieldname"
+                value="#esc("$!field.default")"
+                #if($field.type == "integer")step="1"#elseif($field.type == "number")step="any"#end
+                #if("$!field.minimum" != "")min="$field.minimum"#end
+                #if("$!field.maximum" != "")max="$field.maximum"#end
+                #if($field.placeholder)placeholder="#esc($field.placeholder)"#end
+                #if($field.pattern)pattern="#esc($field.pattern)"#end
+                #if($field.required)required#end
+                #if($field.options) list="${fieldname}__options" #end />
+              #if( $field.options )
+                <datalist id="${fieldname}__options">
+                  #foreach( $option in $field.options )<option value="#esc($option.value)">#esc($option.label)</option>#end
+                </datalist>
+              #end
+            #end
+          </div>
+          #end
+        #end
+        <button type="submit" class="btn btn-sm btn-cta">[[Submit]]</button>
+      </form>
+      #end
     </div>
   #end
 #end
