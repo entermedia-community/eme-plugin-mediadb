@@ -25,6 +25,9 @@
   <property name="title">MediaDB</property>
 
   <property name="communitytag">default</property>
+  <path-action name="Admin.autoLogin"/>
+  <path-action name="ProfileModule.loadUserProfile"/>
+
   <path-action name="MediaAdminModule.loadCommunityTag"/>
 
   <path-action name="MediaArchiveModule.loadApplicationId" />
