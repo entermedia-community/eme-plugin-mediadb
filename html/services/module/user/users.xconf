@@ -1,0 +1,5 @@
+<page>
+  <path-action name="JsonAdminModule.preprocess" />
+  <property name="module">user</property>
+  <path-action name="AutoCompleteModule.userSearchSuggestions" />
+</page>

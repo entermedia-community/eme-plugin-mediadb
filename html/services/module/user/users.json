@@ -1,0 +1,30 @@
+#set($emeservers = $mediaarchive.query("emeserver").all().search())
+
+{
+#ifnotnull($suggestions)
+	"response": {
+		"status": "ok"
+	},
+	"users": [ 
+		#foreach($u in $suggestions)
+			#if($foreach.count > 1),#end
+		{
+			"id" : "$u.id",
+			"firstname": "$u.firstName",
+			"lastname" : "$u.lastName",
+			"email" : "$u.email"
+			#set($assetportrait = "$!siteroot$mediaarchive.asLinkToPreview($u.assetportrait, 'image200x200')")
+			#ifnotnull($assetportrait),
+			"assetportrait" : "$assetportrait"
+			#end
+		}
+	#end
+	]
+#end
+
+	#ifnull($suggestions)
+	"response": {
+		"status": "error"
+	}
+	#end
+}
