@@ -2,7 +2,7 @@
 
 <page>
 
-	<property name="mcp-endpoint">/${applicationid}/mcp/client/client</property>
+	<property name="mcp-endpoint">/${applicationid}/ai/mcp/</property>
 	<permission name="view">
 		<blank/>
 	</permission>

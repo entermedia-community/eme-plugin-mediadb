@@ -1,0 +1,250 @@
+#set($helperroles = ["Support", "Sales", "Accounting"])
+#if($roles && !$roles.isEmpty())
+	#set($helperroles = $roles)
+#end
+{
+	"model": "${model}",
+	"messages": [
+		{
+			"role": "system",
+			"content": #jesc("[[You are a helpful assistant quietly monitoring a conversation between several team members. Your task is to read the conversation and decide what the team is currently talking about so we can quickly offer to help.]]
+
+			[[Focus on the most recent messages. Choose the one tool that best matches the skill the team needs, pick the role (department) the conversation belongs to, and summarize what the team is asking for.]]
+
+			[[The instruction must be a short, actionable summary of the request written as a command (for example: Search the database for invoices from last month). The context must include any names, dates, amounts, record types or other details from the conversation that are needed to complete the request.]]
+
+			[[The confirmation is a short, friendly question offering help, which will be shown to the team so they can confirm. Address the team directly and mention the specific subject (for example: Would you like help searching for images of cars?).]]
+
+			[[The priority_timeline is how many minutes (0 to 5) to wait before offering help, giving the rest of the team a chance to add something. Use 0 when the request is clear and help should be offered now. Use a longer wait when the conversation is still going, details are missing, or another team member is likely to respond.]]
+
+			[[If the team is only chatting and does not need help, choose small_talk and use the confirmation for a short, friendly and helpful reply instead of a question.]]")
+		}
+#foreach($message in $channelchathistory)
+		,
+	#if($message.user == "agent")
+		{
+			"role": "assistant",
+			"content": #jesc($!message.messageplain)
+		}
+	#else
+		{
+			"role": "user",
+			"content": #jesc("$!message.user: $!message.message")
+		}
+	#end
+#end
+	],
+	"tools": [
+		{
+			"type": "function",
+			"function": {
+				"name": "small_talk",
+				"description": "Use this tool when the team is only making small talk such as greetings, the weather, jokes or saying goodbye. Respond in a friendly, helpful way.",
+				"parameters": {
+					"type": "object",
+					"properties": {
+						"role": {
+							"type": "string",
+							"description": "The department the conversation is most related to.",
+							"enum": [#foreach($role in $helperroles)"#text($role)"#if($foreach.hasNext),#end#end]
+						},
+						"instruction": {
+							"type": "string",
+							"description": "A one sentence summary of what is being discussed."
+						},
+						"context": {
+							"type": "string",
+							"description": "Any relevant details from the conversation. Leave empty if none."
+						},
+						"confirmation": {
+							"type": "string",
+							"description": "A short, warm and helpful reply to the small talk, returned to the team. Respond naturally to what was said and, when it fits, gently mention that you are available to help. Example: Good morning everyone! Let me know if there is anything I can help with today."
+						},
+						"priority_timeline": {
+							"type": "integer",
+							"description": "How many minutes to wait before offering help, from 0 to 5. Use 0 when the request is clear, complete and urgent so help should be offered now. Use a higher number when the conversation is still developing, someone is likely to add more details or answer it themselves, or the request is unclear.",
+							"enum": [0, 1, 2, 3, 4, 5]
+						}
+					},
+					"required": ["role", "instruction", "context", "confirmation", "priority_timeline"]
+				}
+			}
+		},
+		{
+			"type": "function",
+			"function": {
+				"name": "searching",
+				"description": "Use this tool when the team wants to search, find, look up or list records, assets, files or data in the database. Example: I want to search the database.",
+				"parameters": {
+					"type": "object",
+					"properties": {
+						"role": {
+							"type": "string",
+							"description": "The department the search is for.",
+							"enum": [#foreach($role in $helperroles)"#text($role)"#if($foreach.hasNext),#end#end]
+						},
+						"instruction": {
+							"type": "string",
+							"description": "A short summary of what should be searched for, written as a command."
+						},
+						"context": {
+							"type": "string",
+							"description": "Keywords, record types, dates, people or filters mentioned that are needed to perform the search."
+						},
+						"confirmation": {
+							"type": "string",
+							"description": "A short, friendly question offering to help with the search, returned to the team for confirmation. Example: Would you like help searching for images of cars?"
+						},
+						"priority_timeline": {
+							"type": "integer",
+							"description": "How many minutes to wait before offering help, from 0 to 5. Use 0 when the request is clear, complete and urgent so help should be offered now. Use a higher number when the conversation is still developing, someone is likely to add more details or answer it themselves, or the request is unclear.",
+							"enum": [0, 1, 2, 3, 4, 5]
+						}
+					},
+					"required": ["role", "instruction", "context", "confirmation", "priority_timeline"]
+				}
+			}
+		},
+		{
+			"type": "function",
+			"function": {
+				"name": "asking_questions",
+				"description": "Use this tool when the team is asking a question or seeking information or an explanation that someone could answer for them.",
+				"parameters": {
+					"type": "object",
+					"properties": {
+						"role": {
+							"type": "string",
+							"description": "The department best suited to answer the question.",
+							"enum": [#foreach($role in $helperroles)"#text($role)"#if($foreach.hasNext),#end#end]
+						},
+						"instruction": {
+							"type": "string",
+							"description": "The question being asked, rewritten clearly so it can be answered on its own."
+						},
+						"context": {
+							"type": "string",
+							"description": "Background details from the conversation needed to answer the question."
+						},
+						"confirmation": {
+							"type": "string",
+							"description": "A short, friendly question offering to help answer the question, returned to the team for confirmation. Example: Would you like help finding out when the invoice is due?"
+						},
+						"priority_timeline": {
+							"type": "integer",
+							"description": "How many minutes to wait before offering help, from 0 to 5. Use 0 when the request is clear, complete and urgent so help should be offered now. Use a higher number when the conversation is still developing, someone is likely to add more details or answer it themselves, or the request is unclear.",
+							"enum": [0, 1, 2, 3, 4, 5]
+						}
+					},
+					"required": ["role", "instruction", "context", "confirmation", "priority_timeline"]
+				}
+			}
+		},
+		{
+			"type": "function",
+			"function": {
+				"name": "team_goal_creation",
+				"description": "Use this tool when the team wants to create goals, set objectives, plan work, assign tasks or add a task to an existing goal. Example: We should create some goals.",
+				"parameters": {
+					"type": "object",
+					"properties": {
+						"role": {
+							"type": "string",
+							"description": "The department the goal belongs to.",
+							"enum": [#foreach($role in $helperroles)"#text($role)"#if($foreach.hasNext),#end#end]
+						},
+						"instruction": {
+							"type": "string",
+							"description": "A short summary of the goal or goals to create, written as a command."
+						},
+						"context": {
+							"type": "string",
+							"description": "Deadlines, owners, targets, measurements and any other details mentioned for the goals."
+						},
+						"confirmation": {
+							"type": "string",
+							"description": "A short, friendly question offering to help create the goals, returned to the team for confirmation. Example: Would you like help creating goals for the product launch?"
+						},
+						"priority_timeline": {
+							"type": "integer",
+							"description": "How many minutes to wait before offering help, from 0 to 5. Use 0 when the request is clear, complete and urgent so help should be offered now. Use a higher number when the conversation is still developing, someone is likely to add more details or answer it themselves, or the request is unclear.",
+							"enum": [0, 1, 2, 3, 4, 5]
+						}
+					},
+					"required": ["role", "instruction", "context", "confirmation", "priority_timeline"]
+				}
+			}
+		},
+		{
+			"type": "function",
+			"function": {
+				"name": "create_content",
+				"description": "Use this tool when the team wants to write, draft or generate content such as a document, email, post, report, presentation or image.",
+				"parameters": {
+					"type": "object",
+					"properties": {
+						"role": {
+							"type": "string",
+							"description": "The department the content is for.",
+							"enum": [#foreach($role in $helperroles)"#text($role)"#if($foreach.hasNext),#end#end]
+						},
+						"instruction": {
+							"type": "string",
+							"description": "A short summary of the content to create, written as a command."
+						},
+						"context": {
+							"type": "string",
+							"description": "The type of content, audience, tone, topics and any specific details that should be included."
+						},
+						"confirmation": {
+							"type": "string",
+							"description": "A short, friendly question offering to help create the content, returned to the team for confirmation. Example: Would you like help drafting the welcome email?"
+						},
+						"priority_timeline": {
+							"type": "integer",
+							"description": "How many minutes to wait before offering help, from 0 to 5. Use 0 when the request is clear, complete and urgent so help should be offered now. Use a higher number when the conversation is still developing, someone is likely to add more details or answer it themselves, or the request is unclear.",
+							"enum": [0, 1, 2, 3, 4, 5]
+						}
+					},
+					"required": ["role", "instruction", "context", "confirmation", "priority_timeline"]
+				}
+			}
+		},
+		{
+			"type": "function",
+			"function": {
+				"name": "create_agent_job",
+				"description": "Use this tool when the team wants work done that takes several steps or should run automatically, such as processing many records, running a workflow or scheduling a recurring job.",
+				"parameters": {
+					"type": "object",
+					"properties": {
+						"role": {
+							"type": "string",
+							"description": "The department the job is for.",
+							"enum": [#foreach($role in $helperroles)"#text($role)"#if($foreach.hasNext),#end#end]
+						},
+						"instruction": {
+							"type": "string",
+							"description": "A short summary of the job the agent should complete, written as a command."
+						},
+						"context": {
+							"type": "string",
+							"description": "The records, inputs, schedule and expected result needed to complete the job."
+						},
+						"confirmation": {
+							"type": "string",
+							"description": "A short, friendly question offering to set up the agent job, returned to the team for confirmation. Example: Would you like help setting up a job to tag all the new images?"
+						},
+						"priority_timeline": {
+							"type": "integer",
+							"description": "How many minutes to wait before offering help, from 0 to 5. Use 0 when the request is clear, complete and urgent so help should be offered now. Use a higher number when the conversation is still developing, someone is likely to add more details or answer it themselves, or the request is unclear.",
+							"enum": [0, 1, 2, 3, 4, 5]
+						}
+					},
+					"required": ["role", "instruction", "context", "confirmation", "priority_timeline"]
+				}
+			}
+		}
+	],
+	"tool_choice": "required"
+}

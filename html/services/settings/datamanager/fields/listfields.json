@@ -1,4 +1,4 @@
-{ #set( $hits = $properties )
+{ #set( $hits = $details )
 	"response":
 	{
 			"totalhits" : $hits.size(),
@@ -11,8 +11,11 @@
 			}
 	},
 	"results":[
-#foreach( $detail in $hits )
-		{"id": "$detail.id" }	#if( ${foreach.count} != $hits.size() ), #end
+		#set($detaildetails = $mediaarchive.getSearcher("propertydetail").getPropertyDetails())
+#foreach( $hit in $hits )
+		#json( $hit $detaildetails)
+		
+		#if( ${foreach.count} != $hits.size() ), #end
 
 #end		
 	]

@@ -1,10 +1,11 @@
 [
+#foreach( $automation in  $enabledautomation )
+
+#if( $foreach.count > 1),#end
+
+#if( $automation.getId() == "search_media")
   {
-    "name": "show_hint",
-    "description": "Show hints on how to properly use the search function and provide examples. Use this function when people ask questions like: 'What can you do?', 'How can I search using this tool?', 'Give me example of some search queries'."
-  },
-  {
-    "name": "search_content",
+    "name": "search_media",
     "description": "Breaks a search query into structured parts. Used for understanding user queries and extracting search type, intended action, keywords, filters, and targets.",
     "inputSchema": {
       "type": "object", 
@@ -26,39 +27,59 @@
         "targets": {
           "type": "array",
           "items": {
-            "anyOf": [
+            "type": "string"
+          #set($first = true)
           #foreach($module in $modules)
             #if($module.getBoolean("showonsearch"))
+              #if($first)
+            ,"enum": [
+              #else
               ,
-              {
-                "type": "string",
-                "enum": ["${module.id}", "${module.name}"]
-              }
+              #end
+              "${module.id}", "${module.name}"
+              #set($first = false)
             #end
           #end
+          #if(!$first)
             ]
+          #end
           },
 				  "description": "The targets to search within, such as modules, categories, departments, etc. If not specified, this should be an empty array and all targets will be searched."
         }
       },
       "required": ["search_type", "keywords"]
     }
-  },
-  {
-    "name": "generate_report",
-    "description": "Makes a report by summarizing the key points from one or more documents",
+  }
+#else
+  {   
+    "name": "$automation.getId()",
+    "description": "$!automation.markdowncontent",
     "inputSchema": {
-      "type": "object", 
+      "type": "object",
       "properties": {
-        "keywords": {
-          "type": "array",
-          "description": "The keywords to query the target files",
-          "items": {
-            "type": "string"
-          }
+        "query": {
+          "type": "string",
+          "description": "What the user is asking for, in their own words"
         }
       },
-      "required": ["keywords"]
+      "required": ["query"]
     }
-  },
+  }
+  #end
+#end
+#if( $enabledautomation && $enabledautomation.size() > 0),#end
+  {
+    "name": "get_job_status",
+    "description": "Gets the status and result of a job started by another tool. Tools return a jobid; call this with that jobid until the status is complete or error.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "jobid": {
+          "type": "string",
+          "description": "The jobid returned when the job was queued"
+        }
+      },
+      "required": ["jobid"]
+    }
+  }
 ]

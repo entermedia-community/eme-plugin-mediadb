@@ -43,7 +43,7 @@
 						#ifnotnull($roles)
 						"role": {
 							"type": "string",
-							"description": "Choose the correct role of the person who is best suited to. Leave empty if not sure."
+							"description": "Choose the correct nature of the question. Leave empty if not sure."
 							#if(!$roles.isEmpty())
 							,
 							"enum": [
