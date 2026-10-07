@@ -8,11 +8,11 @@
 	<path-action name="Admin.allowViewing" alltypes="true" forbid="true"/>
 	
 	<permission name="view">
-	<or>
-		<action name="AssetControlModule.loadDownloadPermission" />
-		<userprofile property="downloadall" equals="true" /> 
-		<action name="OrderModule.canViewAsset" />
-	</or>
+		<or>
+			<action name="AssetControlModule.loadDownloadPermission" />
+			<userprofile property="downloadall" equals="true" /> 
+			<action name="OrderModule.canViewAsset" />
+		</or>
 	</permission>
 
 	<generator name="originalDownloadGenerator" />
