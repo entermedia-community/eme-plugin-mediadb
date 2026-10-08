@@ -1,0 +1,29 @@
+{
+  "response": {
+    "status": "ok"#if($user),
+    "userid": "$user.id"#end
+  },
+  "emeservers": [
+    #foreach($server in $emeservers)
+      #if($foreach.count > 1),#end
+      {
+        "id": #jesc($server.id),
+        "name": #jesc($server.name),
+        "title": #jesc($server.title),
+        "subtitle": #jesc($server.subtitle),
+        "serverdescription": #jesc($server.serverdescription),
+        "category": #jesc($server.category),
+        "primarycolor": #jesc($server.primarycolor),
+        "secondarycolor": #jesc($server.secondarycolor),
+        "membercount": #if($server.membercount)$server.membercount#else 0#end,
+        "servicesoffered": #jesc($server.servicesoffered),
+        "avatarurl": #jesc($server.avatarurl),
+        "iconasset": #jesc($server.iconasset),
+        "statuscolor": #jesc($server.statuscolor),
+        "servermediadburl": #jesc($server.servermediadburl),
+        "serverfunction": #jesc($server.serverfunction),
+        "joined": #if($server.joined == "true")true#else false#end
+      }
+    #end
+  ]
+}

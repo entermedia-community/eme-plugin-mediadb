@@ -1,0 +1,7 @@
+{
+  "response": {
+    "status": "ok"#if($user),
+    "userid": "$user.id"#end
+  },
+  "success": true
+}

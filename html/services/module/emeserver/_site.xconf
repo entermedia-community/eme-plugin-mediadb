@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page>
+  <property name="fallbackdirectory">/mediadb/services/module/default</property>
+  <property name="module">emeserver</property>
+  <property name="searchtype">emeserver</property>
+  <property name="fallbackprop">/mediadb/services/module/emeserver</property>
+  <property name="alternative_extension">json</property>
+</page>
