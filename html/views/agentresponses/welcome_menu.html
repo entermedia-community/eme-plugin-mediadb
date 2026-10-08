@@ -1,0 +1,29 @@
+
+<div class="ai-welcome">
+	<h5 class="mb-1">[[Welcome!]]</h5>
+	<messageplain>[[Welcome!]] [[Here are some things I can help you with]]#ifnotnull($menulabel) [[in]] $!menulabel.text#end.</messageplain>
+	<p>[[Here are some things I can help you with]]#ifnotnull($menulabel) [[in]] <strong>$!menulabel.text</strong>#end:</p>
+	#if( $menuscenarios && !$menuscenarios.isEmpty() )
+		<ul>
+			#foreach( $scenario in $menuscenarios )
+				<li>
+					<a class="ajax"
+						href="$applink/views/modules/${agentcontext.entitymoduleid}/editors/entitychat/chatterbox/changescenario.html"
+						data-targetdiv="changescenario"
+						data-channel="$!{channel.getId()}"
+						data-currentscenario="$scenario.id"
+						data-functionname="${scenario.id}_welcome"
+						data-oemaxlevel="1">
+						<span>#text( $scenario )</span>
+					</a>
+					#ifnotnull($scenario.markdowncontent)
+						<div class="text-muted small">$scenario.markdowncontent</div>
+					#end
+				</li>
+			#end
+		</ul>
+		<div id="changescenario"></div>
+	#else
+		<p>[[No chat options are available yet.]]</p>
+	#end
+</div>
