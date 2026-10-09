@@ -4,27 +4,32 @@
     "userid": "$user.id"#end
   },
   "emeservers": [
-    #foreach($serveruser in $emeservers)
+    #foreach($emeserver in $emeservers)
       #if($foreach.count > 1),#end
-      #set($server = $mediaarchive.getData("emeserver", $serveruser.emeserver))
       {
-        "id": #jesc($server.id),
-        "user": #jesc($serveruser.user), 
-        "joineddate": #jesc($serveruser.joined),
-        "lastnotification": #jesc($serveruser.lastnotification),
-        "lastnotificationtime": #jesc($serveruser.lastnotificationtime),
-        "name": #jesc($server.name),
-        "subtitle": #jesc($server.subtitle),
-        "serverdescription": #jesc($server.serverdescription),
-        "category": #jesc($server.category),
-        "primarycolor": #jesc($server.primarycolor),
-        "secondarycolor": #jesc($server.secondarycolor),
-        "membercount": #if($server.membercount)$server.membercount#else 0#end,
-        "servicesoffered": #jesc($server.servicesoffered),
-        "avatarurl": #jesc($server.avatarurl),
-        "statuscolor": #jesc($server.statuscolor),
-        "servermediadburl": #jesc($server.servermediadburl),
-        "serverfunction": #jesc($server.serverfunction),
+        "id": #jesc($emeserver.id),
+        "name": #jesc($emeserver.name),
+        "subtitle": #jesc($emeserver.subtitle),
+        "serverdescription": #jesc($emeserver.serverdescription),
+        #set($cat = $mediaarchive.getCachedData("servercategory", $emeserver.category))
+        "category": {
+          #ifnotnull($cat)
+          "id": #jesc($cat.id),
+          "name": #jesc($cat.name)
+          #end
+          #ifnull($cat)
+          "id": #jesc($emeserver.category),
+          "name": #jesc($emeserver.category)
+          #end
+        },
+        "primarycolor": #jesc($emeserver.primarycolor),
+        "secondarycolor": #jesc($emeserver.secondarycolor),
+        "membercount": #if($emeserver.membercount)$emeserver.membercount#else 0#end,
+        "servicesoffered": #jesc($emeserver.servicesoffered),
+        "avatarurl": #jesc($emeserver.avatarurl),
+        "statuscolor": #jesc($emeserver.statuscolor),
+        "servermediadburl": #jesc($emeserver.servermediadburl),
+        "serverfunction": #jesc($emeserver.serverfunction),
         "joined": true
       }
     #end
