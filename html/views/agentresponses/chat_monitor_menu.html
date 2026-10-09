@@ -1,0 +1,23 @@
+<div class="ai-chat-monitor-menu">
+	<messageplain>#if( $helperrole )#esc( $helperrole ): #end#esc( $!confirmation )</messageplain>
+	<p>#if( $helperrole )<b>#esc( $helperrole ):</b> #end#esc( $!confirmation )</p>
+	<ul>
+		#foreach( $scenario in $recommendedscenarios )
+			<li>
+				<a class="ajax"
+					href="$applink/views/modules/${agentcontext.entitymoduleid}/editors/entitychat/chatterbox/changescenario.html"
+					data-targetdiv="changescenario"
+					data-channel="$!{channel.getId()}"
+					data-currentscenario="$scenario.id"
+					data-functionname="${scenario.id}_welcome"
+					data-oemaxlevel="1">
+					<span>#text( $scenario )</span>
+				</a>
+				#ifnotnull($scenario.markdowncontent)
+					<div class="text-muted small">$scenario.markdowncontent</div>
+				#end
+			</li>
+		#end
+	</ul>
+	<div id="changescenario"></div>
+</div>
