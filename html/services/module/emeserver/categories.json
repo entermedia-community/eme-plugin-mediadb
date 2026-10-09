@@ -1,0 +1,15 @@
+{
+  "response": {
+    "status": "ok"#if($user),
+    "userid": "$user.id"#end
+  },
+  "categories": [
+    #foreach($category in $categories)
+      #if($foreach.count > 1),#end
+      {
+        "id": #jesc($category.id),
+        "name": #jesc($category.name)
+      }
+    #end
+  ]
+}
