@@ -9,7 +9,17 @@
     "name": #jesc($emeserver.name),
     "subtitle": #jesc($emeserver.subtitle),
     "serverdescription": #jesc($emeserver.serverdescription),
-    "category": #jesc($emeserver.category),
+    #set($cat = $mediaarchive.getCachedData("servercategory", $emeserver.category))
+    "category": {
+      #ifnotnull($cat)
+      "id": #jesc($cat.id),
+      "name": #jesc($cat.name)
+      #end
+      #ifnull($cat)
+      "id": #jesc($emeserver.category),
+      "name": #jesc($emeserver.category)
+      #end
+    },
     "primarycolor": #jesc($emeserver.primarycolor),
     "secondarycolor": #jesc($emeserver.secondarycolor),
     "membercount": #if($emeserver.membercount)$emeserver.membercount#else 0#end,
@@ -18,7 +28,7 @@
     "statuscolor": #jesc($emeserver.statuscolor),
     "servermediadburl": #jesc($emeserver.servermediadburl),
     "serverfunction": #jesc($emeserver.serverfunction),
-    "joined": #if($emeserver.joined == "true")true#else false#end
+    "joined": $joined
   }
   #else
   "emeserver": null

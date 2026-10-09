@@ -11,7 +11,17 @@
         "name": #jesc($server.name),
         "subtitle": #jesc($server.subtitle),
         "serverdescription": #jesc($server.serverdescription),
-        "category": #jesc($server.category),
+        #set($cat = $mediaarchive.getCachedData("servercategory", $server.category))
+        "category": {
+          #ifnotnull($cat)
+          "id": #jesc($cat.id),
+          "name": #jesc($cat.name)
+          #end
+          #ifnull($cat)
+          "id": #jesc($server.category),
+          "name": #jesc($server.category)
+          #end
+        },
         "primarycolor": #jesc($server.primarycolor),
         "secondarycolor": #jesc($server.secondarycolor),
         "membercount": #if($server.membercount)$server.membercount#else 0#end,
