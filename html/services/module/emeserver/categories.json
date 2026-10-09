@@ -4,6 +4,10 @@
     "userid": "$user.id"#end
   },
   "categories": [
+    {
+      "id": "all",
+      "name": "All"
+    },
     #foreach($category in $categories)
       #if($foreach.count > 1),#end
       {
