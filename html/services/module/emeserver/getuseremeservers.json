@@ -8,14 +8,12 @@
       #if($foreach.count > 1),#end
       #set($server = $mediaarchive.getData("emeserver", $serveruser.emeserver))
       {
-        "id": #jesc($serveruser.id),
-        "user": #jesc($serveruser.user),
-        "serverid": #jesc($serveruser.emeserver),
+        "id": #jesc($server.id),
+        "user": #jesc($serveruser.user), 
         "joineddate": #jesc($serveruser.joined),
         "lastnotification": #jesc($serveruser.lastnotification),
-        "lastnotificationtime": #jesc($serveruser.lastnotificationtime)#if($server),
+        "lastnotificationtime": #jesc($serveruser.lastnotificationtime),
         "name": #jesc($server.name),
-        "title": #jesc($server.title),
         "subtitle": #jesc($server.subtitle),
         "serverdescription": #jesc($server.serverdescription),
         "category": #jesc($server.category),
@@ -24,29 +22,10 @@
         "membercount": #if($server.membercount)$server.membercount#else 0#end,
         "servicesoffered": #jesc($server.servicesoffered),
         "avatarurl": #jesc($server.avatarurl),
-        "iconasset": #jesc($server.iconasset),
         "statuscolor": #jesc($server.statuscolor),
         "servermediadburl": #jesc($server.servermediadburl),
         "serverfunction": #jesc($server.serverfunction),
-        "joined": true,
-        "server": {
-          "id": #jesc($server.id),
-          "name": #jesc($server.name),
-          "title": #jesc($server.title),
-          "subtitle": #jesc($server.subtitle),
-          "serverdescription": #jesc($server.serverdescription),
-          "category": #jesc($server.category),
-          "primarycolor": #jesc($server.primarycolor),
-          "secondarycolor": #jesc($server.secondarycolor),
-          "membercount": #if($server.membercount)$server.membercount#else 0#end,
-          "servicesoffered": #jesc($server.servicesoffered),
-          "avatarurl": #jesc($server.avatarurl),
-          "iconasset": #jesc($server.iconasset),
-          "statuscolor": #jesc($server.statuscolor),
-          "servermediadburl": #jesc($server.servermediadburl),
-          "serverfunction": #jesc($server.serverfunction),
-          "joined": true
-        }#end
+        "joined": true
       }
     #end
   ]

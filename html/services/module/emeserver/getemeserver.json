@@ -7,7 +7,6 @@
   "emeserver": {
     "id": #jesc($emeserver.id),
     "name": #jesc($emeserver.name),
-    "title": #jesc($emeserver.title),
     "subtitle": #jesc($emeserver.subtitle),
     "serverdescription": #jesc($emeserver.serverdescription),
     "category": #jesc($emeserver.category),
@@ -16,7 +15,6 @@
     "membercount": #if($emeserver.membercount)$emeserver.membercount#else 0#end,
     "servicesoffered": #jesc($emeserver.servicesoffered),
     "avatarurl": #jesc($emeserver.avatarurl),
-    "iconasset": #jesc($emeserver.iconasset),
     "statuscolor": #jesc($emeserver.statuscolor),
     "servermediadburl": #jesc($emeserver.servermediadburl),
     "serverfunction": #jesc($emeserver.serverfunction),
