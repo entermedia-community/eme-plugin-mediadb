@@ -1,0 +1,32 @@
+{
+#ifnotnull($messages)
+	"response": {
+		"status": "ok"
+	},
+	"messages": [
+#set($count = 0)
+#foreach($message in $messages)
+  #if($message.messagetype != "system")
+    #set($count = $count + 1)
+    #if($count > 1),#end
+    {
+      "channel": #jesc($message.get("channel")),
+      "date": #jesc($message.get("date")),
+      "messageid": #jesc($message.get("id")),
+      "message": #jesc($message.get("message")),
+      "messagetype": #jesc($message.get("messagetype")),
+      "replytoid": #jesc($message.get("replytoid")),
+      "user": #jesc($message.get("user")),
+      "agentcontextvalues": #jesc($message.get("agentcontextvalues"))
+    }
+  #end
+#end
+  ]
+#end
+
+	#ifnull($messages)
+	"response": {
+		"status": "error"
+	}
+	#end
+}

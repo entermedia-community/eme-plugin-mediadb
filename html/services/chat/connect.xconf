@@ -1,0 +1,10 @@
+<page>
+  <path-action name="EmeServerModule.handleChatConnection" />
+
+  <path-action name="ChatModule.loadChatChannel" />
+  <path-action name="AgentModule.loadAgentContext" />
+
+  <property name="defaultscenarioid">emeteamchat_responder</property>
+
+  <path-action name="AgentModule.sendWelcomeIfNeeded" />
+</page>
