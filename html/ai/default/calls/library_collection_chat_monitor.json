@@ -21,7 +21,7 @@
 
 			[[Available menu options:]]
 #foreach($scenario in $menuscenarios)
-			- $scenario.id: #text($scenario)#if($scenario.markdowncontent) - $scenario.markdowncontent#end
+			- $scenario.id: #text($scenario)#if($scenario.longcaption) - $scenario.longcaption#end#if($scenario.markdowncontent) ($scenario.markdowncontent)#end
 
 #end
 			- none: [[The team is only chatting, or nothing on the menu fits.]]
