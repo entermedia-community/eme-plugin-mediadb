@@ -1,0 +1,34 @@
+## Confirmation for team_chat_create_job. Start, or any reply, runs team_chat_create_job_welcome
+<div class="ai-welcome ai-confirm">
+	<h5 class="mb-1">[[Create Agent Jobs]]</h5>
+	<messageplain>[[Create Agent Jobs]]: [[I will run a background agent job for the team.]]</messageplain>
+	<p>[[I will run a background agent job for the team.]]</p>
+	<p class="mb-1">[[Here is what will happen]]:</p>
+	<ol>
+		<li>[[Someone on the team tells me what to do.]]</li>
+		<li>[[I plan the steps and start them as a background agent job.]]</li>
+		<li>[[If a step needs permission or more details, I ask here first.]]</li>
+		<li>[[I post the progress and the result in this chat.]]</li>
+	</ol>
+	<p class="text-muted small">[[Jobs can change your files and records, so review each approval request.]]</p>
+	<div class="d-flex gap-2">
+		<a class="ajax btn btn-sm btn-primary"
+			href="$applink/views/modules/${agentcontext.entitymoduleid}/editors/entitychat/chatterbox/changescenario.html"
+			data-targetdiv="changescenario"
+			data-channel="$!{channel.getId()}"
+			data-currentscenario="team_chat_create_job"
+			data-functionname="team_chat_create_job_welcome"
+			data-oemaxlevel="1">
+			<span>[[Start]]</span>
+		</a>
+		<a class="ajax btn btn-sm btn-outline-secondary"
+			href="$applink/views/modules/${agentcontext.entitymoduleid}/editors/entitychat/chatterbox/changescenario.html"
+			data-targetdiv="changescenario"
+			data-channel="$!{channel.getId()}"
+			data-currentscenario="team_chat_monitor"
+			data-oemaxlevel="1">
+			<span>[[Not now]]</span>
+		</a>
+	</div>
+	<div id="changescenario"></div>
+</div>

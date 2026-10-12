@@ -1,0 +1,34 @@
+## Confirmation for team_chat_questions. Start, or any reply, runs team_chat_questions_welcome
+<div class="ai-welcome ai-confirm">
+	<h5 class="mb-1">[[Answer Questions]]</h5>
+	<messageplain>[[Answer Questions]]: [[I will answer the team's questions using the files and records in this project.]]</messageplain>
+	<p>[[I will answer the team's questions using the files and records in this project.]]</p>
+	<p class="mb-1">[[Here is what will happen]]:</p>
+	<ol>
+		<li>[[I check which documents are ready to answer from.]]</li>
+		<li>[[I suggest example questions, creating them if there are none yet.]]</li>
+		<li>[[Anyone on the team asks a question, or picks one of the examples.]]</li>
+		<li>[[I search the documents and answer, using only what they say.]]</li>
+	</ol>
+	<p class="text-muted small">[[Nothing is changed or deleted.]]</p>
+	<div class="d-flex gap-2">
+		<a class="ajax btn btn-sm btn-primary"
+			href="$applink/views/modules/${agentcontext.entitymoduleid}/editors/entitychat/chatterbox/changescenario.html"
+			data-targetdiv="changescenario"
+			data-channel="$!{channel.getId()}"
+			data-currentscenario="team_chat_questions"
+			data-functionname="team_chat_questions_welcome"
+			data-oemaxlevel="1">
+			<span>[[Start]]</span>
+		</a>
+		<a class="ajax btn btn-sm btn-outline-secondary"
+			href="$applink/views/modules/${agentcontext.entitymoduleid}/editors/entitychat/chatterbox/changescenario.html"
+			data-targetdiv="changescenario"
+			data-channel="$!{channel.getId()}"
+			data-currentscenario="team_chat_monitor"
+			data-oemaxlevel="1">
+			<span>[[Not now]]</span>
+		</a>
+	</div>
+	<div id="changescenario"></div>
+</div>

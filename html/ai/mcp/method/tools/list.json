@@ -3,9 +3,9 @@
 
 #if( $foreach.count > 1),#end
 
-#if( $automation.getId() == "search_media")
+#if( $automation.getId() == "eme_chat_search_media")
   {
-    "name": "search_media",
+    "name": "eme_chat_search_media",
     "description": "Breaks a search query into structured parts. Used for understanding user queries and extracting search type, intended action, keywords, filters, and targets.",
     "inputSchema": {
       "type": "object", 

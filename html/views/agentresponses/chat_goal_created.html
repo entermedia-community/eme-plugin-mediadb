@@ -3,5 +3,8 @@
 	<h5 class="mb-1">
 		[[The following Goal has been created in the project]]
 	</h5>
-	<messageplain>[[Goal Created!]]</messageplain>
+	#if( $goal )
+		<p>#text( $goal )</p>
+	#end
+	<messageplain>[[Goal Created!]]#if( $goal ) #text( $goal )#end</messageplain>
 </div>

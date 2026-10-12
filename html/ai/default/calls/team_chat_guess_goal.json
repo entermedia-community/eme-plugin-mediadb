@@ -1,0 +1,53 @@
+{
+	"model": "${model}",
+	"messages": [
+		{
+			"role": "system",
+			"content": #jesc("[[You help a team turn their group chat into a project goal. Read the message history and work out the one goal the team most likely wants to create. Focus on the most recent messages, but use earlier messages for context.]]
+
+			[[The goal is a short, specific title written as an outcome, for example: Publish the spring catalog by May 1. Use the names, dates and amounts the team mentioned. Do not invent details that were not said.]]
+
+			[[The details are one or two sentences explaining what the team said that led to this goal.]]#if($teaminstruction)
+
+			[[The team assistant already summarized the request as]]: $teaminstruction#end")
+		}
+#foreach($message in $channelchathistory)
+		,
+	#if($message.user == "agent")
+		{
+			"role": "assistant",
+			"content": #jesc($!message.messageplain)
+		}
+	#else
+		{
+			"role": "user",
+			"content": #jesc("$!message.user: $!message.message")
+		}
+	#end
+#end
+	],
+	"tools": [
+		{
+			"type": "function",
+			"function": {
+				"name": "suggest_goal",
+				"description": "Suggest the project goal the team wants to create from this conversation.",
+				"parameters": {
+					"type": "object",
+					"properties": {
+						"goal": {
+							"type": "string",
+							"description": "A short, specific goal title written as an outcome. Example: Publish the spring catalog by May 1."
+						},
+						"details": {
+							"type": "string",
+							"description": "One or two sentences on what was said in the chat that led to this goal."
+						}
+					},
+					"required": ["goal", "details"]
+				}
+			}
+		}
+	],
+	"tool_choice": "required"
+}

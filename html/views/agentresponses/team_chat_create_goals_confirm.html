@@ -1,0 +1,45 @@
+## Confirmation for team_chat_create_goals. ChatGuessGoalSkill sets $suggestedgoal from the recent messages.
+## The Create button, or a typed reply, runs team_chat_create_goals_create
+<div class="ai-welcome ai-confirm">
+	<h5 class="mb-1">[[Create Goals]]</h5>
+	#if( $suggestedgoal )
+		<messageplain>[[Create Goals]]: [[Based on the conversation, I suggest this goal]]: $suggestedgoal</messageplain>
+		<p>[[Based on the conversation, I suggest this goal]]:</p>
+	#else
+		<messageplain>[[Create Goals]]: [[What goal should I create for the team?]]</messageplain>
+		<p>[[What goal should I create for the team?]]</p>
+	#end
+	<form class="ajaxform"
+		action="$applink/views/modules/${agentcontext.entitymoduleid}/editors/entitychat/chatterbox/changescenario.html"
+		method="post"
+		data-targetdiv="changescenario"
+		data-oemaxlevel="1">
+		<input type="hidden" name="channel" value="$!{channel.getId()}" />
+		<input type="hidden" name="currentscenario" value="team_chat_create_goals" />
+		<input type="hidden" name="functionname" value="team_chat_create_goals_create" />
+		<input type="hidden" name="oemaxlevel" value="1" />
+		<textarea class="form-control form-control-sm mb-1" name="context_goaltext" rows="2" required>#esc( $!suggestedgoal )</textarea>
+		#if( $suggestedgoaldetails )
+			<div class="form-text mb-2">#esc( $suggestedgoaldetails )</div>
+		#end
+		<p class="mb-1">[[Here is what will happen]]:</p>
+		<ol>
+			<li>[[I create the goal in this project, owned by you.]]</li>
+			<li>[[I break the goal into up to three tasks.]]</li>
+			<li>[[The goal and its tasks show up on the project's goals board.]]</li>
+		</ol>
+		<p class="text-muted small">[[Edit the goal first if it is not quite right, or type a different goal as a reply.]]</p>
+		<div class="d-flex gap-2">
+			<button type="submit" class="btn btn-sm btn-primary">[[Create Goal]]</button>
+			<a class="ajax btn btn-sm btn-outline-secondary"
+				href="$applink/views/modules/${agentcontext.entitymoduleid}/editors/entitychat/chatterbox/changescenario.html"
+				data-targetdiv="changescenario"
+				data-channel="$!{channel.getId()}"
+				data-currentscenario="team_chat_monitor"
+				data-oemaxlevel="1">
+				<span>[[Not now]]</span>
+			</a>
+		</div>
+	</form>
+	<div id="changescenario"></div>
+</div>
