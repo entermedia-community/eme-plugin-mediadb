@@ -4,7 +4,5 @@
   <path-action name="ChatModule.loadChatChannel" />
   <path-action name="AgentModule.loadAgentContext" />
 
-  <property name="defaultscenarioid">team_chat_monitor</property>
-
   <path-action name="AgentModule.sendWelcomeIfNeeded" />
 </page>
