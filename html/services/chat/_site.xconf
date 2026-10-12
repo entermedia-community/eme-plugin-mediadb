@@ -1,3 +1,4 @@
 <page>
-  <property name="defaultscenarioid">team_chat_monitor</property>
+  <property name="channeltype">agentserverchat</property>
+  <property name="defaultscenarioid">eme_chat_welcome_menu</property>
 </page>
