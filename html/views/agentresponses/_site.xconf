@@ -13,4 +13,8 @@
 
 	<path-action bean="jsonUtil" name="PageValue.loadPageVariable" allowduplicates="true"/>
 
+	<generator name="velocityGenerator" mimetypes="text/html"/>
+	<generator name="velocityGenerator" mimetypes="text/json"/>
+	<generator name="velocityGenerator" mimetypes="application/json"/>
+
 </page>

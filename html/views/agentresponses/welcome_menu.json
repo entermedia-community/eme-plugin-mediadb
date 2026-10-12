@@ -1,0 +1,54 @@
+{
+	"type": "message",
+	"content": [
+		{
+			"type": "heading",
+			"text": "Configure your project"
+		},
+		{
+			"type": "paragraph",
+			"children": [
+				{ "type": "text", "text": "Choose your " },
+				{
+					"type": "text",
+					"text": "target platform",
+					"marks": ["bold"]
+				},
+				{ "type": "text", "text": "." }
+			]
+		},
+		{
+			"type": "image",
+			"url": "https://example.com/diagram.png",
+			"alt": "Architecture diagram"
+		},
+		{
+			"type": "form",
+			"id": "project_config",
+			"fields": [
+				{
+					"name": "platform",
+					"type": "select",
+					"label": "Platform",
+					"required": true,
+					"options": [
+						{ "label": "Flutter", "value": "flutter" },
+						{ "label": "React Native", "value": "react_native" },
+						{ "label": "Native Android", "value": "native_android" }
+					]
+				},
+				{
+					"name": "project_name",
+					"type": "text",
+					"label": "Project name",
+					"placeholder": "Enter project name",
+					"required": true
+				}
+			],
+			"submit": {
+				"label": "Continue",
+				"action": "submit_form"
+			}
+		}
+	]
+}
