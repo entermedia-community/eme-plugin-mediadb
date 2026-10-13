@@ -2,34 +2,29 @@
 <div class="ai-welcome ai-confirm">
 	<h5 class="mb-1">[[Smart Creator]]</h5>
 	<messageplain>[[Smart Creator]]: [[I will write a new article or document together with you, section by section.]]</messageplain>
-	<p>[[I will write a new article or document together with you, section by section.]]</p>
-	<p class="mb-1">[[Here is what will happen]]:</p>
-	<ol>
-		<li>[[You choose the type of content to create.]]</li>
-		<li>[[I suggest topics and you describe what you want.]]</li>
-		<li>[[I find reference material and draft an outline for you to approve or change.]]</li>
-		<li>[[I write each section and put together the finished document.]]</li>
-	</ol>
-	<p class="text-muted small">[[A new record is created when the document is finished.]]</p>
-	<div class="d-flex gap-2">
-		<a class="ajax btn btn-sm btn-primary"
-			href="$applink/views/modules/${agentcontext.entitymoduleid}/editors/entitychat/chatterbox/changescenario.html"
-			data-targetdiv="changescenario"
-			data-channel="$!{channel.getId()}"
-			data-currentscenario="entity_chat_smart_creator"
-			data-functionname="entity_chat_smart_creator_welcome"
-			data-oemaxlevel="1">
-			<span>[[Start]]</span>
-		</a>
-		<a class="ajax btn btn-sm btn-outline-secondary"
-			href="$applink/views/modules/${agentcontext.entitymoduleid}/editors/entitychat/chatterbox/changescenario.html"
-			data-targetdiv="changescenario"
-			data-channel="$!{channel.getId()}"
-			data-currentscenario="entity_chat_welcome_menu"
-			data-functionname="entity_chat_welcome_menu_welcome"
-			data-oemaxlevel="1">
-			<span>[[Back to menu]]</span>
-		</a>
-	</div>
-	<div id="changescenario"></div>
+	<messageplain>[[Welcome to Smart Creator wizard]].</messageplain>
+<p class="mb-2">
+  [[Choose the type of content you would like to create:]]
+</p>
+<messageplain>[[Choose the type of content you would like to create:]]</messageplain>
+#set($modules = $mediaarchive.query("module").exact("aicreationmethod","smartcreator").sort("name").cachedSearch()) 
+<ul>
+  #foreach($module in $modules)
+    <li style="text-transform: capitalize;"
+      data-prefix="Create a ${module.getName()}.">
+      <a class="ajax ai-func"
+        href="$apphome/views/modules/$module.getId()/editors/entitychat/chatterbox/changescenario.html"
+        data-targetdiv="changescenario"
+        data-channel="$agentcontext.getChannel().getId()"
+        data-currentscenario="$agentcontext.getCurrentAgentJob().getScenarioId()"
+        data-functionname="chat_smartcreator_make_suggestions"
+        data-context_playbackentitymoduleid="$module.getId()"
+        data-oemaxlevel="1">
+        <span>#text( $module )</span>
+        <messageplain>#text( $module )</messageplain>
+      </a>
+    </li>
+  #end
+</ul>
+<div id="changescenario"></div>
 </div>

@@ -1,6 +1,6 @@
 #set($creatortype = $inflector.singularize($playbackentitymodule.getName()))
 <p>
-  [[What]] $creatortype [[subject you would like to create?]]
+  [[What]] $!creatortype [[subject you would like to create?]]
 </p>
 <messageplain>[[What]] $creatortype [[subject you would like to create?]]</messageplain>
 
@@ -17,7 +17,7 @@
   <ul>
     #foreach($topic in $semantictopics)
 
-      #set($fixedtopic = "Create a brief outline for a $creatortype about $topic. For each outline topic, create a summary with a header, and paragraphs + lists (where necessary). Provide examples if applicable.")
+      #set($fixedtopic = "Create a brief outline for a $!creatortype about $!topic. For each outline topic, create a summary with a header, and paragraphs + lists (where necessary). Provide examples if applicable.")
       
 
      #set($fixedtopic = $translationManager.emediaTranslate("en", $context.getLocale(), $fixedtopic))
