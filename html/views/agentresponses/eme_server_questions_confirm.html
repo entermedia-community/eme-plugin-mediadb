@@ -2,34 +2,49 @@
 <div class="ai-welcome ai-confirm">
 	<h5 class="mb-1">[[Answer Questions]]</h5>
 	<messageplain>[[Answer Questions]]: [[I will answer questions using the files and records in your library.]]</messageplain>
-	<p>[[I will answer questions using the files and records in your library.]]</p>
-	<p class="mb-1">[[Here is what will happen]]:</p>
-	<ol>
-		<li>[[I check which documents are ready to answer from.]]</li>
-		<li>[[I suggest example questions, creating them if there are none yet.]]</li>
-		<li>[[You ask a question, or pick one of the examples.]]</li>
-		<li>[[I search the documents and answer, using only what they say.]]</li>
-	</ol>
-	<p class="text-muted small">[[Nothing is changed or deleted.]]</p>
-	<div class="d-flex gap-2">
-		<a class="ajax btn btn-sm btn-primary"
-			href="$applink/views/modules/${agentcontext.entitymoduleid}/editors/entitychat/chatterbox/changescenario.html"
-			data-targetdiv="changescenario"
-			data-channel="$!{channel.getId()}"
-			data-currentscenario="eme_server_questions"
-			data-functionname="eme_server_questions_welcome"
-			data-oemaxlevel="1">
-			<span>[[Start]]</span>
-		</a>
-		<a class="ajax btn btn-sm btn-outline-secondary"
-			href="$applink/views/modules/${agentcontext.entitymoduleid}/editors/entitychat/chatterbox/changescenario.html"
-			data-targetdiv="changescenario"
-			data-channel="$!{channel.getId()}"
-			data-currentscenario="eme_server_welcome_menu"
-			data-functionname="eme_server_welcome_menu_welcome"
-			data-oemaxlevel="1">
-			<span>[[Back to menu]]</span>
-		</a>
-	</div>
-	<div id="changescenario"></div>
+	
+
+
+  <div class="chatter-guides mb-1">
+	#if($statuses)
+		<span class="text-muted">[[You can ask questions about]]:</span>
+		#foreach($status in $statuses)
+			#set($groupedby = $status.getViewData())
+			
+			#ifnull($groupedby)
+				#set($groupedby = $mediaarchive.getCachedData("module", $status.getSearchType()) )
+			#end
+		<span class="chatter-guide #if($status.isReady()) success #end me-2">
+			#if($status.isReady())
+			<i class="bi bi-check-lg me-1"></i> #text($groupedby) <span>($status.getCountTotal())</span>
+			#else
+			<i class="fas fa-spinner fa-spin me-1"></i> #text($groupedby) <span>($status.getCountPending() / $status.getCountTotal())</span>
+			#end
+		</span>
+		#end
+	#else
+		[[No embedded documents found]]
+		<messageplain>[[No embedded documents found]]</messageplain>
+	#end
+  </div>
+  
+  #ifnotnull($suggestions)
+	  #if(!$suggestions.isEmpty())
+	  <div class="d-flex flex-column">
+	    <strong class="ai-suggestions-title mb-1">[[Example questions]]:</strong>
+	    <messageplain>[[Example questions]]:</messageplain>
+	    <ul class="ai-suggestions">
+	      #foreach( $suggestion in $suggestions )
+	      <li class="ai-suggestion autoprefixchatmsg" 
+		  		data-prefix="$suggestion.prompt"
+				 data-functionname="chat_questions_ask">
+	        $suggestion.prompt
+	      </li>
+				<messageplain>$suggestion.prompt</messageplain>
+	      #end
+	    </ul>
+	  </div>
+	  #end
+  #end
+
 </div>

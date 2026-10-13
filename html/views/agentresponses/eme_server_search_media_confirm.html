@@ -2,34 +2,17 @@
 <div class="ai-welcome ai-confirm">
 	<h5 class="mb-1">[[Search for Media]]</h5>
 	<messageplain>[[Search for Media]]: [[I will search the whole library for media that matches what you describe.]]</messageplain>
-	<p>[[I will search the whole library for media that matches what you describe.]]</p>
-	<p class="mb-1">[[Here is what will happen]]:</p>
-	<ol>
-		<li>[[You describe what you are looking for in your own words.]]</li>
-		<li>[[I work out the keywords, file types and filters from your description.]]</li>
-		<li>[[I search the library and show the matching files and records.]]</li>
-		<li>[[You can keep refining the search in the same chat.]]</li>
-	</ol>
-	<p class="text-muted small">[[Nothing is changed or deleted.]]</p>
-	<div class="d-flex gap-2">
-		<a class="ajax btn btn-sm btn-primary"
-			href="$applink/views/modules/${agentcontext.entitymoduleid}/editors/entitychat/chatterbox/changescenario.html"
-			data-targetdiv="changescenario"
-			data-channel="$!{channel.getId()}"
-			data-currentscenario="eme_server_search_media"
-			data-functionname="eme_server_search_media_welcome"
-			data-oemaxlevel="1">
-			<span>[[Start]]</span>
-		</a>
-		<a class="ajax btn btn-sm btn-outline-secondary"
-			href="$applink/views/modules/${agentcontext.entitymoduleid}/editors/entitychat/chatterbox/changescenario.html"
-			data-targetdiv="changescenario"
-			data-channel="$!{channel.getId()}"
-			data-currentscenario="eme_server_welcome_menu"
-			data-functionname="eme_server_welcome_menu_welcome"
-			data-oemaxlevel="1">
-			<span>[[Back to menu]]</span>
-		</a>
-	</div>
-	<div id="changescenario"></div>
+<div id="searchforom${channel.getId()}">
+<form method="post" 
+	class="ajaxform"
+	data-targetdiv="searchforom${channel.getId()}"
+	action="$applink/views/modules/${agentcontext.entitymoduleid}/editors/entitychat/chatterbox/changescenario.html">
+	<input name="context_query" class="grabfocus"  autocomplete="off" placeholder="[[Search]]..." data-width="100%"  value="$!{unconfirmed_query}" autofocus />
+	<input type="hidden" name="channel" value="$!{channel.getId()}" />
+	<input type="hidden" name="currentscenario" value="eme_chat_search_media" />
+	<input type="hidden" name="functionname" value="eme_chat_search_media_parse" />
+	<a href="#" class="btn btn-cta submit-form">[[Search]]</a>
+</form>	
+</div>
+
 </div>
