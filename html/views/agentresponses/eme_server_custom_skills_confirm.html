@@ -1,0 +1,22 @@
+## Confirmation for eme_server_custom_skills. Start, or any reply, runs eme_server_custom_skills_welcome
+
+
+## Confirmation for eme_server_search_media. Start, or any reply, runs eme_server_search_media_welcome
+<div class="ai-welcome ai-confirm">
+	<h5 class="mb-1">[[Run Custom Skill]]</h5>
+	<messageplain>[[Run Custom Skill]]: [[I will run a background agent job for you, like tagging files or creating content.]]</messageplain>
+<div id="searchforom${channel.getId()}">
+<form method="post" 
+	class="ajaxform"
+	data-targetdiv="searchforom${channel.getId()}"
+	action="$applink/views/modules/${agentcontext.entitymoduleid}/editors/entitychat/chatterbox/changescenario.html">
+	<input name="context_userrequest" class="grabfocus"  autocomplete="off" placeholder="[[Enter Custom Prompt]]..." data-width="100%"  value="$!{unconfirmed_query}" autofocus />
+	<input type="hidden" name="channel" value="$!{channel.getId()}" />
+	<input type="hidden" name="currentscenario" value="eme_server_custom_skills" />
+	<input type="hidden" name="functionname" value="eme_server_custom_skills_run" />
+	<a href="#" class="btn btn-cta submit-form">[[Submit]]</a>
+</form>	
+	<p class="text-muted small">[[Jobs can change your files and records, so review each approval request.]]</p>
+</div>
+
+</div>

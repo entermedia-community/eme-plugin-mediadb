@@ -1,12 +1,12 @@
-## Confirmation for eme_server_create_job. Start, or any reply, runs eme_server_create_job_welcome
+## Confirmation for entity_chat_custom_skills. Start, or any reply, runs entity_chat_custom_skills_welcome
 <div class="ai-welcome ai-confirm">
-	<h5 class="mb-1">[[Create Agent Jobs]]</h5>
-	<messageplain>[[Create Agent Jobs]]: [[I will run a background agent job for you, like tagging files or creating content.]]</messageplain>
-	<p>[[I will run a background agent job for you, like tagging files or creating content.]]</p>
+	<h5 class="mb-1">[[Run Custom Skill]]</h5>
+	<messageplain>[[Run Custom Skill]]: [[I will run a background agent job on this item for you.]]</messageplain>
+	<p>[[I will run a background agent job on this item for you.]]</p>
 	<p class="mb-1">[[Here is what will happen]]:</p>
 	<ol>
-		<li>[[You tell me what you want done.]]</li>
-		<li>[[I plan the steps and start them as a background agent job.]]</li>
+		<li>[[You tell me what you want done with this item.]]</li>
+		<li>[[I plan the steps and show you the job plan.]]</li>
 		<li>[[If a step needs your permission or more details, I ask you here first.]]</li>
 		<li>[[I show the progress and the result in this chat.]]</li>
 	</ol>
@@ -16,8 +16,8 @@
 			href="$applink/views/modules/${agentcontext.entitymoduleid}/editors/entitychat/chatterbox/changescenario.html"
 			data-targetdiv="changescenario"
 			data-channel="$!{channel.getId()}"
-			data-currentscenario="eme_server_create_job"
-			data-functionname="eme_server_create_job_welcome"
+			data-currentscenario="entity_chat_custom_skills"
+			data-functionname="entity_chat_custom_skills_welcome"
 			data-oemaxlevel="1">
 			<span>[[Start]]</span>
 		</a>
@@ -25,8 +25,8 @@
 			href="$applink/views/modules/${agentcontext.entitymoduleid}/editors/entitychat/chatterbox/changescenario.html"
 			data-targetdiv="changescenario"
 			data-channel="$!{channel.getId()}"
-			data-currentscenario="eme_server_welcome_menu"
-			data-functionname="eme_server_welcome_menu_welcome"
+			data-currentscenario="entity_chat_welcome_menu"
+			data-functionname="entity_chat_welcome_menu_welcome"
 			data-oemaxlevel="1">
 			<span>[[Back to menu]]</span>
 		</a>
