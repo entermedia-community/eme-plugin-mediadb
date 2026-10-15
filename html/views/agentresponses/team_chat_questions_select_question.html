@@ -1,0 +1,18 @@
+<div>
+    <p><strong>[[Ask Questions]]</strong></p>
+    <div id="aiquestionforom${channel.getId()}">
+    <form method="post" 
+        class="ajaxform"
+        data-targetdiv="aiquestionforom${channel.getId()}"
+        action="$applink/views/modules/${agentcontext.entitymoduleid}/editors/entitychat/chatterbox/changescenario.html">
+        <input name="context_userquery" class="form-control form-control-sm grabfocus"  
+        autocomplete="off" placeholder="[[Search]]..." data-width="100%"  
+        value="$!{userquery}" autofocus 
+        style="min-width: 300px;" />
+        <input type="hidden" name="channel" value="$!{channel.getId()}" />
+        <input type="hidden" name="currentscenario" value="team_chat_questions" />
+        <input type="hidden" name="functionname" value="team_chat_questions_ask" />
+        <a href="#" class="btn btn-cta submitform">[[Next]]</a>
+    </form>	
+    </div>
+</div>

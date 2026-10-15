@@ -10,9 +10,12 @@
 					data-channel="$!{channel.getId()}"
 					data-currentscenario="$scenario.id"
 					data-functionname="${scenario.id}_confirm"
+					data-context_teaminstruction="$!teaminstruction"
 					data-oemaxlevel="1">
-					<span>#text( $scenario )</span>
+					<span> $scenario.name </span>
+					
 				</a>
+				
 				#ifnotnull($scenario.markdowncontent)
 					<div class="text-muted small">$scenario.markdowncontent</div>
 				#end
