@@ -18,6 +18,9 @@ $!{markdown.render($agentjob.markdowncontent)}
 #end
 
 #foreach($agentjobstep in $agentjob.getSteps())
+
+$agentjobstep.status
+
   #if( $agentjobstep.status == "securityprompt" )
     <div class="agentjob-prompt">
       <p><b>[[Security approval requested]]:</b></p>
