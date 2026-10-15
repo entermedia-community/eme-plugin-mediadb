@@ -1,54 +1,60 @@
 {
-	"type": "message",
-	"content": [
+	"ops": [
 		{
-			"type": "heading",
-			"text": "Configure your project"
+			"attributes": { "color": "#444444", "background": "#ffffff" },
+			"insert": "[[Welcome!]]"
 		},
+		{ "attributes": { "header": 3 }, "insert": "\n" },
 		{
-			"type": "paragraph",
-			"children": [
-				{ "type": "text", "text": "Choose your " },
-				{
-					"type": "text",
-					"text": "target platform",
-					"marks": ["bold"]
-				},
-				{ "type": "text", "text": "." }
-			]
+			"attributes": { "color": "#444444", "background": "#ffffff" },
+			"insert": "[[Here are some things I can help you with]]#ifnotnull($menulabel) [[in]] #end"
 		},
+		#ifnotnull($menulabel)
 		{
-			"type": "image",
-			"url": "https://example.com/diagram.png",
-			"alt": "Architecture diagram"
+			"attributes": {
+				"color": "#444444",
+				"background": "#ffffff",
+				"bold": true
+			},
+			"insert": "$!menulabel.text"
 		},
+		#end
 		{
-			"type": "form",
-			"id": "project_config",
-			"fields": [
-				{
-					"name": "platform",
-					"type": "select",
-					"label": "Platform",
-					"required": true,
-					"options": [
-						{ "label": "Flutter", "value": "flutter" },
-						{ "label": "React Native", "value": "react_native" },
-						{ "label": "Native Android", "value": "native_android" }
-					]
-				},
-				{
-					"name": "project_name",
-					"type": "text",
-					"label": "Project name",
-					"placeholder": "Enter project name",
-					"required": true
-				}
-			],
-			"submit": {
-				"label": "Continue",
-				"action": "submit_form"
-			}
+			"attributes": { "color": "#444444", "background": "#ffffff" },
+			"insert": ":"
+		},
+		{ "insert": "\n" },
+#if( $menuscenarios && !$menuscenarios.isEmpty() )
+	#foreach( $scenario in $menuscenarios )
+		#if($foreach.count > 1),#end
+		{
+			"attributes": {
+				"color": "#3cb371",
+				"background": "#ffffff",
+				"data-targetdiv": "changescenario",
+				"data-channel": "$!{channel.getId()}",
+				"data-currentscenario": "$scenario.id",
+				"data-functionname": "${scenario.id}_confirm",
+				"data-oemaxlevel": "1",
+				"class": "ajax",
+				"link": "$applink/views/modules/${agentcontext.entitymoduleid}/editors/entitychat/chatterbox/changescenario.html"
+			},
+			"insert": "#text( $scenario )"
+		},
+		#ifnotnull($scenario.markdowncontent)
+		{
+			"attributes": { "color": "#444444", "background": "#ffffff" },
+			"insert": ": $scenario.markdowncontent"
+		},
+		#end
+		{ "attributes": { "list": "bullet" }, "insert": "\n" }
+	#end
+#else 
+		{
+			"attributes": { "color": "#444444", "background": "#ffffff" },
+			"insert": "[[No chat options are available yet.]]"
 		}
-	]
+#end
+	],
+	"append":"<div id='changescenario'></div>"
 }

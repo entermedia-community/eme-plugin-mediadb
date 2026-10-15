@@ -1,0 +1,36 @@
+{
+	"ops": [
+		{
+			"attributes": { "color": "#444444", "background": "#ffffff" },
+			"insert": "[[Search for Media]]"
+		},
+		{ "attributes": { "header": 3 }, "insert": "\n" }
+	],
+	"formAttr": {
+		"action": "$applink/views/modules/${agentcontext.entitymoduleid}/editors/entitychat/chatterbox/changescenario.html",
+		"method": "post",
+		"class": "ajaxform"
+	},
+	"form": [
+		{
+			"type": "text",
+			"name": "context_query",
+			"label": "[[Search]]..."
+		},
+		{
+			"type": "hidden",
+			"name": "channel",
+			"value": "$!{channel.getId()}"
+		},
+		{
+			"type": "hidden",
+			"name": "currentscenario",
+			"value": "eme_server_search_media"
+		},
+		{
+			"type": "hidden",
+			"name": "functionname",
+			"value": "eme_server_search_media_parse"
+		}
+	]
+}
