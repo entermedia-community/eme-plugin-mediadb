@@ -1,81 +1,70 @@
-<messageplain>#text($agentjob)</messageplain>
+## Rendered by OpenCodeStatusSkill. $sessionstatus and $pendingform are set while an opencode session runs.
+## The question, form and progress live on the runner's step (sessionstatus.agentJobStep), not $currentagentjobstep.
+## $currentscenario, $answerfunction and $approvefunction keep replies in this job's scenario (see OpenCodeStatusSkill.renderStatus).
+#set( $runnerstep = false )
+#if( $sessionstatus ) #set( $runnerstep = $sessionstatus.getAgentJobStep() ) #end
+#set( $answerstepid = $currentagentjobstep.id )
+#if( $runnerstep ) #set( $answerstepid = $runnerstep.getId() ) #end
+#set( $question = false )
+#if( $sessionstatus ) #set( $question = $sessionstatus.getCurrentQuestion() ) #end
 
-#if( $agentjob.status == "new")
-  <h3>[[Requested]] - #text($agentjob)</h3>
-#elseif( $agentjob.status == "complete")
-  <h3>[[Completed]]</h3>
+#set( $sessionerror = false )
+#if( $sessionstatus ) #set( $sessionerror = $sessionstatus.getError() ) #end
+#set( $isdone = $agentjob.status == "complete" )
+#if( $sessionstatus && $sessionstatus.isCompleted() && !$sessionstatus.getConfirmationPendingId() ) #set( $isdone = true ) #end
+#set( $isfailed = $agentjob.status == "error" )
+#if( $sessionerror ) #set( $isfailed = true ) #end
 
-$!{markdown.render($agentjob.summaryLog())}
+#set( $progress = false )
+#if( $runnerstep ) #set( $progress = $runnerstep.get("markdowncontent") ) #end
+#if( !$progress ) #set( $progress = $agentjob.markdowncontent ) #end
 
-#else
-  <p>
-    [[Job Status]]: #text( $mediaarchive.getCachedData("jobstatus", $agentjob.status) )
-  </p>
-#end
+<messageplain>#text($agentjob)#if( $pendingform || $question ): $!question#elseif( $isfailed ): [[Failed]]#elseif( $isdone ): [[Completed]]#end</messageplain>
 
-#if( $agentjob.status != "complete")
-$!{markdown.render($agentjob.markdowncontent)}
-#end
-
-#foreach($agentjobstep in $agentjob.getSteps())
-
-$agentjobstep.status
-
-  #if( $agentjobstep.status == "securityprompt" )
-    <div class="agentjob-prompt">
-      <p><b>[[Security approval requested]]:</b></p>
-      ${markdown.render($agentjobstep.markdowncontent)}
-      #foreach( $decision in ["once","always","reject"] )
-        <a class="ajax btn btn-sm btn-outline-primary"
-          href="$applink/views/modules/${agentcontext.entitymoduleid}/editors/entitychat/chatterbox/changescenario.html"
-          data-targetdiv="chatterbox"
-          data-channel="$!{channel.getId()}"
-          data-currentscenario="agentorchestrator"
-          data-functionname="openCodeApprove"
-          data-context_agentjobstepid="$agentjobstep.id"
-          data-context_decision="$decision"
-          data-oemaxlevel="1">
-          <span>#if($decision == "once")[[Approve once]]#elseif($decision == "always")[[Always approve]]#else[[Reject]]#end</span>
-        </a>
-      #end
+#if( $pendingform )
+  ## ---- opencode is asking for input ----
+  ## Field names are context_{formid}_{key}; OpenCodeAnswerSkill converts them back to typed values
+  #set( $formid = $pendingform.id )
+  <div class="card border-primary my-2 agentjob-prompt">
+    <div class="card-header bg-primary-subtle d-flex align-items-center gap-2 py-2">
+      <i class="bi bi-chat-square-text"></i>
+      <strong>#if( $pendingform.title )#esc($pendingform.title)#else[[Input needed]]#end</strong>
     </div>
-  #elseif( $agentjobstep.status == "question" )
-    #set( $pendingform = $agentjob.getPendingForm($agentjobstep) )
-    <div class="agentjob-prompt">
-      
-      ${markdown.render($agentjobstep.markdowncontent)}
-      #if( $pendingform )
-      ## Field names are context_{formid}_{key}; OpenCodeAnswerSkill converts them back to typed values
-      #set( $formid = $pendingform.id )
+    <div class="card-body">
+      #if( $question )<div class="mb-3">$!{markdown.render($question)}</div>#end
       <form class="ajaxform"
         action="$applink/views/modules/${agentcontext.entitymoduleid}/editors/entitychat/chatterbox/changescenario.html"
         method="post"
         data-targetdiv="chatterbox"
         data-oemaxlevel="1">
         <input type="hidden" name="channel" value="$!{channel.getId()}" />
-        <input type="hidden" name="currentscenario" value="agentorchestrator" />
-        <input type="hidden" name="functionname" value="openCodeAnswer" />
-        <input type="hidden" name="context_agentjobstepid" value="$agentjobstep.id" />
+        <input type="hidden" name="currentscenario" value="$!currentscenario" />
+        <input type="hidden" name="functionname" value="$!answerfunction" />
+        <input type="hidden" name="confirmationpendingid" value="$!sessionstatus.getConfirmationPendingId()" />
+        <input type="hidden" name="context_currentagentjobstepid" value="$!answerstepid" />
         <input type="hidden" name="oemaxlevel" value="1" />
+
         #foreach( $field in $pendingform.fields )
           #if( !$field.hidden )
           #set( $fieldname = "context_${formid}_${field.key}" )
           #set( $fieldlabel = $field.title )
           #if( !$fieldlabel ) #set( $fieldlabel = $field.key ) #end
-           #if( $field.description )<div class="form-text">#esc($field.description)</div>#end
-
-          <div class="mb-2">
+          #if( $field.description )<div class="form-text">#esc($field.description)</div>#end
+          <div class="mb-3">
             #if( $field.type == "external" )
-              <a href="#esc($field.url)" target="_blank" rel="noopener">#if($field.title)#esc($field.title)#else#esc($field.url)#end</a>
+              <a class="btn btn-sm btn-outline-secondary" href="#esc($field.url)" target="_blank" rel="noopener">
+                <i class="bi bi-box-arrow-up-right"></i> #if($field.title)#esc($field.title)#else#esc($field.url)#end
+              </a>
             #elseif( $field.type == "boolean" )
-              <label class="form-label" for="$fieldname">#esc($fieldlabel)</label>
-              <select class="form-select form-select-sm" id="$fieldname" name="$fieldname">
-                <option value="">[[Default]]</option>
-                <option value="true" #if($field.default == true)selected#end>[[Yes]]</option>
-                <option value="false" #if($field.default == false)selected#end>[[No]]</option>
-              </select>
+              <div class="form-label fw-semibold">#esc($fieldlabel)#if($field.required) <span class="text-danger">*</span>#end</div>
+              <div class="btn-group btn-group-sm" role="group">
+                <input type="radio" class="btn-check" name="$fieldname" id="${fieldname}__yes" value="true" #if($field.default == true)checked#end #if($field.required)required#end />
+                <label class="btn btn-outline-primary" for="${fieldname}__yes">[[Yes]]</label>
+                <input type="radio" class="btn-check" name="$fieldname" id="${fieldname}__no" value="false" #if($field.default == false)checked#end />
+                <label class="btn btn-outline-primary" for="${fieldname}__no">[[No]]</label>
+              </div>
             #elseif( $field.type == "multiselect" )
-              <div class="form-label">#esc($fieldlabel)</div>
+              <div class="form-label fw-semibold">#esc($fieldlabel)#if($field.required) <span class="text-danger">*</span>#end</div>
               #foreach( $option in $field.options )
                 <div class="form-check">
                   <input class="form-check-input" type="checkbox" id="${fieldname}__$foreach.count" name="${fieldname}__$option.value" value="true"
@@ -84,27 +73,39 @@ $agentjobstep.status
                 </div>
               #end
             #elseif( $field.type == "string" && $field.options && !$field.custom )
-              <label class="form-label" for="$fieldname">#esc($fieldlabel)</label>
-              <select class="form-select form-select-sm" id="$fieldname" name="$fieldname" #if($field.required)required#end>
-                <option value=""></option>
-                #foreach( $option in $field.options )
-                  <option value="#esc($option.value)" #if("$!field.default" == $option.value)selected#end>#esc($option.label)</option>
-                #end
-              </select>
+              ## A short list of fixed choices reads better as radio cards; long lists stay a select
+              <div class="form-label fw-semibold">#esc($fieldlabel)#if($field.required) <span class="text-danger">*</span>#end</div>
+              #if( $field.options.size() <= 6 )
+                <div class="list-group">
+                  #foreach( $option in $field.options )
+                    <label class="list-group-item list-group-item-action d-flex gap-2">
+                      <input class="form-check-input flex-shrink-0 mt-1" type="radio" name="$fieldname" value="#esc($option.value)"
+                        #if("$!field.default" == $option.value)checked#end #if($field.required)required#end />
+                      <span>#esc($option.label)#if($option.description)<span class="d-block small text-muted">#esc($option.description)</span>#end</span>
+                    </label>
+                  #end
+                </div>
+              #else
+                <select class="form-select form-select-sm" id="$fieldname" name="$fieldname" #if($field.required)required#end>
+                  <option value=""></option>
+                  #foreach( $option in $field.options )
+                    <option value="#esc($option.value)" #if("$!field.default" == $option.value)selected#end>#esc($option.label)</option>
+                  #end
+                </select>
+              #end
             #elseif( $field.type == "string" && $field.options && $field.custom )
               ## Suggested choices with per-option descriptions, but still a free-text field (custom==true)
-              <label class="form-label" for="$fieldname">#esc($fieldlabel)</label>
-              <input class="form-control form-control-sm mb-1" type="text" id="$fieldname" name="$fieldname"
+              <label class="form-label fw-semibold" for="$fieldname">#esc($fieldlabel)#if($field.required) <span class="text-danger">*</span>#end</label>
+              <input class="form-control form-control-sm mb-2" type="text" id="$fieldname" name="$fieldname"
                 value="#esc("$!field.default")"
                 placeholder="#if($field.placeholder)#esc($field.placeholder)#else[[Choose a suggestion below or type your own]]#end"
                 #if($field.pattern)pattern="#esc($field.pattern)"#end
                 #if($field.required)required#end />
-              <div class="d-flex flex-column gap-1">
+              <div class="d-flex flex-wrap gap-1">
                 #foreach( $option in $field.options )
                   <button type="button" class="btn btn-sm btn-outline-secondary text-start" data-value="#esc($option.value)"
-                    onclick="document.getElementById('$fieldname').value=this.getAttribute('data-value')">
-                    #esc($option.label)#if($option.description)<div class="form-text mb-0">#esc($option.description)</div>#end
-                  </button>
+                    #if($option.description)title="#esc($option.description)"#end
+                    onclick="document.getElementById('$fieldname').value=this.getAttribute('data-value')">#esc($option.label)</button>
                 #end
               </div>
             #else
@@ -115,7 +116,7 @@ $agentjobstep.status
               #elseif( $field.format == "date" ) #set( $inputtype = "date" )
               #elseif( $field.format == "date-time" ) #set( $inputtype = "datetime-local" )
               #end
-              <label class="form-label" for="$fieldname">#esc($fieldlabel)</label>
+              <label class="form-label fw-semibold" for="$fieldname">#esc($fieldlabel)#if($field.required) <span class="text-danger">*</span>#end</label>
               <input class="form-control form-control-sm" type="$inputtype" id="$fieldname" name="$fieldname"
                 value="#esc("$!field.default")"
                 #if($field.type == "integer")step="1"#elseif($field.type == "number")step="any"#end
@@ -134,26 +135,88 @@ $agentjobstep.status
           </div>
           #end
         #end
-        <button type="submit" class="btn btn-sm btn-cta">[[Submit]]</button>
+        <div class="d-flex justify-content-end">
+          <button type="submit" class="btn btn-sm btn-cta"><i class="bi bi-send"></i> [[Submit]]</button>
+        </div>
       </form>
+    </div>
+  </div>
+
+#elseif( $sessionstatus && $sessionstatus.getConfirmationPendingId() )
+  ## ---- opencode wants to run a tool that needs approval ----
+  <div class="card border-warning my-2 agentjob-prompt">
+    <div class="card-header bg-warning-subtle d-flex align-items-center gap-2 py-2">
+      <i class="bi bi-shield-exclamation"></i>
+      <strong>[[Security approval requested]]</strong>
+      <span class="ms-auto small text-muted">#text($agentjob)</span>
+    </div>
+    <div class="card-body">
+      <div class="mb-3">$!{markdown.render($question)}</div>
+      <div class="d-flex flex-wrap gap-2">
+        #foreach( $decision in ["once","always","reject"] )
+          <a class="ajax btn btn-sm #if($decision == "once")btn-primary#elseif($decision == "always")btn-outline-primary#else btn-outline-danger ms-auto#end"
+            href="$applink/views/modules/${agentcontext.entitymoduleid}/editors/entitychat/chatterbox/changescenario.html"
+            data-targetdiv="chatterbox"
+            data-channel="$!{channel.getId()}"
+            data-currentscenario="$!currentscenario"
+            data-functionname="$!approvefunction"
+            data-context_currentagentjobstepid="$!answerstepid"
+            data-context_decision="$decision"
+            data-oemaxlevel="1">
+            #if($decision == "once")<i class="bi bi-check-lg"></i> [[Approve once]]#elseif($decision == "always")<i class="bi bi-check-all"></i> [[Always approve]]#else<i class="bi bi-x-lg"></i> [[Reject]]#end
+          </a>
+        #end
+      </div>
+    </div>
+  </div>
+
+#elseif( $isfailed )
+  ## ---- failed ----
+  <div class="card border-danger my-2">
+    <div class="card-header bg-danger-subtle d-flex align-items-center gap-2 py-2">
+      <i class="bi bi-x-circle-fill text-danger"></i>
+      <strong>[[Job failed]]</strong>
+      <span class="ms-auto small text-muted">#text($agentjob)</span>
+    </div>
+    <div class="card-body">
+      #if( $sessionerror )<div class="alert alert-danger py-2 small mb-2">#esc($sessionerror)</div>#end
+      $!{markdown.render($progress)}
+    </div>
+  </div>
+
+#elseif( $isdone )
+  ## ---- finished: show the final answer ----
+  #set( $finaloutput = $commandoutput )
+  #if( !$finaloutput ) #set( $finaloutput = $progress ) #end
+  <div class="card border-success my-2">
+    <div class="card-header bg-success-subtle d-flex align-items-center gap-2 py-2">
+      <i class="bi bi-check-circle-fill text-success"></i>
+      <strong>[[Completed]]</strong>
+      <span class="ms-auto small text-muted">#text($agentjob)</span>
+    </div>
+    <div class="card-body">
+      #if( $finaloutput )
+        $!{markdown.render($finaloutput)}
+      #else
+        $!{markdown.render($agentjob.summaryLog())}
       #end
     </div>
-  #end
-#end
+    #if( $secondstaken )
+      <div class="card-footer small text-muted py-1"><i class="bi bi-stopwatch"></i> [[Job completed in]] $!{secondstaken} [[seconds]]</div>
+    #end
+  </div>
 
-
-#if( !$userapproved)
-<p><b>[[Approach:]]</b></p> 
-<ol>
-  #foreach($agentjobstep in $proposedsteps)
-    <li>
-      <p>${markdown.render($agentjobstep.markdowncontent)}</p> 
-    </li>
-  #end
-</ol>
-<p class="m-0">[[Tell me if you want]] #if($changed) [[any more]] #else [[to make any]] #end [[changes to the plan. If not just say "Approved"!]]</p>
-#end
-
-#if($secondstaken)
-  <p class="m-0">[[Job completed in]]: $!{secondstaken} [[seconds]]</p>
+#else
+  ## ---- still running: show what opencode has said so far ----
+  <div class="card my-2">
+    <div class="card-header d-flex align-items-center gap-2 py-2">
+      <span class="spinner-border spinner-border-sm text-primary" role="status"></span>
+      <strong>#if( $agentjob.status == "new" )[[Requested]]#else[[Working]]#end</strong>
+      <span class="badge text-bg-light border">#text( $mediaarchive.getCachedData("jobstatus", $agentjob.status) )</span>
+      <span class="ms-auto small text-muted">#text($agentjob)</span>
+    </div>
+    #if( $progress )
+      <div class="card-body">$!{markdown.render($progress)}</div>
+    #end
+  </div>
 #end
