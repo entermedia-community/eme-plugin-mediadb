@@ -14,7 +14,7 @@
 	"form": [
 		{
 			"type": "text",
-			"name": "userquery",
+			"name": "context_userquery",
 			"label": "[[Search]]..."
 		},
 		{

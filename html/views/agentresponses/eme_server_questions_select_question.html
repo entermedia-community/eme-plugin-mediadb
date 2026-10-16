@@ -2,8 +2,6 @@
 <div class="ai-welcome ai-confirm">
 	<h5 class="mb-1">[[Answer Questions]]</h5>
 	<messageplain>[[Answer Questions]]: [[I will answer questions using the files and records in your library.]]</messageplain>
-	
-
 
   <div class="chatter-guides mb-1">
 	#if($statuses)
@@ -35,16 +33,36 @@
 	    <messageplain>[[Example questions]]:</messageplain>
 	    <ul class="ai-suggestions">
 	      #foreach( $suggestion in $suggestions )
-	      <li class="ai-suggestion autoprefixchatmsg" 
-		  		data-prefix="$suggestion.prompt"
-				 data-functionname="chat_questions_ask">
-	        $suggestion.prompt
-	      </li>
-				<messageplain>$suggestion.prompt</messageplain>
+            <li class="ai-suggestion autoprefixchatmsg" 
+                    data-prefix="$suggestion.prompt"
+                    data-functionname="${scenario.id}_ask">
+                $suggestion.prompt
+            </li>
+            <messageplain>$suggestion.prompt</messageplain>
 	      #end
 	    </ul>
 	  </div>
 	  #end
   #end
+
+  #ifnull($suggestions)
+      <div id="aiquestionforom${channel.getId()}">
+        <form method="post" 
+            class="ajaxform"
+            data-targetdiv="aiquestionforom${channel.getId()}"
+            action="$applink/views/modules/${agentcontext.entitymoduleid}/editors/entitychat/chatterbox/changescenario.html">
+            <input name="context_userquery" class="form-control form-control-sm grabfocus"  
+            autocomplete="off" placeholder="[[Search]]..." data-width="100%"  
+            value="$!{userquery}" autofocus 
+            style="min-width: 300px;" />
+            <input type="hidden" name="channel" value="$!{channel.getId()}" />
+            <input type="hidden" name="currentscenario" value="${scenario.id}" />
+            <input type="hidden" name="functionname" value="${scenario.id}_ask" />
+            <a href="#" class="btn btn-cta submitform">[[Next]]</a>
+        </form>	
+    </div>
+  #end
+
+
 
 </div>

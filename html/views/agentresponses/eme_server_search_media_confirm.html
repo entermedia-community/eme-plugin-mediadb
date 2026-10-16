@@ -7,7 +7,7 @@
 	class="ajaxform"
 	data-targetdiv="searchforom${channel.getId()}"
 	action="$applink/views/modules/${agentcontext.entitymoduleid}/editors/entitychat/chatterbox/changescenario.html">
-	<input name="context_query" class="grabfocus"  autocomplete="off" placeholder="[[Search]]..." data-width="100%"  value="$!{unconfirmed_query}" autofocus />
+	<input name="context_userquery" class="grabfocus"  autocomplete="off" placeholder="[[Search]]..." data-width="100%"  value="$!{unconfirmed_query}" autofocus />
 	<input type="hidden" name="channel" value="$!{channel.getId()}" />
 	<input type="hidden" name="currentscenario" value="eme_server_search_media" />
 	<input type="hidden" name="functionname" value="eme_server_search_media_parse" />
