@@ -1,0 +1,3 @@
+<page>
+  <path-action name="AgentJobModule.getFilteredJobs" alltypes="true" />
+</page>
