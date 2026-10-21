@@ -2,10 +2,11 @@
 
 <page>
 
-  <property name="fallbackdirectory">/community/default</property>  <!-- added to individual folders to avoid load all css/js finder stuff -->
+  <property name="fallbackdirectory">/community/default</property>  <!-- added to individual folders
+  to avoid load all css/js finder stuff -->
 
-  <generator name="velocityGenerator" mimetypes="text/html"/>
-  <generator name="velocityGenerator" mimetypes="text/json"/>
+  <generator name="velocityGenerator" mimetypes="text/html" />
+  <generator name="velocityGenerator" mimetypes="text/json" />
 
   <property name="missingimagepath">/${applicationid}/views/images/missing150.jpg</property>
   <property name="allowguestregistration">true</property>
@@ -25,22 +26,27 @@
   <property name="title">MediaDB</property>
 
   <property name="communitytag">default</property>
-  <path-action name="Admin.autoLogin"/>
-  <path-action name="ProfileModule.loadUserProfile"/>
+  <path-action name="Admin.autoLogin" />
+  <path-action name="ProfileModule.loadUserProfile" />
 
-  <path-action name="MediaAdminModule.loadCommunityTag"/>
+  <path-action name="MediaAdminModule.loadCommunityTag" />
 
   <path-action name="MediaArchiveModule.loadApplicationId" />
   <path-action name="MediaArchiveModule.loadComponentHome" />
 
   <property name="catalogid">site/catalog</property>
-  <path-action name="Admin.loadPermissions"/>
+
+  <path-action name="Admin.allowCorsHeaders" alltypes="true" />
+
+  <path-action name="Admin.loadPermissions" />
   <path-action name="Admin.allowViewing" />
   <path-action name="MediaArchiveModule.loadApplicationId" />
 
   <!-- Bootstrap CSS (JS included @ includes.html) -->
-  <style id="bootstrap-css" href="/${applicationid}/components/javascript/bootstrap/5.3.8/css/bootstrap.min.css" />
-  <style id="fontawesome-css" href="/${applicationid}/components/javascript/bootstrap/fonts/css/fontawesome-all.min.css" />
+  <style id="bootstrap-css"
+    href="/${applicationid}/components/javascript/bootstrap/5.3.8/css/bootstrap.min.css" />
+  <style id="fontawesome-css"
+    href="/${applicationid}/components/javascript/bootstrap/fonts/css/fontawesome-all.min.css" />
 
   <!-- OpenEdit -->
   <script id="openedit" src="/openedit/components/javascript/openedit.js" />
@@ -53,7 +59,5 @@
   <permission name="view">
     <user />
   </permission>
-
-  <path-action name="Admin.allowCorsHeaders" alltypes="true" />
 
 </page>
