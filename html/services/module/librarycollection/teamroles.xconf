@@ -1,0 +1,7 @@
+<page>
+	<!-- collectiverole list for the team member editor -->
+	<generator name="velocity"/>
+	<permission name="view">
+		<user/>
+	</permission>
+</page>

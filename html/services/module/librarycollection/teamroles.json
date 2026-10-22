@@ -1,0 +1,9 @@
+#set( $roles = $mediaarchive.query("collectiverole").all().sort("name").search($context) )
+{
+	"response": { "status": "ok" },
+	"roles": [
+		#foreach( $role in $roles )#if( $foreach.count > 1 ), #end
+		{ "id": #jesc($role.getId()), "name": #jesc($role.getName()) }
+		#end
+	]
+}

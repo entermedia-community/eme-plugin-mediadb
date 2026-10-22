@@ -1,0 +1,9 @@
+{
+	"response": {
+		"status": #if($subscription)"ok"#else"error"#end
+		#if($error), "error": #jesc($error)#end
+	}
+	#if($subscription),
+	"userid": #jesc($subscription.get("followeruser"))
+	#end
+}

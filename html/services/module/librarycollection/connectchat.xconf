@@ -1,0 +1,30 @@
+<page>
+	<!-- Same chat channel as the web project chat page (community/html/default/project/chat/_site.xconf) -->
+	<property name="channeltype">emeteamchat</property>
+	<property name="channeldatamodule">collectiveproject</property>
+	<property name="defaultscenarioid">team_chat_monitor</property>
+
+	<path-action name="ProjectModule.loadCollection" />
+	<path-action name="Script.run">
+		<script>./requirecollection.groovy</script>
+	</path-action>
+	<path-action name="ProjectModule.loadChatTopic" />
+	<path-action name="ChatModule.loadChatChannel" />
+	<path-action name="AgentModule.loadAgentContext" />
+	<path-action name="AgentModule.sendWelcomeIfNeeded" />
+
+	<generator name="velocity"/>
+	<permission name="view">
+		<user/>
+	</permission>
+	<permission name="editcollection">
+		<or>
+			<action name="ProjectModule.canEditCollection" />
+			<action name="ProjectModule.isOnTeam" />
+		</or>
+	</permission>
+	<!-- Web shows the team member edit pencil with $canviewsettings -->
+	<permission name="viewsettings">
+		<userprofile name="viewsettings" value="true"/>
+	</permission>
+</page>

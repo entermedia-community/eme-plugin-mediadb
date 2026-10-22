@@ -1,0 +1,7 @@
+{
+	"response": {
+		"status": #if($subscription)"ok"#else"error"#end
+	},
+	"following": #if($subscription && $subscription.getBoolean("enabled"))true#else false#end,
+	"followercount": #if($followercount)$followercount#else 0#end
+}

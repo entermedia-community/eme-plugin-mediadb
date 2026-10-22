@@ -1,0 +1,16 @@
+<page>
+	<!-- JSON version of the web team member edit dialog
+	     (community/html/default/project/channel/subscribers/edit/edit.html):
+	     Team Member and roles. Same audience as the web pencil ($canviewsettings). -->
+	<path-action name="Script.run">
+		<script>./updateteammember.groovy</script>
+	</path-action>
+	<generator name="velocity"/>
+	<permission name="view">
+		<user/>
+	</permission>
+	<!-- Web shows the team member edit pencil with $canviewsettings -->
+	<permission name="viewsettings">
+		<userprofile name="viewsettings" value="true"/>
+	</permission>
+</page>

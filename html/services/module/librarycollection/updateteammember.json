@@ -1,0 +1,6 @@
+{
+	"response": {
+		"status": #if($member)"ok"#else"error"#end
+		#if($error), "error": #jesc($error)#end
+	}
+}

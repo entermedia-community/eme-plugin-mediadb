@@ -1,0 +1,11 @@
+{
+	"response": {
+		"status": #if($librarycol && $currentchannel)"ok"#else"not found"#end,
+		"userid": "$!user.id"
+	},
+	"collectionid": #jesc($!librarycol.id),
+	"topic": #jesc($!currenttopic.id),
+	"channel": #jesc($!currentchannel.id),
+	"caneditcollection": #if($caneditcollection)true#else false#end,
+	"canviewsettings": #if($canviewsettings)true#else false#end
+}

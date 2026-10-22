@@ -24,6 +24,16 @@
 				"email": "$person.email",
 				"firstName": "$!person.firstName",
 				"lastName": "$!person.lastName"
+				## Role names as the web sidebar shows them (channel/subscribers/index.html)
+				#set( $roles = $member.getValues("teamroles") )
+				#if( $roles && !$roles.isEmpty() )
+				, "teamrolenames": [
+					#foreach( $urole in $roles )#if( $foreach.count > 1 ), #end
+						#set( $role = $mediaarchive.getCachedData("collectiverole", $urole) )
+						#if( $role )#jesc($role.getName())#else#jesc($urole)#end
+					#end
+				]
+				#end
 				#set( $userimageurl = $mediaarchive.asLinkToProfile($person) )
 				#if($userimageurl)
 					,"portrait": "$userimageurl"
@@ -32,6 +42,16 @@
 			#end
 		#end	
 	]
+	#end
+	## Same link the web menu builds (project/layout/menu-collectives.html); relative when no community domain.
+	#if( $hit.urlname )
+	, "projectlink": "$!{community.externaldomain}/${hit.urlname}"
+	#end
+	#set( $followers = $mediaarchive.query("librarycollectionlikes").exact("collectionid",$hit.id).exact("enabled", true).search($context) )
+	, "followercount": $followers.size()
+	#if( $user )
+		#set( $followed = $mediaarchive.query("librarycollectionlikes").exact("collectionid",$hit.id).exact("followeruser",$user.getId()).exact("enabled", true).searchOne() )
+		, "followedbyuser": #if($followed)true#else false#end
 	#end
 	#set( $topics = $mediaarchive.query("collectiveproject").exact("parentcollectionid",$hit.id).sort("name").search($context) )
 	#if( !$topics.isEmpty() )
