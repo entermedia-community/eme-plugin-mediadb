@@ -1,0 +1,23 @@
+{
+	"response": {
+		"status": "ok",
+		"userid": "$user.id"
+	},
+  "job": {
+    "id": #jesc($job.id),
+    "name": #jesc($job.name),
+    "automationscenario": #jesc($job.automationscenario), 
+    "errordetails": #jesc($job.errordetails),
+    "expirationdate": #jesc($job.expirationdate),
+    "userrequest": #jesc($job.userrequest),
+    "lastresponse": #jesc($job.lastresponse),
+    "markdowncontent": #jesc($job.markdowncontent),
+    "orchestrator": #jesc($job.orchestrator),
+    "repeatperiod": #jesc($job.repeatperiod),
+    "repeattime": #jesc($job.repeattime),
+    "startdate": #jesc($job.startdate),
+    "enddate": #jesc($job.enddate),
+    "status": #jesc($job.status),
+    "submitteddate": #jesc($job.submitteddate)
+  }
+}
