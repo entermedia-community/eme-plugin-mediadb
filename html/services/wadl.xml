@@ -10,7 +10,7 @@
             <method id="login" name="PUT">
                 <request>
                     <param name="id" type="xsd:string" style="query" required="true"/>
-                    <param name="password" type="xsd:string" style="query" required="true"/>  
+                    <param name="templogincode" type="xsd:string" style="query" required="true"/>  
                 </request>
                 <response status="200"> 
                     <representation mediaType="application/json" element="json:response"/> 
