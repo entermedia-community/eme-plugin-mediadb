@@ -1,0 +1,16 @@
+{
+  "response": {
+    "status": "ok"#if($user),
+    "userid": "$user.id"#end
+  },
+  "projects": [
+    #foreach($hit in $hits.getPageOfHits())
+      #if($foreach.count > 1),#end
+      $context.putPageValue("hit", $hit)
+      {
+        "joined": #if($joinedids.contains($hit.id))true#else false#end,
+        "project": $pages.include("$apphome/services/module/librarycollection/hit.json", $context)
+      }
+    #end
+  ]
+}

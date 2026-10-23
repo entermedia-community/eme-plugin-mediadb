@@ -16,7 +16,7 @@
 		"response": {
 			"status": "error",
 			"error": "$!error"
-		}
+		} 
 	}
 #elseif($commandSucceeded == "ok")
 	{

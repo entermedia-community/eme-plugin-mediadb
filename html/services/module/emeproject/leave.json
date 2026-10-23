@@ -1,0 +1,8 @@
+{
+  "response": {
+    "status": #if($error)"error"#else"ok"#end
+    #if($error), "error": #jesc($error)#end
+    #if($user), "userid": "$user.id"#end
+  },
+  "success": #if($error)false#else true#end
+}
