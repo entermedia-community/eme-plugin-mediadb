@@ -68,7 +68,8 @@ AI provider config lives as data under `html/ai`.
 
 ### Notes For Agents
 
-- See `plugins/mediadb/html/services/authentication/README.txt` for a worked end-to-end example
-  (request-code -> redeem-code login flow) that mirrors the conventions here.
+- See `plugins/mediadb/html/services/authentication/README.txt` for worked examples and the `mediadb-auth` skill
+  (`.agents/skills/mediadb-auth/SKILL.md`) for the credential model: public keys and application passwords in the
+  system `userkey` table, `bin/refreshtoken.sh` for tokens, no `entermedia.key`.
 - This plugin is the integration surface for external callers (mobile apps, third-party
   integrations, AI agents) — treat any change here as a compatibility-sensitive API change.

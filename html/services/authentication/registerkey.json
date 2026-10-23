@@ -1,0 +1,15 @@
+{
+	#if($commandSucceeded == "ok")
+	"response": { "status": "ok" },
+	#if($apppassword)
+	"key_id": "$userkey.id",
+	"apppassword": "$apppassword",
+	"note": "Store the application password now. Only a hash is kept and it cannot be shown again."
+	#else
+	"key_id": "$userkey.id"
+	#end
+	#else
+	"response": { "status": "error" },
+	"error": "$!{oauth_error_description}"
+	#end
+}

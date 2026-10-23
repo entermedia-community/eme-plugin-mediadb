@@ -31,16 +31,16 @@ jQuery(document).ready(function()
 var mediadburl = "https://openinstitute.org/site/mediadb"
 var libraryid = "AWrBXnMANjyARyxuxhOA";  //Metro East Station
 
-var entermediakey = "apiusermd5420e30b30f809e600873d0f29690f309b170eb0db0e6";
+var apppassword = "emeapp.KEYID.SECRET"; // register one with services/authentication/registerkey.json (keytype=apppassword)
 
 	console.log("request data");
 	jQuery.ajax({
 		type: "POST",
 		url: mediadburl + "/services/module/librarycollection/search",
 		async: false,
+		headers: { "Authorization": "Bearer " + apppassword },
 		data: JSON.stringify(
 			{
-			  "entermedia.key": entermediakey,
 			  "page": "1",
 			  "hitsperpage": "20",
 			  "query": {

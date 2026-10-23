@@ -12,8 +12,18 @@
 	#if($error),
 	"error": "$!error"
 	#end
-	#if($entermediakey),
-		"entermediakey": "$entermediakey"
+	#if($access_token),
+		"access_token": "$access_token",
+		"token_type": "Bearer",
+		"expires_in": $!{expires_in},
+		"key_id": "$!{key_id}"
+	#end
+	#if($apppassword),
+		"apppassword": "$apppassword",
+		"key_id": "$!{key_id}"
+	#end
+	#if($key_error),
+		"key_error": "$key_error"
 	#end
 	#if($user),
 	"user": { 

@@ -1,0 +1,4 @@
+{
+	"response": { "status": "#if($commandSucceeded == "ok")ok#{else}error#end" },
+	"error": "$!{oauth_error_description}"
+}

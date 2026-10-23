@@ -14,7 +14,6 @@
 	
 	<path-action name="Admin.allowViewing" alltypes="true">
 		<login-path>/${applicationid}/services/authentication/noaccess.json</login-path>
-		<exclude>/${applicationid}/services/authentication/getkey.json</exclude>
 	</path-action>
 
 	<!-- used in velocity macro -->

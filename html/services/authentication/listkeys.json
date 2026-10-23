@@ -1,0 +1,10 @@
+{
+	"response": { "status": "#if($commandSucceeded == "ok")ok#{else}error#end" },
+	"keys": [
+	#if($userkeys)
+	#foreach($key in $userkeys)
+		{ "id": "$key.id", "label": "$!key.label", "keytype": "$!key.keytype", "algorithm": "$!key.algorithm", "created": "$!key.created", "lastused": "$!key.lastused", "enabled": "$!key.enabled" }#if($foreach.hasNext),#end
+	#end
+	#end
+	]
+}

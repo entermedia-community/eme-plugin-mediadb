@@ -74,7 +74,9 @@ public void init()
 		WebEmail templatemail = archive.createSystemEmail(teamuser, apphome + "/theme/emails/collection-add-teammember.html");
 		templatemail.setSubject("Added to Team " + librarycol.getName());
 		Map objects = new HashMap();
-		objects.put("entermediakey", archive.getUserManager().getEnterMediaKey(teamuser));
+		// One-time login link (single use, one hour) instead of embedding a key in the email
+		objects.put("loginlinktoken", archive.getUserManager().createNewTempLoginLink(teamuser.getId(), teamuser.getEmail(), teamuser.getFirstName(), teamuser.getLastName(), teamuser.getScreenName()));
+		objects.put("loginemail", java.net.URLEncoder.encode(teamuser.getEmail(), "UTF-8"));
 		objects.put("user", context.getUser());
 		objects.put("teamuser", teamuser);
 		objects.put("librarycol", librarycol);

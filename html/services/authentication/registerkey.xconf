@@ -1,0 +1,8 @@
+<page>
+	<!-- Open so grant_type=otp (emailed code) can register a first key; Admin.registerKey itself rejects callers with neither a login nor a valid code -->
+	<permission name="view">
+		<blank/>
+	</permission>
+	<path-action name="JsonAdminModule.preprocess" alltypes="true" />
+	<path-action name="Admin.registerKey" alltypes="true" />
+</page>
