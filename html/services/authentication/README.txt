@@ -18,10 +18,10 @@ curl -s -X POST "http://localhost:8080/finder/mediadb/services/authentication/to
 
 response:
 {
-	"access_token": "adminmd5421c0af185908a6c0c40d50fd5e3f16760d5580bctstamphe17GMyLCG7rsInbT5qIGQ==",
+	"access_token": "<access token>",
 	"token_type": "Bearer",
 	"expires_in": 86400,
-	"refresh_token": "adminmd5421c0af185908a6c0c40d50fd5e3f16760d5580bc",
+	"refresh_token": "<refresh token>",
 	"user": {
 		"id": "admin",
 		"firstname": "The",
