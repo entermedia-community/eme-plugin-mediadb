@@ -1,0 +1,10 @@
+{
+	"response": {
+		"status": #if($error)"error"#else"ok"#end
+		#if($error), "error": #jesc($error)#end
+	},
+	"eventid": #jesc($!eventid),
+	"goingcount": #if($goingcount)$goingcount#else 0#end,
+	"interestedcount": #if($interestedcount)$interestedcount#else 0#end,
+	"myrsvp": #jesc($!myrsvp)
+}

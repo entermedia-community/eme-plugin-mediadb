@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page>
+  <property name="fallbackdirectory">/mediadb/services/module/default</property>
+  <property name="module">collectiveevent</property>
+  <property name="searchtype">collectiveevent</property>
+  <property name="fallbackprop">/mediadb/services/module/emeevent</property>
+  <property name="alternative_extension">json</property>
+  <permission name="view">
+    <user/>
+  </permission>
+</page>

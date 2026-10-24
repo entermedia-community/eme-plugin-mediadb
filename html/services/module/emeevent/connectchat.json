@@ -1,0 +1,8 @@
+{
+	"response": {
+		"status": #if($eventdata && $currentchannel)"ok"#else"not found"#end,
+		"userid": "$!user.id"
+	},
+	"eventid": #jesc($!eventdata.id),
+	"channel": #jesc($!currentchannel.id)
+}

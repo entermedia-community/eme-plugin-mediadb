@@ -1,0 +1,25 @@
+{
+	"response": {
+		"status": "ok"#if($user),
+		"userid": "$user.id"#end
+	},
+	"events": [
+		#foreach($event in $events)
+		#if($foreach.count > 1),#end
+		{
+			"id": #jesc($event.id),
+			"name": #jesc($!event.name),
+			"description": #jesc($!event.description),
+			"location": #jesc($!event.location),
+			"imageurl": #jesc($!event.imageurl),
+			"startdate": #jesc($!event.startdate),
+			"enddate": #jesc($!event.enddate),
+			"hostid": #jesc($!event.hostid),
+			"hostname": #jesc($!event.hostname),
+			"goingcount": $event.goingcount,
+			"interestedcount": $event.interestedcount,
+			"myrsvp": #jesc($!event.myrsvp)
+		}
+		#end
+	]
+}

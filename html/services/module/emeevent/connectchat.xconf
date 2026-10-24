@@ -1,0 +1,17 @@
+<page>
+	<!-- Same channel type as the project team chat (librarycollection/connectchat.xconf) -->
+	<property name="channeltype">emeteamchat</property>
+	<property name="channeldatamodule">collectiveevent</property>
+	<property name="defaultscenarioid">team_chat_monitor</property>
+
+	<path-action name="Script.run">
+		<script>./requireevent.groovy</script>
+	</path-action>
+	<path-action name="ChatModule.loadChatChannel" />
+	<path-action name="AgentModule.loadAgentContext" />
+
+	<generator name="velocity"/>
+	<permission name="view">
+		<user/>
+	</permission>
+</page>

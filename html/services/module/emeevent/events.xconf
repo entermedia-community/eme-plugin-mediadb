@@ -1,0 +1,9 @@
+<page>
+	<path-action name="Script.run">
+		<script>./events.groovy</script>
+	</path-action>
+	<generator name="velocity"/>
+	<permission name="view">
+		<user/>
+	</permission>
+</page>
