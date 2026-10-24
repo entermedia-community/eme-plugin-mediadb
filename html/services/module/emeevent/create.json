@@ -1,0 +1,7 @@
+{
+	"response": {
+		"status": #if($error)"error"#else"ok"#end
+		#if($error), "error": #jesc($error)#end
+	},
+	"eventid": #jesc($!eventid)
+}

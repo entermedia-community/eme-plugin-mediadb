@@ -1,0 +1,42 @@
+## Confirmation for entity_chat_create_event. ChatGuessEventSkill sets the $suggestedevent* values from the chat.
+## The Create Event button runs entity_chat_create_event_create
+<div class="ai-welcome ai-confirm">
+	<h5 class="mb-1">[[Create Event]]</h5>
+	#if( $suggestedeventname )
+		<messageplain>[[Create Event]]: [[Based on your message, I suggest this event]]: $suggestedeventname</messageplain>
+		<p>[[Based on your message, I suggest this event]]:</p>
+	#else
+		<messageplain>[[Create Event]]: [[What event should I create?]]</messageplain>
+		<p>[[What event should I create?]]</p>
+	#end
+	<form class="ajaxform"
+		action="$applink/views/modules/${agentcontext.entitymoduleid}/editors/entitychat/chatterbox/changescenario.html"
+		method="post"
+		data-targetdiv="changescenario"
+		data-oemaxlevel="1">
+		<input type="hidden" name="channel" value="$!{channel.getId()}" />
+		<input type="hidden" name="currentscenario" value="entity_chat_create_event" />
+		<input type="hidden" name="functionname" value="entity_chat_create_event_create" />
+		<input type="hidden" name="oemaxlevel" value="1" />
+		<input class="form-control form-control-sm mb-1" type="text" name="context_eventname" placeholder="[[Event name]]" value="#esc( $!suggestedeventname )" required />
+		<label class="form-text">[[Starts]]</label>
+		<input class="form-control form-control-sm mb-1" type="datetime-local" name="context_eventstart" value="#esc( $!suggestedeventstart )" required />
+		<label class="form-text">[[Ends (optional)]]</label>
+		<input class="form-control form-control-sm mb-1" type="datetime-local" name="context_eventend" value="#esc( $!suggestedeventend )" />
+		<input class="form-control form-control-sm mb-1" type="text" name="context_eventlocation" placeholder="[[Location (optional)]]" value="#esc( $!suggestedeventlocation )" />
+		<textarea class="form-control form-control-sm mb-2" name="context_eventdescription" rows="2" placeholder="[[Description (optional)]]">#esc( $!suggestedeventdescription )</textarea>
+		<p class="text-muted small">[[The event is public and you are the host. Edit anything that is not right first.]]</p>
+		<div class="d-flex gap-2">
+			<button type="submit" class="btn btn-sm btn-primary">[[Create Event]]</button>
+			<a class="ajax btn btn-sm btn-outline-secondary"
+				href="$applink/views/modules/${agentcontext.entitymoduleid}/editors/entitychat/chatterbox/changescenario.html"
+				data-targetdiv="changescenario"
+				data-channel="$!{channel.getId()}"
+				data-currentscenario="entity_chat_welcome_menu"
+				data-oemaxlevel="1">
+				<span>[[Not now]]</span>
+			</a>
+		</div>
+	</form>
+	<div id="changescenario"></div>
+</div>

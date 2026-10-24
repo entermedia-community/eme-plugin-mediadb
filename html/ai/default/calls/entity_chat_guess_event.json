@@ -1,0 +1,63 @@
+{
+	"model": "${model}",
+	"messages": [
+		{
+			"role": "system",
+			"content": #jesc("[[You help a person create a public event. Read the message history and work out the one event they most likely want to create. Focus on the most recent messages.]]
+
+			[[The current date and time is]]: $currentdate
+
+			[[Resolve words like tomorrow or next Friday from the current date. Write dates as yyyy-MM-dd'T'HH:mm in the person's local time. Use only what was said, do not invent a location or a description. If no time was given for the start, use 18:00.]]")
+		}
+#foreach($message in $channelchathistory)
+		,
+	#if($message.user == "agent")
+		{
+			"role": "assistant",
+			"content": #jesc($!message.messageplain)
+		}
+	#else
+		{
+			"role": "user",
+			"content": #jesc("$!message.user: $!message.message")
+		}
+	#end
+#end
+	],
+	"tools": [
+		{
+			"type": "function",
+			"function": {
+				"name": "suggest_event",
+				"description": "Suggest the event the person wants to create from this conversation.",
+				"parameters": {
+					"type": "object",
+					"properties": {
+						"name": {
+							"type": "string",
+							"description": "A short event name. Example: Park Potluck."
+						},
+						"start": {
+							"type": "string",
+							"description": "Start date and time as yyyy-MM-dd'T'HH:mm, local time."
+						},
+						"end": {
+							"type": "string",
+							"description": "End date and time as yyyy-MM-dd'T'HH:mm, local time. Empty if not said."
+						},
+						"location": {
+							"type": "string",
+							"description": "Where the event is. Empty if not said."
+						},
+						"description": {
+							"type": "string",
+							"description": "One or two sentences about the event. Empty if not said."
+						}
+					},
+					"required": ["name", "start"]
+				}
+			}
+		}
+	],
+	"tool_choice": "required"
+}

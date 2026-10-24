@@ -1,0 +1,10 @@
+
+<div>
+	<h5 class="mb-1">
+		[[Your event has been created]]
+	</h5>
+	#if( $event )
+		<p>#text( $event.name )</p>
+	#end
+	<messageplain>[[Event Created!]]#if( $event ) #text( $event.name )#end</messageplain>
+</div>

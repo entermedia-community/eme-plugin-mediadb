@@ -6,7 +6,7 @@ import org.openedit.data.QueryBuilder
 
 // Events for the app. Without params: upcoming and recent events, newest start
 // first. query: name filter. rsvped=true: only events the signed-in user
-// answered. eventid: a single event.
+// answered or hosts. eventid: a single event.
 // Each event is a map with the rsvp counts and the signed-in user's response.
 String iso(Date inDate)
 {
@@ -47,10 +47,15 @@ public void init()
 		}
 		if (userid != null && Boolean.parseBoolean(context.getRequestParameter("rsvped")))
 		{
+			// Events the user answered, plus the ones they host
 			List<String> ids = new ArrayList<String>();
 			for (Data rsvp : archive.query("collectiveeventrsvp").exact("rsvpuser", userid).search())
 			{
 				ids.add(rsvp.get("eventid"));
+			}
+			for (Data hosted : archive.query("collectiveevent").exact("eventhost", userid).search())
+			{
+				ids.add(hosted.getId());
 			}
 			if (ids.isEmpty())
 			{

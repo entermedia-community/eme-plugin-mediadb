@@ -28,6 +28,8 @@
     "statuscolor": #jesc($emeserver.statuscolor),
     "servermediadburl": #jesc($emeserver.servermediadburl),
     "serverfunction": #jesc($emeserver.serverfunction),
+    #set($ownerrow = false)#set($ownerrow = $mediaarchive.query("emeserveruser").exact("user", $user.id).exact("emeserver", $emeserver.id).exact("serverowner", "true").searchOne())
+    "isowner": #if($ownerrow)true#else false#end,
     "joined": $joined
   }
   #else
