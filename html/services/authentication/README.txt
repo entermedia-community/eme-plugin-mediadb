@@ -28,7 +28,7 @@ response:
 		"lastname": "Administrator",
 		"email": "support@entermediadb.org",
 		"screenname": "Admin",
-		"assetportrait": "http://localhost.com:8080/site/mediadb/services/module/asset/generated/Users/Shakil.A/image_picker_E3FCF644-58ED-4EFE-AFA7-CEC8386DF770-47636-000000A8B34B33E9.jpg/image200x200.webp"
+		"assetportrait": "http://localhost:8080/site/mediadb/services/module/asset/generated/Users/Shakil.A/image_picker_E3FCF644-58ED-4EFE-AFA7-CEC8386DF770-47636-000000A8B34B33E9.jpg/image200x200.webp"
 	}
 }
 
