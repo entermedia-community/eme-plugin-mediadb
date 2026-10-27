@@ -1,0 +1,47 @@
+## Confirmation for team_chat_custom_skills. Start, or any reply, runs team_chat_custom_skills_welcome
+{
+	"messageplain": "[[Run Custom Skill]]: [[I will run a background agent job for the team.]]",
+	"ops": [
+		{ "insert": "[[Run Custom Skill]]" },
+		{ "attributes": { "header": 3 }, "insert": "\n" },
+		{ "insert": "[[I will run a background agent job for the team.]]\n" },
+		{ "insert": "[[Here is what will happen]]:\n" },
+		{ "insert": "[[Someone on the team tells me what to do.]]" },
+		{ "attributes": { "list": "ordered" }, "insert": "\n" },
+		{ "insert": "[[I plan the steps and start them as a background agent job.]]" },
+		{ "attributes": { "list": "ordered" }, "insert": "\n" },
+		{ "insert": "[[If a step needs permission or more details, I ask here first.]]" },
+		{ "attributes": { "list": "ordered" }, "insert": "\n" },
+		{ "insert": "[[I post the progress and the result in this chat.]]" },
+		{ "attributes": { "list": "ordered" }, "insert": "\n" },
+		{ "attributes": { "italic": true }, "insert": "[[Jobs can change your files and records, so review each approval request.]]" },
+		{ "insert": "\n" },
+		{
+			"attributes": {
+				"bold": true,
+				"link": "$applink/views/modules/${agentcontext.entitymoduleid}/editors/entitychat/chatterbox/changescenario.html",
+				"class": "ajax",
+				"data-targetdiv": "changescenario",
+				"data-channel": "$!{channel.getId()}",
+				"data-currentscenario": "team_chat_custom_skills",
+				"data-functionname": "team_chat_custom_skills_welcome",
+				"data-oemaxlevel": "1"
+			},
+			"insert": "[[Start]]"
+		},
+		{ "insert": "   " },
+		{
+			"attributes": {
+				"link": "$applink/views/modules/${agentcontext.entitymoduleid}/editors/entitychat/chatterbox/changescenario.html",
+				"class": "ajax",
+				"data-targetdiv": "changescenario",
+				"data-channel": "$!{channel.getId()}",
+				"data-currentscenario": "team_chat_monitor",
+				"data-oemaxlevel": "1"
+			},
+			"insert": "[[Not now]]"
+		},
+		{ "insert": "\n" }
+	],
+	"append": "<div id='changescenario'></div>"
+}

@@ -1,0 +1,13 @@
+#set( $tellme = "[[Tell me if you want]] #if( $changed )[[any more]]#else[[to make any]]#end [[changes to the outline. If not just say 'OK'!]]" )
+{
+	"messageplain": "[[We made the changes according to your request]]: \n [[Outline]]:#foreach( $section in $proposedoutline ) \n ${foreach.count}. #jrender( "$!section" )#end \n $tellme",
+	"ops": [
+		{ "attributes": { "italic": true }, "insert": "[[We made the changes according to your request]]:" },
+		{ "insert": "\n[[Outline]]:\n" },
+		#foreach( $section in $proposedoutline )
+		{ "insert": "#jrender( "$!section" )" },
+		{ "attributes": { "list": "ordered" }, "insert": "\n" },
+		#end
+		{ "insert": "$tellme\n" }
+	]
+}

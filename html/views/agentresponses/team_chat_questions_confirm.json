@@ -1,0 +1,47 @@
+## Confirmation for team_chat_questions. Start, or any reply, runs team_chat_questions_welcome
+{
+	"messageplain": "[[Answer Questions]]: [[I will answer the team's questions using the files and records in this project.]]",
+	"ops": [
+		{ "insert": "[[Answer Questions]]" },
+		{ "attributes": { "header": 3 }, "insert": "\n" },
+		{ "insert": "[[I will answer the team's questions using the files and records in this project.]]\n" },
+		{ "insert": "[[Here is what will happen]]:\n" },
+		{ "insert": "[[I check which documents are ready to answer from.]]" },
+		{ "attributes": { "list": "ordered" }, "insert": "\n" },
+		{ "insert": "[[I suggest example questions, creating them if there are none yet.]]" },
+		{ "attributes": { "list": "ordered" }, "insert": "\n" },
+		{ "insert": "[[Anyone on the team asks a question, or picks one of the examples.]]" },
+		{ "attributes": { "list": "ordered" }, "insert": "\n" },
+		{ "insert": "[[I search the documents and answer, using only what they say.]]" },
+		{ "attributes": { "list": "ordered" }, "insert": "\n" },
+		{ "attributes": { "italic": true }, "insert": "[[Nothing is changed or deleted.]]" },
+		{ "insert": "\n" },
+		{
+			"attributes": {
+				"bold": true,
+				"link": "$applink/views/modules/${agentcontext.entitymoduleid}/editors/entitychat/chatterbox/changescenario.html",
+				"class": "ajax",
+				"data-targetdiv": "changescenario",
+				"data-channel": "$!{channel.getId()}",
+				"data-currentscenario": "team_chat_questions",
+				"data-functionname": "team_chat_questions_welcome",
+				"data-oemaxlevel": "1"
+			},
+			"insert": "[[Start]]"
+		},
+		{ "insert": "   " },
+		{
+			"attributes": {
+				"link": "$applink/views/modules/${agentcontext.entitymoduleid}/editors/entitychat/chatterbox/changescenario.html",
+				"class": "ajax",
+				"data-targetdiv": "changescenario",
+				"data-channel": "$!{channel.getId()}",
+				"data-currentscenario": "team_chat_monitor",
+				"data-oemaxlevel": "1"
+			},
+			"insert": "[[Not now]]"
+		},
+		{ "insert": "\n" }
+	],
+	"append": "<div id='changescenario'></div>"
+}

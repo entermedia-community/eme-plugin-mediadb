@@ -1,0 +1,17 @@
+#if( $errorcode == 422 )
+## embed server error
+{
+	"messageplain": "[[Do you have any questions?]]",
+	"ops": [
+		{ "insert": "[[Do you have any questions?]]\n" }
+	]
+}
+#else
+{
+	"messageplain": "[[Error on AI Agent]]: #jrender( "$!error" )",
+	"ops": [
+		{ "attributes": { "bold": true }, "insert": "[[Error on AI Agent]]:" },
+		{ "insert": "\n#jrender( "$!error" )\n" }
+	]
+}
+#end

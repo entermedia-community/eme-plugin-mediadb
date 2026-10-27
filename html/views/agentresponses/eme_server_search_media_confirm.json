@@ -1,36 +1,22 @@
+## Confirmation for eme_server_search_media. Start, or any reply, runs eme_server_search_media_welcome
 {
+	"messageplain": "[[Search for Media]]: [[I will search the whole library for media that matches what you describe.]]",
 	"ops": [
-		{
-			"attributes": { "color": "#444444", "background": "#ffffff" },
-			"insert": "[[Search for Media]]"
-		},
+		{ "insert": "[[Search for Media]]" },
 		{ "attributes": { "header": 3 }, "insert": "\n" }
 	],
 	"formAttr": {
 		"action": "$applink/views/modules/${agentcontext.entitymoduleid}/editors/entitychat/chatterbox/changescenario.html",
 		"method": "post",
-		"class": "ajaxform"
+		"class": "ajaxform",
+		"data-targetdiv": "changescenario"
 	},
 	"form": [
-		{
-			"type": "text",
-			"name": "context_userquery",
-			"label": "[[Search]]..."
-		},
-		{
-			"type": "hidden",
-			"name": "channel",
-			"value": "$!{channel.getId()}"
-		},
-		{
-			"type": "hidden",
-			"name": "currentscenario",
-			"value": "eme_server_search_media"
-		},
-		{
-			"type": "hidden",
-			"name": "functionname",
-			"value": "eme_server_search_media_parse"
-		}
-	]
+		{ "type": "text", "name": "context_userquery", "label": "[[Search]]...", "value": "#jrender( "$!unconfirmed_query" )" },
+		{ "type": "hidden", "name": "channel", "value": "$!{channel.getId()}" },
+		{ "type": "hidden", "name": "currentscenario", "value": "eme_server_search_media" },
+		{ "type": "hidden", "name": "functionname", "value": "eme_server_search_media_parse" }
+	],
+	"submitLabel": "[[Search]]",
+	"append": "<div id='changescenario'></div>"
 }

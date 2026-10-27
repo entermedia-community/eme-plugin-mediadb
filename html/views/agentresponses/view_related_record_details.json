@@ -1,0 +1,70 @@
+#set( $edithome = "$applink/views/modules/${agentcontext.entitymoduleid}/editors" )
+#set( $description = $record.get("longcaption") )
+#ifnull( $description )
+	#set( $description = $record.get("collectivedescription") )
+#end
+#ifnull( $description )
+	#set( $description = $record.get("maincontent") )
+#end
+#set( $assetid = $record.get("primarymedia") )
+#ifnull( $assetid )
+	#set( $assetid = $record.get("primaryimage") )
+#end
+{
+	"messageplain": "#jrender( "$!recordmodule.getName()" ): #jtext( $record )",
+	"ops": [
+		{
+			"attributes": {
+				"link": "$edithome/entitychat/chatterbox/changescenario.html",
+				"class": "ajax",
+				"data-targetdiv": "aichatsearch",
+				"data-channel": "$!{channel.getId()}",
+				"data-currentscenario": "entity_chat_search",
+				"data-functionname": "view_related_record_list",
+				"data-context_relatedmoduleid": "$recordmodule.getId()",
+				"data-oemaxlevel": "1"
+			},
+			"insert": "#jrender( "$!recordmodule.getName()" )"
+		},
+		{ "insert": " · " },
+		{ "attributes": { "bold": true }, "insert": "#jtext( $record )" },
+		{ "insert": "\n" },
+		#ifnotnull( $description )
+		{ "insert": "#jrender( "$description" )\n" },
+		#end
+		#ifnotnull( $assetid )
+		{
+			"attributes": {
+				"link": "$siteroot$mediaarchive.asLinkToPreview($assetid, 'image3000x3000')",
+				"class": "stackedplayer",
+				"data-assetid": "$assetid"
+			},
+			"insert": "[[Preview]]"
+		},
+		{ "insert": "   " },
+		#end
+		{
+			"attributes": {
+				"link": "$applink/views/modules/${record.entitysourcetype}/index.html?entityid=$record.getId()",
+				"class": "emdialog",
+				"data-dialogid": "entitydialog"
+			},
+			"insert": "[[Open]]"
+		},
+		{ "insert": "   " },
+		{
+			"attributes": {
+				"link": "$edithome/entitychat/chatterbox/changescenario.html",
+				"class": "ajax",
+				"data-targetdiv": "aichatsearch",
+				"data-channel": "$!{channel.getId()}",
+				"data-currentscenario": "entity_chat_search",
+				"data-functionname": "view_related_records",
+				"data-context_relatedmoduleid": "$recordmodule.id",
+				"data-oemaxlevel": "1"
+			},
+			"insert": "[[Related Records]]"
+		},
+		{ "insert": "\n" }
+	]
+}

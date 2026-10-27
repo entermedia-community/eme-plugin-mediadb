@@ -1,0 +1,48 @@
+## Confirmation for entity_chat_search. Start, or any reply, runs entity_chat_search_welcome
+{
+	"messageplain": "[[Search Files]]: [[I will find files and records by what you describe.]]",
+	"ops": [
+		{ "insert": "[[Search Files]]" },
+		{ "attributes": { "header": 3 }, "insert": "\n" },
+		{ "insert": "[[I will find files and records by what you describe.]]\n" },
+		{ "insert": "[[Here is what will happen]]:\n" },
+		{ "insert": "[[You describe what you are looking for in your own words.]]" },
+		{ "attributes": { "list": "ordered" }, "insert": "\n" },
+		{ "insert": "[[I work out the keywords and filters from your description.]]" },
+		{ "attributes": { "list": "ordered" }, "insert": "\n" },
+		{ "insert": "[[I search the records and files and show what matches.]]" },
+		{ "attributes": { "list": "ordered" }, "insert": "\n" },
+		{ "insert": "[[You can keep refining the search in the same chat.]]" },
+		{ "attributes": { "list": "ordered" }, "insert": "\n" },
+		{ "attributes": { "italic": true }, "insert": "[[Nothing is changed or deleted.]]" },
+		{ "insert": "\n" },
+		{
+			"attributes": {
+				"bold": true,
+				"link": "$applink/views/modules/${agentcontext.entitymoduleid}/editors/entitychat/chatterbox/changescenario.html",
+				"class": "ajax",
+				"data-targetdiv": "changescenario",
+				"data-channel": "$!{channel.getId()}",
+				"data-currentscenario": "entity_chat_search",
+				"data-functionname": "entity_chat_search_welcome",
+				"data-oemaxlevel": "1"
+			},
+			"insert": "[[Start]]"
+		},
+		{ "insert": "   " },
+		{
+			"attributes": {
+				"link": "$applink/views/modules/${agentcontext.entitymoduleid}/editors/entitychat/chatterbox/changescenario.html",
+				"class": "ajax",
+				"data-targetdiv": "changescenario",
+				"data-channel": "$!{channel.getId()}",
+				"data-currentscenario": "entity_chat_welcome_menu",
+				"data-functionname": "entity_chat_welcome_menu_welcome",
+				"data-oemaxlevel": "1"
+			},
+			"insert": "[[Back to menu]]"
+		},
+		{ "insert": "\n" }
+	],
+	"append": "<div id='changescenario'></div>"
+}

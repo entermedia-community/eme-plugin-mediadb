@@ -1,0 +1,25 @@
+## Confirmation for eme_server_custom_skills. Start, or any reply, runs eme_server_custom_skills_welcome
+{
+	"messageplain": "[[Run Custom Skill]]: [[I will run a background agent job for you, like tagging files or creating content.]]",
+	"ops": [
+		{ "insert": "[[Run Custom Skill]]" },
+		{ "attributes": { "header": 3 }, "insert": "\n" },
+		{ "insert": "[[I will run a background agent job for you, like tagging files or creating content.]]\n" },
+		{ "attributes": { "italic": true }, "insert": "[[Jobs can change your files and records, so review each approval request.]]" },
+		{ "insert": "\n" }
+	],
+	"formAttr": {
+		"action": "$applink/views/modules/${agentcontext.entitymoduleid}/editors/entitychat/chatterbox/changescenario.html",
+		"method": "post",
+		"class": "ajaxform",
+		"data-targetdiv": "changescenario"
+	},
+	"form": [
+		{ "type": "text", "name": "context_userrequest", "label": "[[Enter Custom Prompt]]...", "value": "#jrender( "$!unconfirmed_query" )" },
+		{ "type": "hidden", "name": "channel", "value": "$!{channel.getId()}" },
+		{ "type": "hidden", "name": "currentscenario", "value": "eme_server_custom_skills" },
+		{ "type": "hidden", "name": "functionname", "value": "eme_server_custom_skills_run" }
+	],
+	"submitLabel": "[[Submit]]",
+	"append": "<div id='changescenario'></div>"
+}

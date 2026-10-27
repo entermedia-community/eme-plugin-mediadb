@@ -1,0 +1,11 @@
+{
+	"messageplain": "[[Event Created!]]#if( $event ) #jrender( "$!event.name" )#end",
+	"ops": [
+		{ "insert": "[[Your event has been created]]" },
+		{ "attributes": { "header": 3 }, "insert": "\n" },
+		#if( $event )
+		{ "insert": "#jrender( "$!event.name" )\n" },
+		#end
+		{ "insert": "\n" }
+	]
+}

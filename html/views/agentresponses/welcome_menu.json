@@ -1,60 +1,36 @@
 {
+	"messageplain": "[[Welcome!]] [[Here are some things I can help you with]]#ifnotnull( $menulabel ) [[in]] #jrender( "$!menulabel.text" )#end.",
 	"ops": [
-		{
-			"attributes": { "color": "#444444", "background": "#ffffff" },
-			"insert": "[[Welcome!]]"
-		},
+		{ "insert": "[[Welcome!]]" },
 		{ "attributes": { "header": 3 }, "insert": "\n" },
-		{
-			"attributes": { "color": "#444444", "background": "#ffffff" },
-			"insert": "[[Here are some things I can help you with]]#ifnotnull($menulabel) [[in]] #end"
-		},
-		#ifnotnull($menulabel)
-		{
-			"attributes": {
-				"color": "#444444",
-				"background": "#ffffff",
-				"bold": true
-			},
-			"insert": "$!menulabel.text"
-		},
+		{ "insert": "[[Here are some things I can help you with]]#ifnotnull( $menulabel ) [[in]] #end" },
+		#ifnotnull( $menulabel )
+		{ "attributes": { "bold": true }, "insert": "#jrender( "$!menulabel.text" )" },
 		#end
-		{
-			"attributes": { "color": "#444444", "background": "#ffffff" },
-			"insert": ":"
-		},
-		{ "insert": "\n" },
-#if( $menuscenarios && !$menuscenarios.isEmpty() )
-	#foreach( $scenario in $menuscenarios )
-		#if($foreach.count > 1),#end
+		{ "insert": ":\n" },
+		#if( $menuscenarios && !$menuscenarios.isEmpty() )
+		#foreach( $scenario in $menuscenarios )
 		{
 			"attributes": {
-				"color": "#3cb371",
-				"background": "#ffffff",
+				"link": "$applink/views/modules/${agentcontext.entitymoduleid}/editors/entitychat/chatterbox/changescenario.html",
+				"class": "ajax",
 				"data-targetdiv": "changescenario",
 				"data-channel": "$!{channel.getId()}",
 				"data-currentscenario": "$scenario.id",
 				"data-functionname": "${scenario.id}_confirm",
-				"data-oemaxlevel": "1",
-				"class": "ajax",
-				"link": "$applink/views/modules/${agentcontext.entitymoduleid}/editors/entitychat/chatterbox/changescenario.html"
+				"data-oemaxlevel": "1"
 			},
-			"insert": "#text( $scenario )"
+			"insert": "#jtext( $scenario )"
 		},
-		#ifnotnull($scenario.markdowncontent)
-		{
-			"attributes": { "color": "#444444", "background": "#ffffff" },
-			"insert": ": $scenario.markdowncontent"
-		},
+		#ifnotnull( $scenario.markdowncontent )
+		{ "insert": ": #jrender( "$scenario.markdowncontent" )" },
 		#end
-		{ "attributes": { "list": "bullet" }, "insert": "\n" }
-	#end
-#else 
-		{
-			"attributes": { "color": "#444444", "background": "#ffffff" },
-			"insert": "[[No chat options are available yet.]]"
-		}
-#end
+		{ "attributes": { "list": "bullet" }, "insert": "\n" },
+		#end
+		#else
+		{ "insert": "[[No chat options are available yet.]]\n" },
+		#end
+		{ "insert": "\n" }
 	],
-	"append":"<div id='changescenario'></div>"
+	"append": "<div id='changescenario'></div>"
 }

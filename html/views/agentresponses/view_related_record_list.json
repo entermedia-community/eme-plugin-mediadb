@@ -1,0 +1,59 @@
+#set( $edithome = "$applink/views/modules/${agentcontext.entitymoduleid}/editors" )
+{
+	"messageplain": "#jtext( $recordmodule ):#foreach( $record in $recordlist ) \n #jrender( "$!record.getName()" )#end",
+	"ops": [
+		{ "insert": "#jtext( $recordmodule ):" },
+		{ "attributes": { "header": 3 }, "insert": "\n" },
+		#foreach( $record in $recordlist )
+		{
+			"attributes": {
+				"link": "$edithome/entitychat/chatterbox/changescenario.html",
+				"class": "ajax",
+				"data-targetdiv": "aichatsearch",
+				"data-channel": "$!{channel.getId()}",
+				#if( $recordmodule.aicreationmethod == "smartcreator" )
+				"data-currentscenario": "entity_chat_smart_creator",
+				"data-functionname": "smartcreator_play",
+				"data-context_playbackentityid": "${record.id}",
+				"data-context_playbackentitymoduleid": "${recordmodule.id}",
+				"data-context_playbacksection": "0",
+				#else
+				"data-currentscenario": "entity_chat_search",
+				"data-functionname": "view_related_record_details",
+				#end
+				"data-context_relatedmoduleid": "$recordmodule.id",
+				"data-context_recordid": "$record.id",
+				"data-oemaxlevel": "1"
+			},
+			"insert": "#jrender( "$!record.getName()" )"
+		},
+		{ "attributes": { "list": "bullet" }, "insert": "\n" },
+		#end
+		{
+			"attributes": {
+				"link": "$edithome/default/tabs/index.html",
+				"class": "emdialog",
+				"data-dialogid": "entitydialog",
+				"data-entityid": "${agentcontext.entityid}",
+				"data-entitymoduleid": "${agentcontext.entitymoduleid}",
+				"data-entitymoduleviewid": "${agentcontext.entitymoduleid}${recordmodule.id}"
+			},
+			"insert": "[[View All]]"
+		},
+		{ "insert": "   " },
+		{
+			"attributes": {
+				"link": "$edithome/entitychat/chatterbox/changescenario.html",
+				"class": "ajax",
+				"data-targetdiv": "aichatsearch",
+				"data-channel": "$!{channel.getId()}",
+				"data-currentscenario": "entity_chat_search",
+				"data-functionname": "view_related_records",
+				"data-context_relatedmoduleid": "$recordmodule.id",
+				"data-oemaxlevel": "1"
+			},
+			"insert": "[[Related Records]]"
+		},
+		{ "insert": "\n" }
+	]
+}

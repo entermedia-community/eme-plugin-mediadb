@@ -1,0 +1,7 @@
+{
+	"messageplain": "[[What do you want to search?]] \n [[Search for]]:#foreach( $module in $schema.getModules() ) \n #jtext( $module )#end",
+	"ops": [
+		{ "attributes": { "bold": true }, "insert": "[[What do you want to search?]]" },
+		{ "insert": "\n[[Search for]]: #foreach( $module in $schema.getModules() )#if( $foreach.count > 1 ), #end#jtext( $module )#end\n" }
+	]
+}

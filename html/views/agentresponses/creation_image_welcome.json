@@ -1,0 +1,23 @@
+#set( $semantictopics = $entity.getValues("semantictopics") )
+{
+	"messageplain": "[[Welcome to Image creation wizard. Describe the image you want to create]].#ifnotnull( $semantictopics ) \n [[Here are some suggestions]]:#foreach( $topic in $semantictopics ) \n [[Create an image about]] #jrender( "$!topic" )#end#end",
+	"ops": [
+		{ "insert": "[[Welcome to Image creation wizard. Describe the image you want to create]]." },
+		{ "attributes": { "header": 3 }, "insert": "\n" },
+		#ifnotnull( $semantictopics )
+		{ "insert": "[[Here are some suggestions]]:\n" },
+		#foreach( $topic in $semantictopics )
+		{
+			"attributes": {
+				"link": "#",
+				"class": "autoprefixchatmsg",
+				"data-prefix": "[[Create an image about]] #jrender( "$!topic" )"
+			},
+			"insert": "[[Create an image about]] #jrender( "$!topic" )"
+		},
+		{ "attributes": { "list": "bullet" }, "insert": "\n" },
+		#end
+		#end
+		{ "insert": "\n" }
+	]
+}

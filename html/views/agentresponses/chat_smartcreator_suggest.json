@@ -1,0 +1,29 @@
+#set( $creatortype = $inflector.singularize($playbackentitymodule.getName()) )
+#if( $semantictopics.isEmpty() )
+	#set( $suggestedtopic = $entity.getName() )
+	#set( $none = $semantictopics.add($suggestedtopic) )
+#end
+{
+	"messageplain": "[[What]] #jrender( "$!creatortype" ) [[subject you would like to create?]]#if( !$semantictopics.isEmpty() ) \n [[Here are some suggestions]]:#foreach( $topic in $semantictopics ) \n #jrender( "$!topic" )#end#end",
+	"ops": [
+		{ "insert": "[[What]] #jrender( "$!creatortype" ) [[subject you would like to create?]]\n" },
+		#if( !$semantictopics.isEmpty() )
+		{ "insert": "[[Here are some suggestions]]:\n" },
+		#foreach( $topic in $semantictopics )
+		#set( $fixedtopic = "Create a brief outline for a $!creatortype about $!topic. For each outline topic, create a summary with a header, and paragraphs + lists (where necessary). Provide examples if applicable." )
+		#set( $fixedtopic = $translationManager.emediaTranslate("en", $context.getLocale(), $fixedtopic) )
+		{
+			"attributes": {
+				"link": "#",
+				"class": "autoprefixchatmsg",
+				"data-prefix": "#jrender( "$!fixedtopic" )",
+				"data-functionname": "chat_smartcreator_parse_user_prompt"
+			},
+			"insert": "#jrender( "$!topic" )"
+		},
+		{ "attributes": { "list": "bullet" }, "insert": "\n" },
+		#end
+		#end
+		{ "insert": "\n" }
+	]
+}

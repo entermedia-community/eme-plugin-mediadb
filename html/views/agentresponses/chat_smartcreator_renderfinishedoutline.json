@@ -1,0 +1,60 @@
+#set( $listentities = "$applink/views/modules/${playbackentitymodule.getId()}/editors/listentities/tabs/index.html" )
+{
+	"messageplain": "[[Created]] #jtext( $playbackentity ) in #jtext( $playbackentitymodule ) \n [[Outline]]:#foreach( $section in $confirmedoutline ) \n ${foreach.count}. #jrender( "$!section" )#end",
+	"ops": [
+		{ "insert": "[[Created]] " },
+		{
+			"attributes": {
+				"bold": true,
+				"link": "$applink/views/modules/${playbackentitymodule.getId()}/editors/default/tabs/index.html",
+				"class": "emdialog",
+				"data-dialogid": "entitydialog",
+				"data-entityid": "${playbackentity.getId()}",
+				"data-parententityid": "$entity.getId()",
+				"data-parententitymoduleid": "$entitymodule.getId()"
+			},
+			"insert": "#jtext( $playbackentity )"
+		},
+		{ "insert": " in " },
+		{
+			"attributes": {
+				"bold": true,
+				"link": "$applink/views/modules/${entitymodule.getId()}/editors/listentities/tabs/index.html",
+				"class": "emdialog",
+				"data-dialogid": "entitydialog",
+				"data-entityid": "${entity.getId()}",
+				"data-entitymoduleviewid": "${entitymodule.getId()}${playbackentitymodule.getId()}"
+			},
+			"insert": "#jtext( $playbackentitymodule )"
+		},
+		{ "insert": "\n[[Outline]]:\n" },
+		#foreach( $section in $confirmedoutline )
+		{ "insert": "#jrender( "$!section" )" },
+		{ "attributes": { "list": "ordered" }, "insert": "\n" },
+		#end
+		{
+			"attributes": {
+				"link": "$listentities",
+				"class": "emdialog",
+				"data-dialogid": "entitydialog",
+				"data-entityid": "${playbackentity.getId()}",
+				"data-entitymoduleid": "${playbackentitymodule.getId()}",
+				"data-entitymoduleviewid": "${playbackentitymodule.getId()}smartcreator"
+			},
+			"insert": "[[Edit]]"
+		},
+		{ "insert": "   " },
+		{
+			"attributes": {
+				"link": "$listentities",
+				"class": "emdialog",
+				"data-dialogid": "entitydialog",
+				"data-entityid": "${playbackentity.getId()}",
+				"data-entitymoduleid": "${playbackentitymodule.getId()}",
+				"data-entitymoduleviewid": "${playbackentitymodule.getId()}preview"
+			},
+			"insert": "[[View]]"
+		},
+		{ "insert": "\n" }
+	]
+}

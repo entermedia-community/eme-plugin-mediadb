@@ -26,6 +26,7 @@ What\ would\ you\ like\ to\ search\ for?=\u00BFQu\u00E9 desea buscar?
 You're\ about\ to\ begin\ your\ **\#text($tutorial)**\ tutorial.\ Take\ your\ time,\ read\ each\ question\ carefully,\ give\ your\ best\ answers\ with\ proper\ level\ of\ confidence,\ and\ ask\ follow\ up\ question\ if\ you\ get\ them\ wrong\ or\ want\ to\ learn\ more.=Est\u00E1s a punto de comenzar tu tutorial **\#text($tutorial)**. T\u00F3mate tu tiempo, lee cada pregunta cuidadosamente, da tus mejores respuestas con el nivel adecuado de confianza y haz preguntas de seguimiento si te equivocas o quieres aprender m\u00E1s.
 any\ more=Ning\u00FAn m\u00E1s.
 changes\ to\ the\ outline.\ If\ not\ just\ say\ "OK"\!=Si no, solo di "\u00A1OK"\!
+changes\ to\ the\ outline.\ If\ not\ just\ say\ 'OK'\!=cambios en el \u00EDndice. Si no, solo di 'OK'\!
 creation\ wizard=Asistente de creaci\u00F3n
 see\ less=ver menos
 see\ more=Ver m\u00E1s

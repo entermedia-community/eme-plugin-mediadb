@@ -30,6 +30,39 @@ AI provider config lives as data under `html/ai`.
 - `html/media/services/` Media-specific service handlers
 - `html/samples/` Example client code (jQuery, static) for calling the API
 
+- `html/views/agentresponses/` Velocity templates for agent chat replies, rendered by
+  `BaseLlmConnection.renderLocalAction` (`plugins/finder`), which prefers `<name>.json` over
+  `<name>.html`. A sibling `<name>.xconf` applies to either. See "Agent Response Format" below.
+
+### Agent Response Format
+
+`views/agentresponses/*.json` is one hybrid document read by both the web chat
+(`community/.../htmleditor/htmleditor.js`, the `.quill-delta` livequery + `parseForm`) and the
+Flutter app (`eme_app_sdk` `ChatMessage.fromJson`, `DeltaViewer`, the form bubble):
+
+```json
+{
+  "messageplain": "Plain text for the chat list preview, notifications and the LLM's follow-up context",
+  "ops": [ Quill Delta ops; must end with an op whose insert ends in "\n" ],
+  "formAttr": { "action": "...", "method": "post", "class": "ajaxform", "data-targetdiv": "changescenario" },
+  "form": [ { "type": "text|textarea|hidden|select|checkbox|datetime-local|...", "name": "...", "label": "...", "value": "...", "options": [...] } ],
+  "submitLabel": "[[Search]]",
+  "append": "<div id='changescenario'></div>"
+}
+```
+
+- Only `ops` is required. `messageplain` replaces the HTML `<messageplain>` tag
+  (`BasicLlmResponse.readJsonMessagePlain`); without it the preview says "New message".
+- Clickable actions are link ops. Keep every `data-*` attribute: the app passes them (minus the
+  `data-` prefix) to its tap handler. Keep only the classes the web uses for behaviour (`ajax`,
+  `emdialog`, `autoprefixchatmsg`, `stackedplayer`, `ajaxform`), never styling classes or colors.
+- Escape every dynamic value: `#jrender( "$!value" )` for strings, `#jtext( $data )` for a localized
+  name. Never `#text`/`#esc` (XML escaping) and never a raw `$value` that could hold a quote or newline.
+- Keep `"` out of `[[...]]` translation keys and their translations; use `'` instead.
+- Commas: put one after every op inside `#if`/`#foreach`, and close `ops` with a static op so the
+  last element never has a trailing comma.
+- No image embeds in `ops`: the app has no Quill embed builders. Link to the preview instead.
+
 ### What This Plugin Owns
 
 - The HTTP/JSON contract for the whole system: every `/services/**.json` endpoint

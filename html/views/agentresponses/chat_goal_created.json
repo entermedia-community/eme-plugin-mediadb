@@ -1,0 +1,11 @@
+{
+	"messageplain": "[[Goal Created!]]#if( $goal ) #jtext( $goal )#end",
+	"ops": [
+		{ "insert": "[[The following Goal has been created in the project]]" },
+		{ "attributes": { "header": 3 }, "insert": "\n" },
+		#if( $goal )
+		{ "insert": "#jtext( $goal )\n" },
+		#end
+		{ "insert": "\n" }
+	]
+}

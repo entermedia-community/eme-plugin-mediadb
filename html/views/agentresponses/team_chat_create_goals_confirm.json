@@ -1,0 +1,59 @@
+## Confirmation for team_chat_create_goals. ChatGuessGoalSkill sets $suggestedgoal from the recent messages.
+## The Create button, or a typed reply, runs team_chat_create_goals_create
+{
+	#if( $suggestedgoal )
+	"messageplain": "[[Create Goals]]: [[Based on the conversation, I suggest this goal]]: #jrender( "$suggestedgoal" )",
+	#else
+	"messageplain": "[[Create Goals]]: [[What goal should I create for the team?]]",
+	#end
+	"ops": [
+		{ "insert": "[[Create Goals]]" },
+		{ "attributes": { "header": 3 }, "insert": "\n" },
+		#if( $suggestedgoal )
+		{ "insert": "[[Based on the conversation, I suggest this goal]]:\n" },
+		#else
+		{ "insert": "[[What goal should I create for the team?]]\n" },
+		#end
+		#if( $suggestedgoaldetails )
+		{ "attributes": { "italic": true }, "insert": "#jrender( "$suggestedgoaldetails" )" },
+		{ "insert": "\n" },
+		#end
+		{ "insert": "[[Here is what will happen]]:\n" },
+		{ "insert": "[[I create the goal in this project, owned by you.]]" },
+		{ "attributes": { "list": "ordered" }, "insert": "\n" },
+		{ "insert": "[[I break the goal into up to three tasks.]]" },
+		{ "attributes": { "list": "ordered" }, "insert": "\n" },
+		{ "insert": "[[The goal and its tasks show up on the project's goals board.]]" },
+		{ "attributes": { "list": "ordered" }, "insert": "\n" },
+		{ "attributes": { "italic": true }, "insert": "[[Edit the goal first if it is not quite right, or type a different goal as a reply.]]" },
+		{ "insert": "\n" },
+		{
+			"attributes": {
+				"link": "$applink/views/modules/${agentcontext.entitymoduleid}/editors/entitychat/chatterbox/changescenario.html",
+				"class": "ajax",
+				"data-targetdiv": "changescenario",
+				"data-channel": "$!{channel.getId()}",
+				"data-currentscenario": "team_chat_monitor",
+				"data-oemaxlevel": "1"
+			},
+			"insert": "[[Not now]]"
+		},
+		{ "insert": "\n" }
+	],
+	"formAttr": {
+		"action": "$applink/views/modules/${agentcontext.entitymoduleid}/editors/entitychat/chatterbox/changescenario.html",
+		"method": "post",
+		"class": "ajaxform",
+		"data-targetdiv": "changescenario",
+		"data-oemaxlevel": "1"
+	},
+	"form": [
+		{ "type": "hidden", "name": "channel", "value": "$!{channel.getId()}" },
+		{ "type": "hidden", "name": "currentscenario", "value": "team_chat_create_goals" },
+		{ "type": "hidden", "name": "functionname", "value": "team_chat_create_goals_create" },
+		{ "type": "hidden", "name": "oemaxlevel", "value": "1" },
+		{ "type": "textarea", "name": "context_goaltext", "label": "[[Goal]]", "value": "#jrender( "$!suggestedgoal" )", "required": true }
+	],
+	"submitLabel": "[[Create Goal]]",
+	"append": "<div id='changescenario'></div>"
+}

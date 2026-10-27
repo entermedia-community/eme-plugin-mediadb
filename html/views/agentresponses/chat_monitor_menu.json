@@ -1,0 +1,31 @@
+{
+	"messageplain": "#if( $helperrole )#jrender( "$!helperrole" ): #end#jrender( "$!confirmation" )",
+	"ops": [
+		#if( $helperrole )
+		{ "attributes": { "bold": true }, "insert": "#jrender( "$!helperrole" ):" },
+		{ "insert": " " },
+		#end
+		{ "insert": "#jrender( "$!confirmation" )\n" },
+		#foreach( $scenario in $recommendedscenarios )
+		{
+			"attributes": {
+				"link": "$applink/views/modules/${agentcontext.entitymoduleid}/editors/entitychat/chatterbox/changescenario.html",
+				"class": "ajax",
+				"data-targetdiv": "changescenario",
+				"data-channel": "$!{channel.getId()}",
+				"data-currentscenario": "$scenario.id",
+				"data-functionname": "${scenario.id}_confirm",
+				"data-context_teaminstruction": "#jrender( "$!teaminstruction" )",
+				"data-oemaxlevel": "1"
+			},
+			"insert": "#jrender( "$!scenario.name" )"
+		},
+		#ifnotnull( $scenario.markdowncontent )
+		{ "insert": ": #jrender( "$scenario.markdowncontent" )" },
+		#end
+		{ "attributes": { "list": "bullet" }, "insert": "\n" },
+		#end
+		{ "insert": "\n" }
+	],
+	"append": "<div id='changescenario'></div>"
+}

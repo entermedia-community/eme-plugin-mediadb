@@ -1,0 +1,9 @@
+{
+	"messageplain": "[[What would you like me to do?]]",
+	"ops": [
+		{ "attributes": { "bold": true }, "insert": "[[What would you like me to do?]]" },
+		{ "insert": "\n" },
+		{ "attributes": { "italic": true }, "insert": "[[For example]]: [[Write a summary of this project for the client.]]" },
+		{ "insert": "\n" }
+	]
+}

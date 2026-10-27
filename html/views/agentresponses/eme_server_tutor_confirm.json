@@ -1,0 +1,48 @@
+## Confirmation for eme_server_tutor. Start, or any reply, runs eme_server_tutor_welcome
+{
+	"messageplain": "[[Tutor Chat]]: [[I will guide you through a tutorial one step at a time.]]",
+	"ops": [
+		{ "insert": "[[Tutor Chat]]" },
+		{ "attributes": { "header": 3 }, "insert": "\n" },
+		{ "insert": "[[I will guide you through a tutorial one step at a time.]]\n" },
+		{ "insert": "[[Here is what will happen]]:\n" },
+		{ "insert": "[[I open the tutorial and explain the first lesson.]]" },
+		{ "attributes": { "list": "ordered" }, "insert": "\n" },
+		{ "insert": "[[I ask you questions and give feedback on your answers.]]" },
+		{ "attributes": { "list": "ordered" }, "insert": "\n" },
+		{ "insert": "[[I track your progress and move on when you are ready.]]" },
+		{ "attributes": { "list": "ordered" }, "insert": "\n" },
+		{ "insert": "[[You can ask your own questions at any time.]]" },
+		{ "attributes": { "list": "ordered" }, "insert": "\n" },
+		{ "attributes": { "italic": true }, "insert": "[[Your answers and progress are saved.]]" },
+		{ "insert": "\n" },
+		{
+			"attributes": {
+				"bold": true,
+				"link": "$applink/views/modules/${agentcontext.entitymoduleid}/editors/entitychat/chatterbox/changescenario.html",
+				"class": "ajax",
+				"data-targetdiv": "changescenario",
+				"data-channel": "$!{channel.getId()}",
+				"data-currentscenario": "eme_server_tutor",
+				"data-functionname": "eme_server_tutor_welcome",
+				"data-oemaxlevel": "1"
+			},
+			"insert": "[[Start]]"
+		},
+		{ "insert": "   " },
+		{
+			"attributes": {
+				"link": "$applink/views/modules/${agentcontext.entitymoduleid}/editors/entitychat/chatterbox/changescenario.html",
+				"class": "ajax",
+				"data-targetdiv": "changescenario",
+				"data-channel": "$!{channel.getId()}",
+				"data-currentscenario": "eme_server_welcome_menu",
+				"data-functionname": "eme_server_welcome_menu_welcome",
+				"data-oemaxlevel": "1"
+			},
+			"insert": "[[Back to menu]]"
+		},
+		{ "insert": "\n" }
+	],
+	"append": "<div id='changescenario'></div>"
+}

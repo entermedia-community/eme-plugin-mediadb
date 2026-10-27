@@ -1,0 +1,61 @@
+## Confirmation for eme_server_questions. Start, or any reply, runs eme_server_questions_welcome
+{
+	"messageplain": "[[Answer Questions]]: [[I will answer questions using the files and records in your library.]]#if( !$statuses ) \n [[No embedded documents found]]#end#ifnotnull( $suggestions )#if( !$suggestions.isEmpty() ) \n [[Example questions]]:#foreach( $suggestion in $suggestions ) \n #jrender( "$!suggestion.prompt" )#end#end#end",
+	"ops": [
+		{ "insert": "[[Answer Questions]]" },
+		{ "attributes": { "header": 3 }, "insert": "\n" },
+		#if( $statuses )
+		{ "insert": "[[You can ask questions about]]:\n" },
+		#foreach( $status in $statuses )
+		#set( $groupedby = $status.getViewData() )
+		#ifnull( $groupedby )
+			#set( $groupedby = $mediaarchive.getCachedData("module", $status.getSearchType()) )
+		#end
+		#if( $status.isReady() )
+		{ "insert": "#jtext( $groupedby ) ($status.getCountTotal())" },
+		{ "attributes": { "list": "checked" }, "insert": "\n" },
+		#else
+		{ "insert": "#jtext( $groupedby ) ($status.getCountPending() / $status.getCountTotal())" },
+		{ "attributes": { "list": "unchecked" }, "insert": "\n" },
+		#end
+		#end
+		#else
+		{ "insert": "[[No embedded documents found]]\n" },
+		#end
+		#ifnotnull( $suggestions )
+		#if( !$suggestions.isEmpty() )
+		{ "attributes": { "bold": true }, "insert": "[[Example questions]]:" },
+		{ "insert": "\n" },
+		#foreach( $suggestion in $suggestions )
+		{
+			"attributes": {
+				"link": "#",
+				"class": "autoprefixchatmsg",
+				"data-prefix": "#jrender( "$!suggestion.prompt" )",
+				"data-functionname": "${scenario.id}_ask"
+			},
+			"insert": "#jrender( "$!suggestion.prompt" )"
+		},
+		{ "attributes": { "list": "bullet" }, "insert": "\n" },
+		#end
+		#end
+		#end
+		{ "insert": "\n" }
+	],
+	#ifnull( $suggestions )
+	"formAttr": {
+		"action": "$applink/views/modules/${agentcontext.entitymoduleid}/editors/entitychat/chatterbox/changescenario.html",
+		"method": "post",
+		"class": "ajaxform",
+		"data-targetdiv": "changescenario"
+	},
+	"form": [
+		{ "type": "text", "name": "context_userquery", "label": "[[Search]]...", "value": "#jrender( "$!userquery" )" },
+		{ "type": "hidden", "name": "channel", "value": "$!{channel.getId()}" },
+		{ "type": "hidden", "name": "currentscenario", "value": "${scenario.id}" },
+		{ "type": "hidden", "name": "functionname", "value": "${scenario.id}_ask" }
+	],
+	"submitLabel": "[[Next]]",
+	#end
+	"append": "<div id='changescenario'></div>"
+}

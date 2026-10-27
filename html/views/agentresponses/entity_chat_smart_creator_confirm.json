@@ -1,0 +1,28 @@
+## Confirmation for entity_chat_smart_creator. Start, or any reply, runs entity_chat_smart_creator_welcome
+#set( $modules = $mediaarchive.query("module").exact("aicreationmethod","smartcreator").sort("name").cachedSearch() )
+{
+	"messageplain": "[[Smart Creator]]: [[I will write a new article or document together with you, section by section.]] \n [[Welcome to Smart Creator wizard]]. \n [[Choose the type of content you would like to create:]]#foreach( $module in $modules ) \n #jtext( $module )#end",
+	"ops": [
+		{ "insert": "[[Smart Creator]]" },
+		{ "attributes": { "header": 3 }, "insert": "\n" },
+		{ "insert": "[[Choose the type of content you would like to create:]]\n" },
+		#foreach( $module in $modules )
+		{
+			"attributes": {
+				"link": "$apphome/views/modules/$module.getId()/editors/entitychat/chatterbox/changescenario.html",
+				"class": "ajax",
+				"data-targetdiv": "changescenario",
+				"data-channel": "$agentcontext.getChannel().getId()",
+				"data-currentscenario": "$agentcontext.getCurrentAgentJob().getScenarioId()",
+				"data-functionname": "chat_smartcreator_make_suggestions",
+				"data-context_playbackentitymoduleid": "$module.getId()",
+				"data-oemaxlevel": "1"
+			},
+			"insert": "#jtext( $module )"
+		},
+		{ "attributes": { "list": "bullet" }, "insert": "\n" },
+		#end
+		{ "insert": "\n" }
+	],
+	"append": "<div id='changescenario'></div>"
+}

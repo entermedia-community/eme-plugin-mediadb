@@ -1,0 +1,24 @@
+{
+	"messageplain": "[[Related Records]]:#foreach( $recordmodule in $relatedrecords ) \n #jrender( "$!recordmodule.name" ) ($!recordmodule.total)#end",
+	"ops": [
+		{ "insert": "[[Related Records]]:" },
+		{ "attributes": { "header": 3 }, "insert": "\n" },
+		#foreach( $recordmodule in $relatedrecords )
+		{
+			"attributes": {
+				"link": "$applink/views/modules/${agentcontext.entitymoduleid}/editors/entitychat/chatterbox/changescenario.html",
+				"class": "ajax",
+				"data-targetdiv": "aichatsearch",
+				"data-channel": "$!{channel.getId()}",
+				"data-currentscenario": "entity_chat_search",
+				"data-functionname": "view_related_record_list",
+				"data-context_relatedmoduleid": "$recordmodule.moduleid",
+				"data-oemaxlevel": "1"
+			},
+			"insert": "#jrender( "$!recordmodule.name" ) ($!recordmodule.total)"
+		},
+		{ "attributes": { "list": "bullet" }, "insert": "\n" },
+		#end
+		{ "insert": "\n" }
+	]
+}

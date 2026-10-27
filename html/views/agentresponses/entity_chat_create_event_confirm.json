@@ -1,0 +1,52 @@
+## Confirmation for entity_chat_create_event. ChatGuessEventSkill sets the $suggestedevent* values from the chat.
+## The Create Event button runs entity_chat_create_event_create
+{
+	#if( $suggestedeventname )
+	"messageplain": "[[Create Event]]: [[Based on your message, I suggest this event]]: #jrender( "$suggestedeventname" )",
+	#else
+	"messageplain": "[[Create Event]]: [[What event should I create?]]",
+	#end
+	"ops": [
+		{ "insert": "[[Create Event]]" },
+		{ "attributes": { "header": 3 }, "insert": "\n" },
+		#if( $suggestedeventname )
+		{ "insert": "[[Based on your message, I suggest this event]]:\n" },
+		#else
+		{ "insert": "[[What event should I create?]]\n" },
+		#end
+		{ "attributes": { "italic": true }, "insert": "[[The event is public and you are the host. Edit anything that is not right first.]]" },
+		{ "insert": "\n" },
+		{
+			"attributes": {
+				"link": "$applink/views/modules/${agentcontext.entitymoduleid}/editors/entitychat/chatterbox/changescenario.html",
+				"class": "ajax",
+				"data-targetdiv": "changescenario",
+				"data-channel": "$!{channel.getId()}",
+				"data-currentscenario": "entity_chat_welcome_menu",
+				"data-oemaxlevel": "1"
+			},
+			"insert": "[[Not now]]"
+		},
+		{ "insert": "\n" }
+	],
+	"formAttr": {
+		"action": "$applink/views/modules/${agentcontext.entitymoduleid}/editors/entitychat/chatterbox/changescenario.html",
+		"method": "post",
+		"class": "ajaxform",
+		"data-targetdiv": "changescenario",
+		"data-oemaxlevel": "1"
+	},
+	"form": [
+		{ "type": "hidden", "name": "channel", "value": "$!{channel.getId()}" },
+		{ "type": "hidden", "name": "currentscenario", "value": "entity_chat_create_event" },
+		{ "type": "hidden", "name": "functionname", "value": "entity_chat_create_event_create" },
+		{ "type": "hidden", "name": "oemaxlevel", "value": "1" },
+		{ "type": "text", "name": "context_eventname", "label": "[[Event name]]", "value": "#jrender( "$!suggestedeventname" )", "required": true },
+		{ "type": "datetime-local", "name": "context_eventstart", "label": "[[Starts]]", "value": "#jrender( "$!suggestedeventstart" )", "required": true },
+		{ "type": "datetime-local", "name": "context_eventend", "label": "[[Ends (optional)]]", "value": "#jrender( "$!suggestedeventend" )" },
+		{ "type": "text", "name": "context_eventlocation", "label": "[[Location (optional)]]", "value": "#jrender( "$!suggestedeventlocation" )" },
+		{ "type": "textarea", "name": "context_eventdescription", "label": "[[Description (optional)]]", "value": "#jrender( "$!suggestedeventdescription" )" }
+	],
+	"submitLabel": "[[Create Event]]",
+	"append": "<div id='changescenario'></div>"
+}
