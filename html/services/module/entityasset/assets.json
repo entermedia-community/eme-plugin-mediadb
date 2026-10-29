@@ -1,0 +1,33 @@
+{
+	#if($error)
+	"response": {
+		"status": "error",
+		"error": #jesc($error)
+	}
+	#else
+	"response": {
+		"status": "ok",
+		"totalhits": $totalhits
+	},
+	"assets": [
+		#foreach($asset in $assets)
+		#if($foreach.count > 1),#end
+		{
+			"id": #jesc($asset.id),
+			"name": #jesc($!asset.name),
+			"description": #jesc($!asset.description),
+			"date": #jesc($!asset.date),
+			"sourcetype": #jesc($!asset.sourcetype),
+			"imageurl": #jesc($!asset.imageurl),
+			"tags": [#foreach($tag in $asset.tags)#if($foreach.count > 1),#end#jesc($tag)#end],
+			"uploaddate": #jesc($!asset.uploaddate),
+			"mediaurl": #jesc($!asset.mediaurl),
+			"mediatype": #jesc($!asset.mediatype),
+			"filename": #jesc($!asset.filename),
+			"emeprofile": #jesc($!asset.emeprofile),
+			"collectionid": #jesc($!asset.collectionid)
+		}
+		#end
+	]
+	#end
+}

@@ -1,0 +1,9 @@
+<page>
+	<!-- Entity assets of a profile (userid, default: the signed-in user)
+	     or of a project (collectionid), for the app. -->
+	<path-action name="EntityAssetModule.loadEntityAssets"/>
+	<generator name="velocity"/>
+	<permission name="view">
+		<user/>
+	</permission>
+</page>
