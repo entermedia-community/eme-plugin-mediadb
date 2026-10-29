@@ -1,0 +1,15 @@
+{
+	#if($error)
+	"response": {
+		"status": "error",
+		"error": #jesc($error)
+	}
+	#else
+	"response": {
+		"status": "ok"
+	},
+	"assetid": #jesc($assetid),
+	"previewstate": #jesc($previewstate),
+	"previewurl": #jesc($!previewurl)
+	#end
+}

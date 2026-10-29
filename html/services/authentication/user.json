@@ -16,6 +16,19 @@
 		#ifnotnull($assetportrait),
 		"assetportrait" : "$assetportrait"
 		#end
+		#if($userprofile.assetportrait)
+		#set($portraitasset = $mediaarchive.getAsset($userprofile.assetportrait))
+		#if($portraitasset)
+		,"assetportraitid" : "$portraitasset.id"
+		#if($portraitasset.previewstatus == "2")
+		,"assetportraitstatus" : "ready"
+		#elseif($portraitasset.importstatus == "error")
+		,"assetportraitstatus" : "error"
+		#else
+		,"assetportraitstatus" : "pending"
+		#end
+		#end
+		#end
 		#ifnotnull($userprofile.dataconsent),
 		"dataconsent" : "$userprofile.dataconsent"
 		#end

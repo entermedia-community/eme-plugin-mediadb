@@ -19,6 +19,8 @@
 			"date": #jesc($!asset.date),
 			"sourcetype": #jesc($!asset.sourcetype),
 			"imageurl": #jesc($!asset.imageurl),
+			"thumbstatus": #jesc($!asset.thumbstatus),
+			"imageassetid": #jesc($!asset.imageassetid),
 			"tags": [#foreach($tag in $asset.tags)#if($foreach.count > 1),#end#jesc($tag)#end],
 			"uploaddate": #jesc($!asset.uploaddate),
 			"mediaurl": #jesc($!asset.mediaurl),

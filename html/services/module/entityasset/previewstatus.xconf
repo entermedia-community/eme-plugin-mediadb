@@ -1,0 +1,8 @@
+<page>
+	<!-- Conversion state of one asset (assetid), for the app to poll until its thumbnail is ready. -->
+	<path-action name="EntityAssetModule.loadPreviewStatus"/>
+	<generator name="velocity"/>
+	<permission name="view">
+		<user/>
+	</permission>
+</page>
