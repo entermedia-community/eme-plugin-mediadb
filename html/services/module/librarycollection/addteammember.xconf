@@ -1,9 +1,7 @@
 <page>
 	<!-- JSON version of the web sidebar's "Add Agent" / "New User"
-	     (community/html/default/project/channel/subscribers/addtoteam.groovy). Editors only. -->
-	<path-action name="Script.run">
-		<script>./addteammember.groovy</script>
-	</path-action>
+	     (ProjectManager.addUserToTeam). Editors only. -->
+	<path-action name="ProjectModule.addTeamMember"/>
 	<generator name="velocity"/>
 	<permission name="view">
 		<user/>

@@ -1,0 +1,91 @@
+{
+  "response": {
+    "status": "ok"#if($user),
+    "userid": "$user.id"#end
+  }
+  #if($types.contains("people"))
+  ,"users": [
+    #foreach($u in $users.getPageOfHits())
+      #if($foreach.count > 1),#end
+      {
+        "username": #jesc($u.id),
+        "firstname": #jesc($!u.firstName),
+        "lastname": #jesc($!u.lastName),
+        "screenname": #jesc($!u.screenname),
+        "email": #jesc($!u.email)
+        #ifnotnull($u.assetportrait)
+        ,"assetportrait": #jesc("$!siteroot$mediaarchive.asLinkToPreview($u.assetportrait, 'image200x200')")
+        #end
+      }
+    #end
+  ]
+  #end
+  #if($types.contains("projects"))
+  ,"projects": [
+    #foreach($hit in $projects.getPageOfHits())
+      #if($foreach.count > 1),#end
+      $context.putPageValue("hit", $hit)
+      {
+        "joined": #if($joinedids.contains($hit.id))true#else false#end,
+        "project": $pages.include("$apphome/services/module/librarycollection/hit.json", $context)
+      }
+    #end
+  ]
+  #end
+  #if($types.contains("servers"))
+  ,"emeservers": [
+    #foreach($server in $emeservers)
+      #if($foreach.count > 1),#end
+      {
+        "id": #jesc($server.id),
+        "name": #jesc($server.name),
+        "subtitle": #jesc($server.subtitle),
+        "serverdescription": #jesc($server.serverdescription),
+        #set($cat = $mediaarchive.getCachedData("servercategory", $server.category))
+        "category": {
+          #ifnotnull($cat)
+          "id": #jesc($cat.id),
+          "name": #jesc($cat.name)
+          #end
+          #ifnull($cat)
+          "id": #jesc($server.category),
+          "name": #jesc($server.category)
+          #end
+        },
+        "primarycolor": #jesc($server.primarycolor),
+        "secondarycolor": #jesc($server.secondarycolor),
+        "membercount": #if($server.membercount)$server.membercount#else 0#end,
+        "servicesoffered": #jesc($server.servicesoffered),
+        "avatarurl": #jesc($server.avatarurl),
+        "statuscolor": #jesc($server.statuscolor),
+        "servermediadburl": #jesc($server.servermediadburl),
+        "serverfunction": #jesc($server.serverfunction),
+        #set($ownerrow = false)#set($ownerrow = $mediaarchive.query("emeserveruser").exact("user", $user.id).exact("emeserver", $server.id).exact("serverowner", "true").searchOne())
+        "isowner": #if($ownerrow)true#else false#end,
+        "joined": #if($server.joined == "true")true#else false#end
+      }
+    #end
+  ]
+  #end
+  #if($types.contains("events"))
+  ,"events": [
+    #foreach($event in $events)
+      #if($foreach.count > 1),#end
+      {
+        "id": #jesc($event.id),
+        "name": #jesc($!event.name),
+        "description": #jesc($!event.description),
+        "location": #jesc($!event.location),
+        "imageurl": #jesc($!event.imageurl),
+        "startdate": #jesc($!event.startdate),
+        "enddate": #jesc($!event.enddate),
+        "hostid": #jesc($!event.hostid),
+        "hostname": #jesc($!event.hostname),
+        "goingcount": $event.goingcount,
+        "interestedcount": $event.interestedcount,
+        "myrsvp": #jesc($!event.myrsvp)
+      }
+    #end
+  ]
+  #end
+}
