@@ -1,0 +1,8 @@
+<page>
+	<!-- Users that can still be added to a project's team (ProjectManager.loadTeamCandidates). Editors only. -->
+	<path-action name="ProjectModule.loadTeamCandidates"/>
+	<generator name="velocity"/>
+	<permission name="view">
+		<user/>
+	</permission>
+</page>

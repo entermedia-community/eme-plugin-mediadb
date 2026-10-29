@@ -1,0 +1,24 @@
+{
+	#if($candidates)
+	"response": {
+		"status": "ok"
+	},
+	"users": [
+		#foreach($u in $candidates)
+			#if($foreach.count > 1),#end
+		{
+			"username": #jesc($u.id),
+			"firstname": #jesc($u.firstName),
+			"lastname": #jesc($u.lastName),
+			"screenname": #jesc($u.screenName),
+			"email": #jesc($u.email)
+		}
+		#end
+	]
+	#else
+	"response": {
+		"status": "error"
+		#if($error), "error": #jesc($error)#end
+	}
+	#end
+}
