@@ -1,0 +1,19 @@
+{
+	#if($error)
+	"response": {
+		"status": "error",
+		"error": #jesc($error)
+	}
+	#else
+	"response": {
+		"status": "ok"
+	},
+	"asset": {
+		"id": #jesc($entityasset.id),
+		"name": #jesc($!entityasset.name),
+		"mediaurl": #jesc($!entityasset.mediaurl),
+		"mediatype": #jesc($!entityasset.mediatype),
+		"filename": #jesc($!entityasset.filename)
+	}
+	#end
+}

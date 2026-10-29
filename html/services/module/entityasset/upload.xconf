@@ -1,0 +1,8 @@
+<page>
+	<!-- Uploads a file (multipart) as a new entity asset of a profile or project, for the app. -->
+	<path-action name="EntityAssetModule.uploadEntityAsset" method="POST"/>
+	<generator name="velocity"/>
+	<permission name="view">
+		<user/>
+	</permission>
+</page>
