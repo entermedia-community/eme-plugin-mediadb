@@ -1,0 +1,11 @@
+<page>
+	<!-- Owner edit of a project's details (name, description, url slug, tags).
+	     The generic default/data PUT needs the api-update-data permission, which
+	     normal users do not have. -->
+	<path-action name="ProjectModule.loadCollection" />
+	<path-action name="ProjectModule.updateCollection" />
+	<generator name="velocity"/>
+	<permission name="view">
+		<user/>
+	</permission>
+</page>

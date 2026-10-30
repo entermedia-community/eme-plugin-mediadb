@@ -3,8 +3,6 @@
 	</path-action>
 	<property name="searchtype">chatterbox</property>
 	
-	<path-action name="Script.run" alltypes="true">
-		<script>./messagesave.groovy</script>
-	</path-action>
+	<path-action name="ProjectModule.saveChatMessage" alltypes="true" />
 	
 </page>

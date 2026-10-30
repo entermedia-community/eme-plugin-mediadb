@@ -5,9 +5,7 @@
 	<property name="defaultscenarioid">team_chat_monitor</property>
 
 	<path-action name="ProjectModule.loadCollection" />
-	<path-action name="Script.run">
-		<script>./requirecollection.groovy</script>
-	</path-action>
+	<path-action name="ProjectModule.requireCollection" />
 	<path-action name="ProjectModule.loadChatTopic" />
 	<path-action name="ChatModule.loadChatChannel" />
 	<path-action name="AgentModule.loadAgentContext" />

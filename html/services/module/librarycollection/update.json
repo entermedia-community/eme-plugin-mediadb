@@ -1,0 +1,9 @@
+{
+	"response": {
+		"status": #if($updated)"ok"#else"error"#end
+		#if($error), "error": #jesc($error)#end
+	}
+	#if($updated),
+	"id": #jesc($updated.id)
+	#end
+}
