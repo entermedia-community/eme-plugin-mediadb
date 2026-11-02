@@ -41,7 +41,8 @@
         "firstname": #jesc($!u.firstName),
         "lastname": #jesc($!u.lastName),
         "screenname": #jesc($!u.screenname),
-        "email": #jesc($!u.email)
+        "email": #jesc($!u.email),
+        "connected": #if($connectedids.contains($u.id))true#else false#end
         #ifnotnull($u.assetportrait)
         ,"assetportrait": #jesc("$!siteroot$mediaarchive.asLinkToPreview($u.assetportrait, 'image200x200')")
         #end
