@@ -2,6 +2,35 @@
   "response": {
     "status": "ok"#if($user),
     "userid": "$user.id"#end
+  },
+  "categories": {
+    "server": [
+      #foreach($category in $servercategories)
+        #if($foreach.count > 1),#end
+        {
+          "id": #jesc($category.id),
+          "name": #jesc($category.name)
+        }
+      #end
+    ],
+    "project": [
+      #foreach($category in $projectcategories)
+        #if($foreach.count > 1),#end
+        {
+          "id": #jesc($category.id),
+          "name": #jesc($category.name)
+        }
+      #end
+    ],
+    "people": [
+      #foreach($category in $peoplecategories)
+        #if($foreach.count > 1),#end
+        {
+          "id": #jesc($category.id),
+          "name": #jesc($category.name)
+        }
+      #end
+    ]
   }
   #if($types.contains("people"))
   ,"users": [
@@ -41,7 +70,7 @@
         "name": #jesc($server.name),
         "subtitle": #jesc($server.subtitle),
         "serverdescription": #jesc($server.serverdescription),
-        #set($cat = $mediaarchive.getCachedData("servercategory", $server.category))
+        #set($cat = $mediaarchive.getCachedData("servertype", $server.category))
         "category": {
           #ifnotnull($cat)
           "id": #jesc($cat.id),
