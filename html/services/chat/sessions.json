@@ -1,0 +1,26 @@
+{
+#ifnotnull($sessions)
+	"response": {
+		"status": "ok"
+	},
+	"sessions": [
+#set($count = 0)
+#foreach($session in $sessions)
+    #set($count = $count + 1)
+    #if($count > 1),#end
+    {
+      "channel": #jesc($session.channel),
+      "name": #jesc($session.name),
+      "refreshdate": #jesc($session.refreshdate),
+      "lastmessage": #jesc($session.lastmessage)
+    }
+#end
+  ]
+#end
+
+#ifnull($sessions)
+	"response": {
+		"status": "error"
+	}
+#end
+}
