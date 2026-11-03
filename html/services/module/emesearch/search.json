@@ -111,8 +111,8 @@
         "enddate": #jesc($!event.enddate),
         "hostid": #jesc($!event.hostid),
         "hostname": #jesc($!event.hostname),
-        "goingcount": $event.goingcount,
-        "interestedcount": $event.interestedcount,
+        "goingcount": #jesc($!event.goingcount),
+        "interestedcount": #jesc($!event.interestedcount),
         "myrsvp": #jesc($!event.myrsvp)
       }
     #end

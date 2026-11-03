@@ -1,0 +1,19 @@
+{
+	#if($commandSucceeded == "ok")
+		"session": true
+		#if($loginredirect),
+		"redirect": "$loginredirect"
+		#end
+		#if($user),
+		"user": {
+			"id" : "$user.id",
+			"firstname": "$!user.firstName",
+			"lastname" : "$!user.lastName",
+			"email" : "$!user.email",
+			"screenname" : "$!user.getScreenName()"
+		}
+		#end
+	#else
+		"error": "$!{oauth_error_description}"
+	#end
+}
