@@ -1,0 +1,7 @@
+<page>
+	<!-- Public: other EME Servers load this server's public key from here -->
+	<permission name="view">
+		<blank/>
+	</permission>
+	<path-action name="EmeServerModule.loadServerPubKey" alltypes="true"/>
+</page>

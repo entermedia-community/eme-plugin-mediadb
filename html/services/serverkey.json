@@ -1,0 +1,8 @@
+{
+#if($publickey)
+	"keyid": "$!keyid",
+	"publickey": "$!publickey"
+#else
+	"error": "$!jsonUtil.escape($!error)"
+#end
+}

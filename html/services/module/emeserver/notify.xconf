@@ -1,0 +1,5 @@
+<page>
+	<!-- Called by other EME Servers signed in as their server user (EmeServerAccountManager).
+	     NotificationHubManager only accepts the user that owns the emeserver named in serverid. -->
+	<path-action name="EmeServerModule.notifyUser" />
+</page>

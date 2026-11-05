@@ -1,0 +1,15 @@
+{
+#if($notifyresult && $notifyresult.isSuccess())
+  "response": {
+    "status": "queued"
+  },
+  "success": true
+#else
+  "response": {
+    "status": "error",
+    "error": "$!{notifyresult.error}",
+    "error_description": "$!jsonUtil.escape($!{notifyresult.errorDescription})"
+  },
+  "success": false
+#end
+}
