@@ -1,0 +1,14 @@
+{
+#ifnotnull($currentchannel)
+	"response": {
+		"status": "ok"
+	},
+	"channel": #jesc($currentchannel.id)
+#end
+#ifnull($currentchannel)
+	"response": {
+		"status": "error",
+		"error": #jesc($error)
+	}
+#end
+}

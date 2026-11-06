@@ -1,0 +1,6 @@
+<page>
+  <path-action name="EmeServerModule.createChatSession" />
+
+  <path-action name="AgentModule.loadAgentContext" />
+  <path-action name="AgentModule.sendWelcomeIfNeeded" />
+</page>
