@@ -11,14 +11,16 @@
 		"firstname": "$!user.firstName",
 		"lastname" : "$!user.lastName",
 		"email" : "$!user.email",
-		"screenname" : "$!user.getScreenName()"
-		#set($assetportrait = "$!siteroot$mediaarchive.asLinkToPreview($userprofile.assetportrait, 'image200x200')")
-		#ifnotnull($assetportrait),
-		"assetportrait" : "$assetportrait"
+		"screenname" : "$!user.getScreenName()",
+		"emeprofileid" : #jesc($myemeprofile.id),
+		"displayname" : #jesc($myemeprofile.displayname),
+		"name" : #jesc($myemeprofile.name)
+		#set($portraitid = $myemeprofile.primarymedia)
+		#if($portraitid)
+		#set($portraitasset = $mediaarchive.getAsset($portraitid))
 		#end
-		#if($userprofile.assetportrait)
-		#set($portraitasset = $mediaarchive.getAsset($userprofile.assetportrait))
 		#if($portraitasset)
+		,"assetportrait" : "$!siteroot$mediaarchive.asLinkToPreview($portraitasset, 'image200x200')"
 		,"assetportraitid" : "$portraitasset.id"
 		#if($portraitasset.previewstatus == "2")
 		,"assetportraitstatus" : "ready"
@@ -26,7 +28,6 @@
 		,"assetportraitstatus" : "error"
 		#else
 		,"assetportraitstatus" : "pending"
-		#end
 		#end
 		#end
 		#ifnotnull($userprofile.dataconsent),
