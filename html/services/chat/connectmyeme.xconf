@@ -3,6 +3,7 @@
 
   <path-action name="FinderModule.loadEmeProfile" />
 
+  <property name="module">emeprofile</property>
   <path-action name="ChatModule.loadChatChannel" />
   <path-action name="AgentModule.loadAgentContext" />
 
