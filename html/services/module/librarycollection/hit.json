@@ -53,15 +53,4 @@
 		#set( $followed = $mediaarchive.query("librarycollectionlikes").exact("collectionid",$hit.id).exact("followeruser",$user.getId()).exact("enabled", true).searchOne() )
 		, "followedbyuser": #if($followed)true#else false#end
 	#end
-	#set( $topics = $mediaarchive.query("collectiveproject").exact("parentcollectionid",$hit.id).sort("name").search($context) )
-	#if( !$topics.isEmpty() )
-	, "topics": [
-		#foreach($topic in $topics)
-			#if( $foreach.count != 1 ), #end
-			{ 
-				#jsonfields($topic $topics.getSearcher().getPropertyDetails()) 
-			}
-		#end	
-	]
-	#end
 }

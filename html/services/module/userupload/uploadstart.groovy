@@ -21,7 +21,6 @@ public void init()
 	upload.setValue("usertags",context.getRequestParameters("usertags"));
 	upload.setValue("title",context.getRequestParameter("title"));
 	upload.setValue("longdescription",context.getRequestParameter("longdescription"));
-	upload.setValue("collectiveproject",context.getRequestParameter("collectiveproject"));
 	upload.setValue("totalfilesize",context.getRequestParameter("totalfilesize"));
 	
 	log.info("Upload to Category: " + sourcepath);

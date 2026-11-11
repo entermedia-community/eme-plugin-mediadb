@@ -33,13 +33,6 @@
 				$context.putPageValue("message",$hit)
 				$pages.include("$apphome/services/module/librarycollection/message.json",$context)
 
-			#set( $topic = $mediaarchive.getCachedData("collectiveproject",$hit.channel) )
-			#if( $topic )
-			, "topic": 
-				{
-					#jsonfields($topic $mediaarchive.getSearcher("collectiveproject").getPropertyDetails())
-				}			 
-			#end
 			}
 		#end
 		]
