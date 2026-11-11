@@ -1,12 +1,11 @@
 <page>
 	<!-- Same chat channel as the web project chat page (community/html/default/project/chat/_site.xconf) -->
 	<property name="channeltype">emeteamchat</property>
-	<property name="channeldatamodule">collectiveproject</property>
-	<property name="defaultscenarioid">team_chat_monitor</property>
+	<property name="channeldatamodule">librarycollection</property>
+	<property name="defaultscenarioid">entity_chat_welcome_menu</property>
 
 	<path-action name="ProjectModule.loadCollection" />
 	<path-action name="ProjectModule.requireCollection" />
-	<path-action name="ProjectModule.loadChatTopic" />
 	<path-action name="ChatModule.loadChatChannel" />
 	<path-action name="AgentModule.loadAgentContext" />
 	<path-action name="AgentModule.sendWelcomeIfNeeded" />
