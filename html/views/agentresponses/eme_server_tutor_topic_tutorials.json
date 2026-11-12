@@ -1,1 +1,30 @@
-// TODO: List topic's tutorial
+#set( $topicdata = $mediaarchive.getCachedData("entitytopic", $topic) )
+#set( $tutorials = $mediaarchive.query("entitytutorial").exact("entitytopic", $topic).sort("name").cachedSearch() )
+{
+	"messageplain": "#jtext( $topicdata )#foreach( $tutorial in $tutorials ) \n #jtext( $tutorial ): #jrender( "$!tutorial.longdescription" )#end",
+	"ops": [
+		{ "insert": "#jtext( $topicdata )" },
+		{ "attributes": { "header": 3 }, "insert": "\n" },
+		#if( $tutorials.isEmpty() )
+		{ "insert": "[[No tutorials found]]\n" },
+		#end
+		#foreach( $tutorial in $tutorials )
+		{
+			"attributes": {
+				"link": "#",
+				"class": "ajax",
+				"data-currentscenario": "eme_server_tutor",
+				"data-functionname": "eme_server_tutor_welcome",
+				"data-context_tutorialid": "$tutorial.getId()"
+			},
+			"insert": "#jtext( $tutorial )"
+		},
+		{ "insert": "\n" },
+		#if( $tutorial.longdescription )
+		{ "insert": "#jrender( "$!tutorial.longdescription" )\n" },
+		#end
+		#end
+		{ "insert": "\n" }
+	],
+	"append": "<div id='changescenario'></div>"
+}
