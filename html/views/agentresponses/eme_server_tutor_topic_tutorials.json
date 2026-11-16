@@ -11,7 +11,7 @@
 		#foreach( $tutorial in $tutorials )
 		{
 			"attributes": {
-				"link": "#",
+				"link": "$applink/views/modules/${agentcontext.entitymoduleid}/editors/entitychat/chatterbox/changescenario.html",
 				"class": "ajax",
 				"data-currentscenario": "eme_server_tutor",
 				"data-functionname": "eme_server_tutor_welcome",

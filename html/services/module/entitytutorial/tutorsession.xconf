@@ -1,0 +1,11 @@
+<page>
+  <property name="module">entitytutorial</property>
+  <property name="channeltype">agenttutorchat</property>
+  <property name="defaultscenarioid">eme_server_tutor</property>
+
+  <path-action name="ChatModule.loadChatChannel" />
+
+
+  <path-action name="AgentModule.loadAgentContext" />
+  <path-action name="AgentModule.sendWelcomeIfNeeded" />
+</page>

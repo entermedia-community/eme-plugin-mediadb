@@ -1,0 +1,16 @@
+{
+	"messageplain": "[[Welcome!]] #if( $isdailychallenge )[[Today's challenge is picked from]] #jrender( "$!tutorial" ). [[Good luck!]]#else[[You're about to begin your]] #jrender( "$!tutorial" ) [[tutorial. Take your time, read each question carefully, give your best answers with proper level of confidence, and ask follow up question if you get them wrong or want to learn more.]] [[Good luck, and enjoy the learning experience!]]#end",
+	"ops": [
+		{ "attributes": { "bold": true }, "insert": "[[Welcome!]]" },
+		{ "insert": " 👋\n\n" },
+		#if( $isdailychallenge )
+		{ "insert": "[[Today's challenge is picked from]] " },
+		{ "attributes": { "bold": true }, "insert": "#jrender( "$!tutorial" )" },
+		{ "insert": ".\n\n[[Good luck!]]\n" }
+		#else
+		{ "insert": "[[You're about to begin your]] " },
+		{ "attributes": { "bold": true }, "insert": "#jrender( "$!tutorial" )" },
+		{ "insert": " [[tutorial. Take your time, read each question carefully, give your best answers with proper level of confidence, and ask follow up question if you get them wrong or want to learn more.]]\n\n[[Good luck, and enjoy the learning experience!]]\n" }
+		#end
+	]
+}

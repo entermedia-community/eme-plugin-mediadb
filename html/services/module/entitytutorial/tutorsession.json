@@ -1,0 +1,17 @@
+{
+#ifnotnull($currentchannel)
+	"response": {
+		"status": "ok"
+	},
+	"channel": {
+    "id": #jesc($currentchannel.id),
+    "channeltype": "agenttutorchat"
+  }
+#end
+#ifnull($currentchannel)
+	"response": {
+		"status": "error",
+		"error": #jesc($error)
+	}
+#end
+}
