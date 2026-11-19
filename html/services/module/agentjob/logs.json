@@ -2,5 +2,16 @@
 	"response": {
 		"status": "ok",
 		"userid": "$user.id"
-	}
+	},
+	"results": [
+		#foreach($entry in $joblogs)
+		#if($foreach.count > 1),#end
+		{
+			"step": #jesc($entry.step),
+			"type": #jesc($entry.type),
+			"log": #jesc($entry.log),
+			"timestamp": #jesc($entry.timestamp)
+		}
+		#end
+	]
 }
