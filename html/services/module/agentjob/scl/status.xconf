@@ -1,0 +1,3 @@
+<page>
+  <path-action name="FulserviceSclModule.status" alltypes="true" />
+</page>
