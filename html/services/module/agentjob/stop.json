@@ -1,0 +1,8 @@
+{
+	"response": {
+		"status": #if($stopped) "ok" #else "error" #end,
+		"stopped": #if($stopped) true #else false #end,
+		"jobid": #jesc($jobid),
+		"userid": "$user.id"
+	}
+}
