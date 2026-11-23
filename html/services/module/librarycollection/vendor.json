@@ -1,0 +1,39 @@
+## GET vendor.json?urlname=<urlname>
+## A vendor is a librarycollection with collectiontype=8. Its menu is the
+## automationscenario rows picked in librarycollection.vendorscenario.
+#set( $urlname = $context.getRequestParameter("urlname") )
+#set( $vendor = false )
+#if( $urlname && $urlname.trim() != "" )
+	#set( $vendor = $mediaarchive.query("librarycollection").exact("collectiontype", "8").exact("urlname", $urlname.trim()).searchOne() )
+#end
+{
+#if( $vendor )
+	"response": { "status": "ok" },
+	"vendor": {
+		"id": #jesc($vendor.getId()),
+		"name": #jesc($vendor.getName()),
+		"urlname": #jesc($vendor.get("urlname")),
+		"menu": [
+		#set( $scenarioids = $vendor.getValues("vendorscenario") )
+		## orgroup() with no ids adds no filter, so only query when the vendor picked some.
+		#if( $scenarioids && !$scenarioids.isEmpty() )
+			#set( $scenarios = $mediaarchive.query("automationscenario").orgroup("id", $scenarioids).not("enabled", "false").sort("ordering").search($context) )
+			#foreach( $scenario in $scenarios )#if( $foreach.count > 1 ),#end
+			{
+				"id": #jesc($scenario.getId()),
+				"name": #jesc($scenario.getName()),
+				"description": #jesc($scenario.get("longcaption")),
+				"icon": #jesc($scenario.get("scenarioicon")),
+				"chatenabled": #if( $scenario.get("chatenabled") == "true" )true#else false#end
+			}
+			#end
+		#end
+		]
+	}
+#else
+	"response": {
+		"status": "error",
+		"error": "vendor not found"
+	}
+#end
+}

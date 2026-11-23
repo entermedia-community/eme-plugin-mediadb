@@ -1,0 +1,7 @@
+<page>
+	<!-- Public: the embeddable lead chatbot loads its vendor (collectiontype 8) and menu without a login. -->
+	<generator name="velocity"/>
+	<permission name="view">
+		<boolean value="true"/>
+	</permission>
+</page>
