@@ -51,6 +51,11 @@ Flutter app (`eme_app_sdk` `ChatMessage.fromJson`, `DeltaViewer`, the form bubbl
 }
 ```
 
+- Form submissions: the submit posts the field values (by field `name`) to `chat/changescenario.json` with an
+  optional standard `formmessageid` (the id of the form message; without it the newest unsubmitted form in the
+  channel with the same `functionname` is used). `AgentModule.saveSubmittedForm` writes each posted value into that
+  message's form field `value`, adds `"submitted": true`, saves it and broadcasts it again (same messageid), so
+  clients render the submitted values as text instead of the form.
 - Only `ops` is required. `messageplain` replaces the HTML `<messageplain>` tag
   (`BasicLlmResponse.readJsonMessagePlain`); without it the preview says "New message".
 - Clickable actions are link ops. Keep every `data-*` attribute: the app passes them (minus the
