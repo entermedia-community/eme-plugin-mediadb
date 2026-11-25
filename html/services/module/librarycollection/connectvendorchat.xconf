@@ -1,0 +1,17 @@
+<page>
+	<!-- EME Chatbot: the signed-in visitor's own chat with a vendor (librarycollection, collectiontype 8).
+	     One channel per visitor and vendor (ChatModule.findExistingChannel). No welcome message: the chatbot shows
+	     the vendor's own menu (vendor.json), and each pick runs chat/changescenario.json -->
+	<property name="channeltype">emechatbotvendorchat</property>
+	<property name="channeldatamodule">librarycollection</property>
+
+	<path-action name="ProjectModule.loadCollection" />
+	<path-action name="ProjectModule.requireVendor" />
+	<path-action name="ChatModule.loadChatChannel" />
+	<path-action name="AgentModule.loadAgentContext" />
+
+	<generator name="velocity"/>
+	<permission name="view">
+		<user/>
+	</permission>
+</page>

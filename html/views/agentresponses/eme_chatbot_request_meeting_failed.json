@@ -1,0 +1,7 @@
+## EmeChatbotSendMeetingRequestSkill could not email the vendor's owner; the reason is in the server log
+{
+	"messageplain": "[[Sorry, we could not send your meeting request. Please try again later.]]",
+	"ops": [
+		{ "insert": "[[Sorry, we could not send your meeting request. Please try again later.]]\n" }
+	]
+}

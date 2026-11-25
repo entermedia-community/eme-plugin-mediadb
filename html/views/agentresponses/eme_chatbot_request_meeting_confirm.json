@@ -1,0 +1,20 @@
+## EME Chatbot Request a Meeting (EmeChatbotRequestMeetingSkill). The submit button runs eme_chatbot_request_meeting_submit
+## (EmeChatbotSendMeetingRequestSkill) through chat/changescenario.json; each context_<key> field becomes context value <key>.
+## context_meetingtimezone is left empty: the chatbot fills an empty hidden ...timezone field with the visitor's UTC offset.
+{
+	"messageplain": "[[Request a Meeting]]: [[Pick a date and time that suits you]]",
+	"ops": [
+		{ "insert": "[[Request a Meeting]]" },
+		{ "attributes": { "header": 3 }, "insert": "\n" },
+		{ "insert": "[[Pick a date and time that suits you, and add a short message if you like. We will email the team and they will get back to you.]]\n" }
+	],
+	"form": [
+		{ "type": "hidden", "name": "channel", "value": "$!{channel.getId()}" },
+		{ "type": "hidden", "name": "currentscenario", "value": "eme_chatbot_request_meeting" },
+		{ "type": "hidden", "name": "functionname", "value": "eme_chatbot_request_meeting_submit" },
+		{ "type": "hidden", "name": "context_meetingtimezone", "value": "" },
+		{ "type": "datetime-local", "name": "context_meetingtime", "label": "[[Date and time]]", "required": true },
+		{ "type": "textarea", "name": "context_meetingmessage", "label": "[[Message (optional)]]" }
+	],
+	"submitLabel": "[[Request meeting]]"
+}

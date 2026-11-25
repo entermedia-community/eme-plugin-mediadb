@@ -1,0 +1,7 @@
+## EmeChatbotSendMeetingRequestSkill emailed the vendor's owner
+{
+	"messageplain": "[[Thanks! Your meeting request has been sent. The team will get back to you by email.]]",
+	"ops": [
+		{ "insert": "[[Thanks! Your meeting request has been sent. The team will get back to you by email.]]\n" }
+	]
+}
