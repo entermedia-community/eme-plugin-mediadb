@@ -1,0 +1,3 @@
+{
+	"response": { "status": "ok", "searchtype": "$!context.getRequestParameter('searchtype')" }
+}

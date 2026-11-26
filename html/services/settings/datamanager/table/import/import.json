@@ -1,4 +1,3 @@
-
-$pages.include("../list/index.html")
-
-<p class="fader save">Import Complete</p>
+{
+	"response": { "status": "ok", "message": "Import complete", "searchtype": "$!context.getRequestParameter('searchtype')" }
+}
