@@ -1,0 +1,4 @@
+#set($snapshot = $nodeManager.createSnapShot($mediaarchive.getCatalogId()))
+{
+	"response": { "status": "ok", "snapshot": "$!snapshot" }
+}

@@ -1,0 +1,14 @@
+#set($errors = $mediaarchive.getNodeManager().getMappingErrors())
+{
+	"response": { "status": "ok", "totalhits": $errors.size() },
+	"results": [
+	#foreach($error in $errors)
+		#if($velocityCount > 1),#end
+		{
+			"field": "$!error.getDetail()",
+			"searchtype": "$!error.searchType",
+			"error": "$!error.getError().toString().replaceAll('\\','/').replace('"',"'").replaceAll('[\r\n\t]+',' ')"
+		}
+	#end
+	]
+}

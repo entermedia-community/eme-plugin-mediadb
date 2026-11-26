@@ -1,0 +1,9 @@
+{
+	"response": {
+		#if($time)
+		"status": "ok", "time": "${time}s"
+		#else
+		"status": "error", "message": "Please check logs"
+		#end
+	}
+}

@@ -1,0 +1,4 @@
+{
+	"response": { "status": "ok" },
+	"mappings": "$!mappingdebug.toString().replaceAll('\\','/').replace('"',"'").replaceAll('\r?\n','\\n').replaceAll('\t',' ')"
+}

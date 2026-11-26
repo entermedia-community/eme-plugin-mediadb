@@ -1,0 +1,6 @@
+<page>
+	<path-action name="JsonAdminModule.preprocess" />
+	<!-- The modules are written into the legacy Settings app (/finder/find), not the services path. -->
+	<property name="applicationid">finder/find</property>
+	<path-action name="MediaAdminModule.saveAllModules" />
+</page>

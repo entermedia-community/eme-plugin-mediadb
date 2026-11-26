@@ -1,0 +1,3 @@
+{
+	"response": { "status": "ok", "logallsearches": $mediaarchive.getSearcherManager().getShowSearchLogs($mediaarchive.getCatalogId()) }
+}

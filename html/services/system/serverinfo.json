@@ -1,0 +1,7 @@
+{
+	"response": { "status": "ok" },
+	"nodeid": "$!nodeManager.getLocalNodeId()",
+	"clusterid": "$!nodeManager.getLocalClusterId()",
+	"catalogid": "$!mediaarchive.getCatalogId()",
+	"logallsearches": $mediaarchive.getSearcherManager().getShowSearchLogs($mediaarchive.getCatalogId())
+}

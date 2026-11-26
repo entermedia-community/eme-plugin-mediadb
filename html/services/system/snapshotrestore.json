@@ -1,0 +1,11 @@
+#set($id = $context.getRequestParameter("id"))
+#if($id)
+$!nodeManager.restoreSnapShot($mediaarchive.getCatalogId(), $id)
+{
+	"response": { "status": "ok", "id": "$id" }
+}
+#else
+{
+	"response": { "status": "error", "message": "id is required" }
+}
+#end

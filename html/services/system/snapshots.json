@@ -1,0 +1,10 @@
+#set($snapshots = $nodeManager.listSnapShots($mediaarchive.getCatalogId()))
+{
+	"response": { "status": "ok", "totalhits": $snapshots.size() },
+	"results": [
+	#foreach($snap in $snapshots)
+		#if($velocityCount > 1),#end
+		{ "name": "$snap.name()", "shards": "$!snap.totalShards()" }
+	#end
+	]
+}

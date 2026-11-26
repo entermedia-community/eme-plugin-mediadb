@@ -1,0 +1,3 @@
+{
+	"response": { "status": "ok", "tables": #if($tables) $tables.size() #else 0 #end }
+}
