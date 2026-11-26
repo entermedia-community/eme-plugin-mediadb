@@ -1,0 +1,4 @@
+{
+	"assetid": "$!context.getRequestParameter('assetid')",
+	"path": #if( $mediaarchive.asLinkToPreview($context.getRequestParameter('assetid'), "image200x200") ) "$mediaarchive.asLinkToPreview($context.getRequestParameter('assetid'), 'image200x200')" #else null #end
+}
