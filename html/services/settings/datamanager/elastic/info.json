@@ -1,0 +1,9 @@
+{
+	"response":
+	{
+		"status": "ok"
+	},
+	"searchtype": "$searcher.getSearchType()",
+	"beanname": "$!searcher.getPropertyDetails().getBeanName()",
+	"mapping": #if( $searcher.getExistingMapping() ) $searcher.getExistingMapping() #else null #end
+}
