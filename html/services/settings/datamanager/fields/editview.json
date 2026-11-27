@@ -1,0 +1,7 @@
+#set( $psearcher = $mediaarchive.getSearcher("propertydetail") )
+#set( $basic = $psearcher.getDetailsForView("propertydetailedit", $context.getUserProfile()) )
+#set( $advanced = $psearcher.getDetailsForView("propertydetailadvancededit", $context.getUserProfile()) )
+{
+	"basic": [ #foreach( $d in $basic ) "$d.id" #if( $foreach.hasNext ), #end #end ],
+	"advanced": [ #foreach( $d in $advanced ) "$d.id" #if( $foreach.hasNext ), #end #end ]
+}
